@@ -1,3 +1,6 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
 <div class="luxury-card">
     <div class="flex justify-content-between align-items-end mb-6">
         <div class="title-group">
@@ -21,6 +24,7 @@
             <th scope="col" class="text-center">AÇÕES</th>
           </tr>
         </ng-template>
+
         <ng-template pTemplate="body" let-cliente>
             <tr class="luxury-row">
                 <td class="font-medium text-900">{{ cliente.nome }}</td>
@@ -30,18 +34,35 @@
                 <td class="text-right text-600 font-light">
                     {{ cliente.gastoAcumulado | currency:'BRL' }}
                 </td>
+
                 <td class="text-center action-cells">
-                    <button pButton
-                            icon="pi pi-pencil"
-                            class="p-button-rounded p-button-text action-icon"
-                            (click)="abrirEdicao(cliente)">
-                    </button>
                     <button pButton
                             icon="pi pi-eye"
                             class="p-button-rounded p-button-text action-icon"
+                            title="Visualizar Detalhes"
                             (click)="abrirVisualizacao(cliente)">
                     </button>
+
+                    <button pButton
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-text action-icon"
+                            title="Editar Cadastro"
+                            (click)="abrirEdicao(cliente)">
+                    </button>
+
+                    <button pButton
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-text p-button-danger action-icon"
+                            title="Excluir Membro"
+                            (click)="confirmarExclusao(cliente.id)">
+                    </button>
                 </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="4" class="text-center p-5">Nenhum membro VIP encontrado.</td>
             </tr>
         </ng-template>
     </p-table>

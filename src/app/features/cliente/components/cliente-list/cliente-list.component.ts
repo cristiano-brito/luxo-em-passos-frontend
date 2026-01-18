@@ -2,23 +2,29 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
 import { LuxoService } from '../../../../services/luxo.service';
 import { Cliente } from '../../../../models/luxo.models';
 import { BadgePerfilComponent } from '../../../../shared/components/badge-perfil/badge-perfil.component';
 import { ButtonModule } from 'primeng/button';
 import { ClienteGestaoModalComponent } from '../cliente-gestao-modal/cliente-gestao-modal.component';
 import { Router } from '@angular/router';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-cliente-list',
   standalone: true,
+  providers: [ConfirmationService, MessageService],
   imports: [
     CommonModule,
     TableModule,
     TagModule,
     ButtonModule,
     BadgePerfilComponent,
-    ClienteGestaoModalComponent
+    ClienteGestaoModalComponent,
+    ConfirmDialogModule,
+    ToastModule
   ],
   templateUrl: './cliente-list.component.html',
   styleUrl: './cliente-list.component.scss',
@@ -30,7 +36,9 @@ export class ClienteListComponent implements OnInit {
 
   constructor(
     private luxoService: LuxoService,
-    private router: Router
+    private router: Router,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -45,10 +53,8 @@ export class ClienteListComponent implements OnInit {
 
   irParaNovoCliente() {
     this.router.navigate(['/clientes/cadastro']);
-    console.log('/clientes/cadastro');
   }
 
-  // Funções que conversam com o Modal
   abrirEdicao(cliente: Cliente) {
     this.gestaoModal.abrirParaEdicao(cliente);
   }
@@ -57,15 +63,40 @@ export class ClienteListComponent implements OnInit {
     this.gestaoModal.abrirParaVisualizacao(cliente);
   }
 
+  confirmarExclusao(id: number) {
+    this.confirmationService.confirm({
+      message: 'Esta ação não pode ser desfeita. Deseja realmente remover este membro VIP?',
+      header: 'Confirmar Exclusão',
+      icon: 'pi pi-exclamation-triangle',
+      acceptLabel: 'Sim, Excluir',
+      rejectLabel: 'Cancelar',
+      rejectButtonStyleClass: 'p-button-text p-button-secondary',
+      acceptButtonStyleClass: 'p-button-danger',
+      accept: () => {
+        this.executarExclusao(id);
+      }
+    });
+  }
+
+  private executarExclusao(id: number) {
+    this.luxoService.excluirCliente(id).subscribe(() => {
+      this.carregarClientes();
+      this.messageService.add({
+        severity: 'info',
+        summary: 'Removido',
+        detail: 'O registro do cliente foi excluído.'
+      });
+    });
+  }
+
   getSeverity(perfil: string): any {
     switch (perfil) {
       case 'BLACK':
-        return 'contrast'; // Vermelho/Escuro
+        return 'contrast';
       case 'GOLD':
-        return 'warning'; // Amarelo/Dourado
+        return 'warning';
       default:
-        return 'info'; // Azul/Standard
+        return 'info';
     }
   }
-
 }

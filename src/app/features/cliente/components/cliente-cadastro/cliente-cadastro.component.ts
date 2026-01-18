@@ -6,11 +6,15 @@ import { ButtonModule } from 'primeng/button';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { ToastModule } from 'primeng/toast';
 import { Cliente } from '../../../../models/luxo.models';
+import { MessageService } from 'primeng/api';
+import { LuxoService } from '../../../../services/luxo.service';
 
 @Component({
   selector: 'app-cliente-cadastro',
   standalone: true,
+  providers:[MessageService],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,14 +22,15 @@ import { Cliente } from '../../../../models/luxo.models';
     InputTextModule,
     DropdownModule,
     InputNumberModule,
-    ButtonModule
+    ButtonModule,
+    ToastModule
   ],
   templateUrl: './cliente-cadastro.component.html',
   styleUrl: './cliente-cadastro.component.scss'
 })
 export class ClienteCadastroComponent {
   // Inicialização do objeto seguindo o seu Model exportado
-  cliente: Cliente = {
+  clienteInicial: Cliente = {
     nome: '',
     telefone: '',
     email: '',
@@ -41,20 +46,47 @@ export class ClienteCadastroComponent {
     }
   };
 
+  cliente: Cliente = { ...this.clienteInicial };
+
   perfis = [
     { label: 'BLACK MEMBER', value: 'BLACK' },
     { label: 'GOLD MEMBER', value: 'GOLD' },
     { label: 'STANDARD', value: 'STANDARD' }
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private messageService: MessageService,
+    private luxoService: LuxoService
+  ) {}
 
   confirmarInscricao() {
-    console.log('Cliente pronto para persistência local:', this.cliente);
-    // this.luxoService.adicionarCliente(this.cliente).subscribe(() => {
-    //   this.voltarParaLista();
-    // });
-    this.voltarParaLista();
+    // Simulando a chamada ao service que você fará no futuro
+    this.luxoService.adicionarCliente(this.cliente).subscribe({
+      next: (res) => {
+        // 1. Mostra o aviso de sucesso
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Inscrição Realizada',
+          detail: `${this.cliente.nome} agora é um membro VIP.`,
+          life: 3000
+        });
+
+        // 2. Reseta o formulário para o próximo cadastro
+        this.limparFormulario();
+      },
+      error: () => {
+        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível salvar o cliente.' });
+      }
+    });
+  }
+
+  limparFormulario() {
+    // Reseta o objeto mantendo a estrutura
+    this.cliente = {
+      ...this.clienteInicial,
+      endereco: { ...this.clienteInicial.endereco }
+    };
   }
 
   voltarParaLista() {
