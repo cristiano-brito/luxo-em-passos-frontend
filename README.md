@@ -3,42 +3,49 @@
 ![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular)
 ![PrimeNG](https://img.shields.io/badge/PrimeNG-Components-06B6D4?style=for-the-badge&logo=primeng)
 ![Sass](https://img.shields.io/badge/SASS-Styles-CC6699?style=for-the-badge&logo=sass)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
-O **Luxo em Passos** é uma plataforma premium de gestão de clientes VIP e estoque de calçados de alto luxo. Este repositório contém a interface desenvolvida em Angular, focada em uma experiência de usuário minimalista, acessível e sofisticada.
+O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de calçados de alto padrão. O sistema foi projetado para oferecer um controle rigoroso de clientes VIP e inventário, unindo uma estética minimalista a uma arquitetura robusta e escalável.
 
-## ✨ Funcionalidades Implementadas
+## ✨ Funcionalidades Principais
 
-### 👥 Gestão de Clientes VIP
-* **Listagem Dinâmica:** Visualização clara de clientes com identificação por badges de fidelidade (`BLACK`, `GOLD`, `STANDARD`).
-* **Modal de Gestão:** Detalhamento de informações com suporte a modo de leitura e edição rápida.
-* **Inscrição de Membros:** Página dedicada para cadastro completo, incluindo dados de contato e endereço aninhado.
+### 👥 Gestão de Clientes VIP (Full CRUD)
+* **Listagem Inteligente:** Tabela dinâmica com classificação por níveis de fidelidade (`BLACK`, `GOLD`, `STANDARD`).
+* **Cadastro em Lote:** Fluxo de inscrição contínuo que permite múltiplos registros sem interrupção da experiência (UX).
+* **Edição & Visualização:** Interface modal versátil para gestão de dados sem troca de contexto.
+* **Segurança de Dados:** Sistema de confirmação de exclusão para prevenir perdas acidentais de registros.
 
-### 🎨 Diferenciais de UI/UX
-* **Design Minimalista:** Estética baseada em tipografia elegante e espaços negativos.
-* **Acessibilidade (WCAG):** Campos de formulário e navegação via breadcrumb totalmente operáveis por teclado.
-* **Arquitetura Escalável:** Organização por funcionalidades (*Features*) e separação de modelos de dados.
+### 🎨 Excelência em UI/UX
+* **Design de Luxo:** Estética "Clean & Dark" baseada em tipografia elegante e espaços negativos.
+* **Feedback Reativo:** Notificações em tempo real (Toasts) para confirmação de todas as ações do usuário.
+* **Acessibilidade:** Navegação otimizada via teclado e conformidade com padrões WCAG.
 
-## 🛠️ Tecnologias Utilizadas
+## 🛠️ Stack Tecnológica
 
-* **Angular 17:** Framework base para a SPA.
-* **PrimeNG:** Suite de componentes de interface.
-* **PrimeFlex:** Grid system para layouts responsivos.
-* **RxJS:** Gestão de fluxos de dados assíncronos.
-* **SCSS:** Estilização avançada e customização de temas.
+| Tecnologia | Descrição |
+| :--- | :--- |
+| **Angular 17** | Desenvolvimento baseado em componentes standalone e signals. |
+| **PrimeNG** | Biblioteca de componentes de interface de alta fidelidade. |
+| **PrimeFlex** | Sistema de grid e utilitários CSS para layouts responsivos. |
+| **RxJS** | Programação reativa para manipulação de fluxos de dados assíncronos. |
+| **SCSS** | Arquitetura de estilos modular com variáveis e mixins. |
 
-## 📁 Estrutura do Projeto
+## 📁 Estrutura de Pastas (Pattern: Feature-based)
 
 ```text
 src/app/
-├── core/           # Serviços globais e status do sistema
-├── features/       # Módulos de negócio (Cliente)
-│   └── cliente/    # Listagem, Cadastro e Modais
+├── core/           # Configurações globais e serviços de singleton
+├── features/       # Módulos de negócio independentes
+│   └── cliente/    # Listagem, Cadastro, Modais e Lógica de Domínio
 ├── models/         # Interfaces TypeScript (Espelho do Backend Java)
-├── services/       # Lógica de consumo de API (RxJS)
-└── shared/         # Componentes reutilizáveis (Badges)
+├── services/       # Serviços de dados e lógica de estado (RxJS)
+└── shared/         # Componentes reutilizáveis, Pipes e Diretivas
 
 ## 🚀 Como Executar o Projeto
 
-1. **Clone o repositório:**
-   ```bash
-   git clone git@github.com:cristiano-brito/luxo-em-passos-frontend.git
+Antes de começar, certifique-se de ter o **Node.js** (v18+) e o **Angular CLI** instalados em sua máquina.
+
+### 1. Clonar o Repositório
+```bash
+git clone [https://github.com/cristiano-brito/luxo-em-passos-frontend.git](https://github.com/cristiano-brito/luxo-em-passos-frontend.git)
+cd luxo-em-passos-frontend
