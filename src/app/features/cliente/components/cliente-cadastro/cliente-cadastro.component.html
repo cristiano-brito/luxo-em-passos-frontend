@@ -1,0 +1,80 @@
+<div class="luxury-page-container">
+  <div class="luxury-form-card">
+
+    <header class="form-header">
+      <nav class="breadcrumb">
+        <button type="button" class="breadcrumb-button" (click)="voltarParaLista()">
+          CLIENTES
+        </button>
+        <span class="sep">/</span>
+        <span class="active">NOVO VIP</span>
+      </nav>
+      <h1 class="luxury-title">Inscrição de Membro</h1>
+      <p class="luxury-subtitle">Private Collection Membership Registration</p>
+    </header>
+
+    <div class="form-content p-fluid">
+
+      <div class="field mb-5">
+        <label for="nome" class="luxury-label">Nome Completo</label>
+        <input pInputText id="nome" [(ngModel)]="cliente.nome" placeholder="Ex: Sophia Loren">
+      </div>
+
+      <div class="grid mb-5">
+        <div class="col-7 field">
+          <label for="email" class="luxury-label">E-mail de Contato</label>
+          <input pInputText id="email" [(ngModel)]="cliente.email">
+        </div>
+        <div class="col-5 field">
+          <label for="telefone" class="luxury-label">Telefone</label>
+          <input pInputText id="telefone" [(ngModel)]="cliente.telefone">
+        </div>
+      </div>
+
+      <div class="grid mb-6">
+        <div class="col-6 field">
+          <label for="perfil" class="luxury-label">Categoria de Fidelidade</label>
+          <p-dropdown inputId="perfil" [options]="perfis" [(ngModel)]="cliente.perfil"></p-dropdown>
+        </div>
+        <div class="col-6 field">
+          <label for="gasto" class="luxury-label">Gasto de Abertura</label>
+          <p-inputNumber inputId="gasto" [(ngModel)]="cliente.gastoAcumulado" mode="currency" currency="BRL"
+            locale="pt-BR"></p-inputNumber>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="col-9 field">
+          <label for="logradouro" class="luxury-label">Logradouro</label>
+          <input pInputText id="logradouro" [(ngModel)]="cliente.endereco.logradouro">
+        </div>
+
+        <div class="col-3 field">
+          <label for="numero" class="luxury-label">Nº</label>
+          <input pInputText id="numero" [(ngModel)]="cliente.endereco.numero">
+        </div>
+
+        <div class="col-4 field">
+          <label for="bairro" class="luxury-label">Bairro</label>
+          <input pInputText id="bairro" [(ngModel)]="cliente.endereco.bairro">
+        </div>
+
+        <div class="col-6 field">
+          <label for="cidade" class="luxury-label">Cidade</label>
+          <input pInputText id="cidade" [(ngModel)]="cliente.endereco.cidade">
+        </div>
+
+        <div class="col-2 field">
+          <label for="uf" class="luxury-label">UF</label>
+          <input pInputText id="uf" [(ngModel)]="cliente.endereco.uf" maxlength="2">
+        </div>
+      </div>
+    </div>
+
+    <footer class="form-actions">
+      <button pButton label="ABANDONAR" class="p-button-text luxury-cancel-btn" (click)="voltarParaLista()"></button>
+      <button pButton label="CONFIRMAR INSCRIÇÃO" class="luxury-submit-btn" (click)="confirmarInscricao()"></button>
+    </footer>
+
+  </div>
+</div>

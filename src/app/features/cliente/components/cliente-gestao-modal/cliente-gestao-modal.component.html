@@ -1,0 +1,80 @@
+<p-dialog
+  [(visible)]="display"
+  [header]="modalTitle"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [blockScroll]="true"
+  styleClass="luxury-dialog-management"
+  maskStyleClass="luxury-mask">
+
+  <div class="luxury-form-container p-fluid">
+    <div class="field mb-5">
+      <label for="name" class="luxury-label">Nome da Cliente</label>
+      <input
+        pInputText
+        id="name"
+        type="text"
+        class="luxury-input"
+        [(ngModel)]="cliente.nome"
+        [disabled]="isReadOnly"
+        placeholder="Ex: Sophia Loren">
+    </div>
+
+    <div class="grid">
+      <div class="col-6 field mb-5">
+        <label for="perfil" class="luxury-label">Perfil de Consumo</label>
+        <p-dropdown
+          inputId="perfil"
+          [options]="perfis"
+          [(ngModel)]="cliente.perfil"
+          [disabled]="isReadOnly"
+          placeholder="Selecione">
+        </p-dropdown>
+      </div>
+
+      <div class="col-6 field mb-5">
+        <label for="gasto" class="luxury-label">Gasto Acumulado</label>
+        <p-inputNumber
+          inputId="gasto"
+          [(ngModel)]="cliente.gastoAcumulado"
+          mode="currency"
+          currency="BRL"
+          locale="pt-BR"
+          [disabled]="isReadOnly">
+        </p-inputNumber>
+      </div>
+    </div>
+
+    <p class="form-instruction" *ngIf="!isReadOnly">
+      As alterações serão sincronizadas com o banco de dados VIP.
+    </p>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="footer-divider"></div>
+    <div class="flex justify-content-end gap-3 px-4 pb-4">
+
+      <button
+        *ngIf="isReadOnly"
+        pButton label="FECHAR"
+        class="p-button-text luxury-save-btn"
+        (click)="fecharModal()">
+      </button>
+
+      <ng-container *ngIf="!isReadOnly">
+        <button
+          pButton label="CANCELAR"
+          class="p-button-text luxury-cancel-btn"
+          (click)="fecharModal()">
+        </button>
+        <button
+          pButton label="SALVAR ALTERAÇÕES"
+          class="p-button-text luxury-save-btn"
+          (click)="confirmarAlteracoes()">
+        </button>
+      </ng-container>
+
+    </div>
+  </ng-template>
+</p-dialog>

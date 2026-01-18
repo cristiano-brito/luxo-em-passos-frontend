@@ -1,0 +1,164 @@
+.luxury-page-container {
+  min-height: 100vh;
+  background-color: #fafafa;
+  display: flex;
+  justify-content: center;
+  padding: 4rem 2rem;
+}
+
+.luxury-form-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 800px;
+  padding: 4rem;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+}
+
+/* Header e Breadcrumb */
+.form-header {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  .breadcrumb {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.2rem;
+    color: #bbb;
+    margin-bottom: 1rem;
+
+    .breadcrumb-button {
+      background: none;
+      border: none;
+      padding: 0;
+      margin: 0;
+      font: inherit;
+      color: inherit;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: inherit;
+      transition: color 0.3s ease;
+
+      &:hover, &:focus {
+        color: #1a1a1a;
+        outline: none;
+      }
+    }
+
+    .sep {
+      color: #eee;
+    }
+
+    .active {
+      color: #1a1a1a;
+      font-weight: 600;
+    }
+  }
+
+  .luxury-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 200;
+    font-size: 2.2rem;
+    margin: 0;
+    color: #1a1a1a;
+  }
+
+  .luxury-subtitle {
+    font-size: 0.6rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    color: #d0d0d0;
+    margin-top: 0.5rem;
+  }
+}
+
+/* Tipografia dos Campos */
+.luxury-label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 0.5rem;
+}
+
+/* Reset e Estilização de Componentes PrimeNG */
+:host ::ng-deep {
+  .p-inputtext,
+  .p-dropdown,
+  .p-inputnumber,
+  .p-inputnumber-input {
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    border-radius: 0 !important;
+    padding: 0.8rem 0 !important;
+    background: transparent !important;
+    font-size: 1rem !important;
+    width: 100%;
+    transition: border-color 0.4s ease;
+
+    &:focus, &.p-inputwrapper-focus {
+      box-shadow: none !important;
+      border-bottom-color: #1a1a1a !important;
+    }
+  }
+
+  /* Alinhamento do texto no Dropdown */
+  .p-dropdown {
+    .p-dropdown-label {
+      padding-left: 0 !important;
+    }
+    .p-dropdown-trigger {
+      width: 2rem;
+    }
+  }
+
+  /* Alinhamento do InputNumber */
+  .p-inputnumber {
+    display: block;
+  }
+}
+
+/* Ações do Formulário (Footer) */
+.form-actions {
+  margin-top: 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .luxury-cancel-btn {
+    color: #999 !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.1rem;
+    font-weight: 400;
+
+    &:hover {
+      color: #666 !important;
+      background: transparent !important;
+    }
+  }
+
+  .luxury-submit-btn {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 1.2rem 2.5rem !important;
+    font-size: 0.8rem;
+    letter-spacing: 0.15rem;
+    font-weight: 500;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+/* Utilitários de Margem */
+.mb-5 { margin-bottom: 1.5rem !important; }
+.mb-6 { margin-bottom: 2.5rem !important; }

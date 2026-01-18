@@ -1,0 +1,50 @@
+<div class="luxury-card">
+    <div class="flex justify-content-between align-items-end mb-6">
+        <div class="title-group">
+            <span class="luxury-subtitle">Private Collection</span>
+            <h2 class="luxury-title">Gestão de Clientes VIP</h2>
+        </div>
+        <button pButton
+                label="NOVO CLIENTE"
+                icon="pi pi-plus"
+                class="p-button-text luxury-add-btn"
+                (click)="irParaNovoCliente()">
+        </button>
+    </div>
+
+    <p-table [value]="clientes" [tableStyle]="{ 'min-width': '50rem' }" styleClass="p-datatable-luxury">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">NOME</th>
+            <th scope="col">PERFIL</th>
+            <th scope="col" class="text-right">GASTO ACUMULADO</th>
+            <th scope="col" class="text-center">AÇÕES</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-cliente>
+            <tr class="luxury-row">
+                <td class="font-medium text-900">{{ cliente.nome }}</td>
+                <td>
+                    <app-badge-perfil [perfil]="cliente.perfil"></app-badge-perfil>
+                </td>
+                <td class="text-right text-600 font-light">
+                    {{ cliente.gastoAcumulado | currency:'BRL' }}
+                </td>
+                <td class="text-center action-cells">
+                    <button pButton
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-text action-icon"
+                            (click)="abrirEdicao(cliente)">
+                    </button>
+                    <button pButton
+                            icon="pi pi-eye"
+                            class="p-button-rounded p-button-text action-icon"
+                            (click)="abrirVisualizacao(cliente)">
+                    </button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-cliente-gestao-modal #gestaoModal></app-cliente-gestao-modal>

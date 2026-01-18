@@ -1,0 +1,64 @@
+.luxury-card {
+    background: transparent;
+    padding: 2rem 0;
+}
+
+.luxury-subtitle {
+    display: block;
+    font-size: 0.65rem;
+    letter-spacing: 0.3rem;
+    color: #b38728; /* Dourado sutil */
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.luxury-title {
+    font-family: "Inter", sans-serif;
+    font-weight: 300;
+    font-size: 1.5rem;
+    letter-spacing: -0.01rem;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.luxury-add-btn {
+    font-size: 0.7rem !important;
+    letter-spacing: 0.15rem !important;
+    color: #1a1a1a !important;
+    font-weight: 600 !important;
+}
+
+:host ::ng-deep {
+    .p-datatable-luxury {
+        .p-datatable-thead > tr > th {
+            background: transparent !important;
+            color: #999 !important;
+            font-size: 0.65rem !important;
+            letter-spacing: 0.15rem !important;
+            border-bottom: 1px solid #eee !important;
+            padding: 1.5rem 1rem !important;
+        }
+
+        .luxury-row {
+            background: transparent !important;
+            border-bottom: 1px solid #f9f9f9 !important;
+            transition: all 0.2s ease;
+
+            &:hover {
+                background-color: #fcfcfc !important;
+            }
+        }
+
+        .action-icon {
+            color: #ccc !important;
+            &:hover {
+                color: #1a1a1a !important;
+                background: transparent !important;
+            }
+            .p-button-icon {
+                font-size: 0.9rem;
+            }
+        }
+    }
+}
+
