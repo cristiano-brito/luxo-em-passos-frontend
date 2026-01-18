@@ -36,3 +36,9 @@ src/app/
 ├── models/         # Interfaces TypeScript (Espelho do Backend Java)
 ├── services/       # Lógica de consumo de API (RxJS)
 └── shared/         # Componentes reutilizáveis (Badges)
+
+## 🚀 Como Executar o Projeto
+
+1. **Clone o repositório:**
+   ```bash
+   git clone git@github.com:cristiano-brito/luxo-em-passos-frontend.git
