@@ -5,20 +5,23 @@
 ![Sass](https://img.shields.io/badge/SASS-Styles-CC6699?style=for-the-badge&logo=sass)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
-O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de calçados de alto padrão. O sistema foi projetado para oferecer um controle rigoroso de clientes VIP e inventário, unindo uma estética minimalista a uma arquitetura robusta e escalável.
+O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de calçados de alto padrão. O sistema une uma estética minimalista a uma arquitetura robusta, focada no controle rigoroso de clientes VIP e inventário.
 
 ## ✨ Funcionalidades Principais
 
+### 🏛️ Private Hub (Lauchpad)
+* **Centro de Comando:** Interface centralizada com atalhos rápidos para as principais operações.
+* **Navegação Inteligente:** Design baseado em cards interativos com foco em acessibilidade e rapidez operacional.
+
 ### 👥 Gestão de Clientes VIP (Full CRUD)
 * **Listagem Inteligente:** Tabela dinâmica com classificação por níveis de fidelidade (`BLACK`, `GOLD`, `STANDARD`).
-* **Cadastro em Lote:** Fluxo de inscrição contínuo que permite múltiplos registros sem interrupção da experiência (UX).
-* **Edição & Visualização:** Interface modal versátil para gestão de dados sem troca de contexto.
-* **Segurança de Dados:** Sistema de confirmação de exclusão para prevenir perdas acidentais de registros.
+* **Cadastro em Lote:** Fluxo de inscrição contínuo que permite múltiplos registros sem interrupção da UX.
+* **Segurança de Dados:** Sistema de confirmação de exclusão para prevenir perdas acidentais.
 
-### 🎨 Excelência em UI/UX
-* **Design de Luxo:** Estética "Clean & Dark" baseada em tipografia elegante e espaços negativos.
-* **Feedback Reativo:** Notificações em tempo real (Toasts) para confirmação de todas as ações do usuário.
-* **Acessibilidade:** Navegação otimizada via teclado e conformidade com padrões WCAG.
+### 🎨 Excelência em UI/UX (Estética de Grife)
+* **Tipografia Premium:** Uso estratégico das fontes *Playfair Display* e *Montserrat* para um visual sofisticado.
+* **Tags Metálicas:** Sistema de labels com gradientes que simulam metais preciosos (Ouro, Platina e Diamante Negro).
+* **Feedback Reativo:** Notificações em tempo real (Toasts) e micro-interações de interface.
 
 ## 🛠️ Stack Tecnológica
 
@@ -28,7 +31,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | **PrimeNG** | Biblioteca de componentes de interface de alta fidelidade. |
 | **PrimeFlex** | Sistema de grid e utilitários CSS para layouts responsivos. |
 | **RxJS** | Programação reativa para manipulação de fluxos de dados assíncronos. |
-| **SCSS** | Arquitetura de estilos modular com variáveis e mixins. |
+| **SCSS** | Arquitetura de estilos modular com variáveis, mixins e gradientes complexos. |
 
 ## 📁 Estrutura de Pastas (Pattern: Feature-based)
 
@@ -36,7 +39,8 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 src/app/
 ├── core/           # Configurações globais e serviços de singleton
 ├── features/       # Módulos de negócio independentes
-│   └── cliente/    # Listagem, Cadastro, Modais e Lógica de Domínio
+│   ├── dashboard/  # Home Hub (Centro de Comando)
+│   └── cliente/    # Gestão de Clientes VIP
 ├── models/         # Interfaces TypeScript (Espelho do Backend Java)
 ├── services/       # Serviços de dados e lógica de estado (RxJS)
 └── shared/         # Componentes reutilizáveis, Pipes e Diretivas
