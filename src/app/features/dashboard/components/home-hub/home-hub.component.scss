@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;500;600&display=swap');
+
+.home-container {
+    padding: 4rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: #fdfdfd; // Off-white para suavidade
+
+    .welcome-section {
+        text-align: center;
+        margin-bottom: 5rem;
+
+        .luxury-badge {
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 0.75rem;
+            color: #b19470;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+        }
+
+        .luxury-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #1a1a1a;
+            margin: 1rem 0;
+            font-weight: 400;
+        }
+
+        .luxury-divider {
+            width: 40px;
+            height: 2px;
+            background: #b19470;
+            margin: 0 auto;
+        }
+    }
+
+    .hub-card {
+        position: relative;
+        background: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 0; // Bordas retas transmitem mais seriedade/luxo
+        padding: 3.5rem 2rem;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        &:hover {
+            border-color: #b19470;
+            transform: translateY(-8px);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+
+            .action-line { width: 40px; background: #b19470; }
+            .card-bg-decoration { transform: scale(1.2); opacity: 0.05; }
+        }
+
+        .card-bg-decoration {
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 120px;
+            height: 120px;
+            background: #b19470;
+            border-radius: 50%;
+            opacity: 0.02;
+            transition: all 0.8s ease;
+        }
+
+        .icon-wrapper {
+            margin-bottom: 2rem;
+            .icon-circle {
+                width: 60px;
+                height: 60px;
+                border: 1px solid;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                i { font-size: 1.5rem; }
+            }
+        }
+
+        .card-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .card-description {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #888;
+            line-height: 1.8;
+            margin-bottom: 2.5rem;
+            font-weight: 300;
+        }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            .action-text {
+                font-size: 0.7rem;
+                text-transform: uppercase;
+                letter-spacing: 3px;
+                color: #1a1a1a;
+                font-weight: 600;
+            }
+
+            .action-line {
+                width: 20px;
+                height: 1px;
+                background: #ddd;
+                margin-top: 8px;
+                transition: all 0.4s ease;
+            }
+        }
+    }
+}

@@ -1,21 +1,36 @@
-/* Importando a fonte do Google */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+/* Importando as fontes de grife */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
 
-/* Aplicando a todo o projeto */
+/* Variáveis de Paleta de Luxo */
+:root {
+    --luxury-gold: #bf953f;
+    --luxury-black: #1a1a1a;
+    --luxury-bg: #fdfdfd;
+}
+
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Montserrat', sans-serif; // Fonte moderna e limpa para leitura
     margin: 0;
-    background-color: var(--surface-ground); /* Usa a cor de fundo do PrimeNG */
+    background-color: var(--luxury-bg);
+    color: var(--luxury-black);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Títulos elegantes */
+h1, h2, h3, .brand-name {
+    font-family: 'Playfair Display', serif;
 }
 
 /* --- SISTEMA DE TAGS LUXO EM PASSOS (GLOBAL) --- */
 
 .tag-premium {
     text-transform: uppercase;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    border-radius: 4px;
-    padding: 0.25rem 0.75rem;
+    font-weight: 600; // Um pouco mais fino para elegância
+    letter-spacing: 2px; // Espaçamento maior para ar premium
+    border-radius: 2px; // Bordas mais retas transmitem mais sofisticação
+    padding: 0.35rem 0.9rem;
+    font-size: 0.7rem;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* BLACK DIAMOND */

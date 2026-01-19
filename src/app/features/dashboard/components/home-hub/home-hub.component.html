@@ -1,0 +1,31 @@
+<div class="home-container">
+    <div class="welcome-section">
+        <span class="luxury-badge">Executive Management</span>
+        <h1 class="luxury-title">O que deseja gerenciar hoje?</h1>
+        <div class="luxury-divider"></div>
+    </div>
+
+    <div class="grid p-fluid">
+        <div *ngFor="let item of atalhos" class="col-12 md:col-6 lg:col-3">
+            <button class="hub-card" (click)="navegar(item.rota)" type="button">
+                <div class="card-bg-decoration"></div>
+
+                <div class="card-content">
+                    <div class="icon-wrapper">
+                        <div class="icon-circle" [style.border-color]="item.color">
+                            <i [class]="item.icon" [style.color]="item.color"></i>
+                        </div>
+                    </div>
+
+                    <h3 class="card-title">{{ item.label }}</h3>
+                    <p class="card-description">{{ item.desc }}</p>
+
+                    <div class="card-footer">
+                        <span class="action-text">Explorar</span>
+                        <div class="action-line"></div>
+                    </div>
+                </div>
+            </button>
+        </div>
+    </div>
+</div>
