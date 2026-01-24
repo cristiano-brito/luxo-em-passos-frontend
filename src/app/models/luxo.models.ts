@@ -19,11 +19,17 @@ export interface Cliente {
   gastoAcumulado: number;
 }
 
+export type Categoria = 'RASTEIRINHA' | 'SALTO_ALTO' | 'SCARPIN' | 'EDICAO_LIMITADA';
+
 export interface Sandalia {
-  sku: string;
-  nome: string;
-  preco: number;
-  estoque: number;
+    sku: string;         // Identificador único (Id)
+    modelo: string;
+    tamanho: number;
+    categoria: Categoria;
+    precoCusto: number;
+    precoVenda: number;
+    estoque: number;
+    imageUrl?: string;   // Opcional (?) pois no início o lojista pode não ter a foto
 }
 
 export interface Pedido {

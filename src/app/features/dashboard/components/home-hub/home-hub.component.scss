@@ -1,14 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;500;600&display=swap');
 
 .home-container {
-    padding: 4rem 2rem;
+    // Reduzido para aproximar o conteúdo do logo que está no app.component
+    padding: 1rem 2rem 4rem;
     max-width: 1400px;
     margin: 0 auto;
-    background-color: #fdfdfd; // Off-white para suavidade
+    background-color: #fdfdfd;
 
     .welcome-section {
         text-align: center;
-        margin-bottom: 5rem;
+        margin-bottom: 3.5rem; // Espaçamento mais equilibrado
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         .luxury-badge {
             text-transform: uppercase;
@@ -17,13 +21,15 @@
             color: #b19470;
             font-family: 'Montserrat', sans-serif;
             font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
         }
 
         .luxury-title {
             font-family: 'Playfair Display', serif;
-            font-size: 3rem;
+            font-size: 2.8rem;
             color: #1a1a1a;
-            margin: 1rem 0;
+            margin: 0.5rem 0;
             font-weight: 400;
         }
 
@@ -31,7 +37,7 @@
             width: 40px;
             height: 2px;
             background: #b19470;
-            margin: 0 auto;
+            margin: 1.5rem auto 0;
         }
     }
 
@@ -39,7 +45,7 @@
         position: relative;
         background: #ffffff;
         border: 1px solid #e0e0e0;
-        border-radius: 0; // Bordas retas transmitem mais seriedade/luxo
+        border-radius: 0;
         padding: 3.5rem 2rem;
         width: 100%;
         height: 100%;
@@ -49,6 +55,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        box-sizing: border-box;
 
         &:hover {
             border-color: #b19470;
@@ -73,6 +80,7 @@
 
         .icon-wrapper {
             margin-bottom: 2rem;
+            z-index: 1;
             .icon-circle {
                 width: 60px;
                 height: 60px;
@@ -99,7 +107,7 @@
             color: #888;
             line-height: 1.8;
             margin-bottom: 2.5rem;
-            font-weight: 300;
+            text-align: center;
         }
 
         .card-footer {
@@ -126,3 +134,5 @@
         }
     }
 }
+
+.p-fluid .grid { margin: 0; }

@@ -1,0 +1,193 @@
+// Container Principal
+.inventory-container {
+    padding: 2rem;
+    background-color: #fdfdfd; // Um off-white sutil para destacar os cards brancos
+
+    // Cabeçalho da Seção
+    .section-header {
+        text-align: center;
+        margin-bottom: 3rem;
+
+        .luxury-badge {
+            font-size: 0.7rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #b19470;
+            font-weight: 600;
+        }
+
+        .luxury-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: #1a1a1a;
+            margin: 0.5rem 0;
+        }
+
+        .luxury-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #bf953f, transparent);
+            margin: 0 auto;
+        }
+
+        .luxury-subtitle {
+            font-family: 'Montserrat', sans-serif;
+            color: #666;
+            font-size: 0.9rem;
+        }
+    }
+
+    // O Card do Produto
+    .product-card {
+        background: #ffffff;
+        border: 1px solid #f0f0f0;
+        border-radius: 2px; // Bordas mais retas para um look premium
+        transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+
+        &:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+            border-color: #bf953f;
+
+            .product-image-placeholder .product-img {
+                transform: scale(1.1);
+            }
+        }
+
+        // Posicionamento da Tag Metálica (Vem do seu global ou definida abaixo)
+        .category-tag-wrapper {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            z-index: 10;
+            transform: scale(0.8);
+            pointer-events: none;
+        }
+
+        // Área da Imagem
+        .product-image-placeholder {
+            height: 280px;
+            background-color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+
+            .product-img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+            }
+
+            i {
+                font-size: 4rem;
+                color: #eeeeee;
+                position: absolute;
+            }
+
+            .size-indicator {
+                position: absolute;
+                bottom: 12px;
+                left: 12px;
+                background: rgba(255, 255, 255, 0.9);
+                padding: 4px 10px;
+                font-size: 0.7rem;
+                font-weight: 700;
+                letter-spacing: 1px;
+                color: #333;
+                border: 1px solid #f0f0f0;
+                z-index: 5;
+            }
+        }
+
+        // Informações do Produto
+        .product-info {
+            padding: 1.5rem;
+            text-align: center;
+            flex-grow: 1;
+
+            .product-sku {
+                font-size: 0.6rem;
+                letter-spacing: 2px;
+                color: #999;
+                text-transform: uppercase;
+                display: block;
+                margin-bottom: 0.7rem;
+            }
+
+            .product-name {
+                font-family: 'Playfair Display', serif;
+                margin: 0.5rem 0;
+                font-size: 1.3rem;
+                color: #1a1a1a;
+                font-weight: 500;
+                line-height: 1.2;
+            }
+
+            .product-price {
+                font-family: 'Montserrat', sans-serif;
+                font-weight: 600;
+                color: #b19470;
+                font-size: 1.15rem;
+                margin-top: 0.8rem;
+            }
+        }
+
+        // Ações (Botões)
+        .product-actions {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            border-top: 1px solid #f9f9f9;
+            padding: 1rem;
+            background: #fafafa;
+
+            // Ajuste para os botões do PrimeNG ficarem elegantes
+            ::ng-deep .p-button.p-button-text {
+                transition: transform 0.3s ease;
+                &:hover {
+                    transform: scale(1.2);
+                    background: transparent;
+                }
+            }
+        }
+    }
+}
+
+// --- CLASSES DAS TAGS METÁLICAS (Caso não estejam no global) ---
+.tag-black {
+    background: linear-gradient(45deg, #000000, #434343);
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    border: 1px solid #555;
+}
+
+.tag-gold {
+    background: linear-gradient(45deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    color: #5d4a1e;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border: 1px solid #d4af37;
+}
+
+.tag-standard {
+    background: linear-gradient(45deg, #e0e0e0, #ffffff);
+    color: #666;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 1px solid #ccc;
+}

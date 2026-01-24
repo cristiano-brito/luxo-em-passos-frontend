@@ -1,105 +1,106 @@
+/* --- IMPORTAÇÕES DE MARCA --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap');
+
 /* --- BANNER DE STATUS (TOPBAR) --- */
 .luxo-dynamic-topbar {
-  background-color: #000000;
-  height: 32px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  position: sticky;
-  top: 0;
-  z-index: 1100;
-  transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-
-  .topbar-wrapper {
+    background-color: #000000;
+    height: 32px;
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 1rem;
-  }
+    width: 100%;
+    position: sticky;
+    top: 0;
+    z-index: 1100;
+    transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Indicador Visual de Conexão */
-  .status-indicator {
-    width: 4px;
-    height: 4px;
-    background-color: #00ff88;
-    border-radius: 50%;
-    box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
-    animation: pulseStatus 2.5s infinite ease-in-out;
-    transition: background-color 0.5s ease;
-  }
+    .topbar-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
 
-  .topbar-text {
-    color: #ffffff;
-    font-size: 0.58rem;
-    letter-spacing: 0.35rem;
-    font-weight: 300;
-    text-transform: uppercase;
-  }
-
-  .topbar-sep {
-    color: #333;
-    font-size: 0.8rem;
-    font-weight: 100;
-  }
-
-  .topbar-status {
-    color: #888;
-    font-size: 0.55rem;
-    letter-spacing: 0.2rem;
-    font-weight: 400;
-    text-transform: uppercase;
-  }
-
-  &.offline {
-    background-color: #2a0505;
     .status-indicator {
-      background-color: #ff4444;
-      box-shadow: 0 0 8px rgba(255, 68, 68, 0.6);
+        width: 4px;
+        height: 4px;
+        background-color: #00ff88;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(0, 255, 136, 0.8);
+        animation: pulseStatus 2.5s infinite ease-in-out;
     }
+
+    .topbar-text {
+        color: #ffffff;
+        font-size: 0.58rem;
+        letter-spacing: 0.35rem;
+        font-weight: 300;
+        text-transform: uppercase;
+    }
+
+    .topbar-sep { color: #333; font-size: 0.8rem; font-weight: 100; }
+
     .topbar-status {
-      color: #b18a8a;
+        color: #888;
+        font-size: 0.55rem;
+        letter-spacing: 0.2rem;
+        font-weight: 400;
+        text-transform: uppercase;
     }
-  }
+
+    &.offline {
+        background-color: #2a0505;
+        .status-indicator { background-color: #ff4444; box-shadow: 0 0 8px rgba(255, 68, 68, 0.6); }
+        .topbar-status { color: #b18a8a; }
+    }
 }
 
-/* --- LOGOTIPO PRINCIPAL --- */
+/* --- CABEÇALHO GLOBAL (AJUSTE DE ESPAÇAMENTO) --- */
 .header-main {
-  padding: 5rem 0 3rem;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  background-color: #ffffff;
+    // Reduzido drasticamente para evitar o buraco branco entre o logo e o conteúdo
+    padding: 1.5rem 0 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+
+    .brand-link {
+        text-decoration: none;
+        display: flex;
+        justify-content: center;
+    }
+
+    .logo-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .main-nav-logo {
+            height: 180px; // Mantendo a imponência solicitada
+            width: auto;
+            object-fit: contain;
+
+            filter: drop-shadow(0 8px 15px rgba(0,0,0,0.06));
+            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+
+            &:hover {
+                transform: scale(1.02) translateY(-2px);
+                filter: drop-shadow(0 15px 30px rgba(191, 149, 63, 0.15));
+            }
+        }
+    }
 }
 
-.brand-name {
-  margin: 0;
-  font-family: "Inter", sans-serif;
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #1a1a1a;
-  letter-spacing: 0.7rem;
-  text-transform: uppercase;
-  display: flex;
-  align-items: center;
-
-  .thin {
-    font-weight: 200;
-    color: #b0b0b0;
-    font-size: 0.9rem;
-    letter-spacing: 0.5rem;
-  }
+/* --- CONTAINER DE CONTEÚDO (CONEXÃO DIRETA COM O HEADER) --- */
+.content-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    /* Removido padding-top para o conteúdo "subir" e encostar na área do logo */
+    padding: 0 2rem 5rem;
 }
 
 /* --- ANIMAÇÕES --- */
 @keyframes pulseStatus {
-  0% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.5); opacity: 0.5; }
-  100% { transform: scale(1); opacity: 1; }
-}
-
-/* --- CONTAINER DE CONTEÚDO --- */
-.content-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem 5rem;
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.5); opacity: 0.5; }
+    100% { transform: scale(1); opacity: 1; }
 }

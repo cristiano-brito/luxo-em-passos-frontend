@@ -4,13 +4,13 @@ import { TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-import { LuxoService } from '../../../../services/luxo.service';
 import { Cliente } from '../../../../models/luxo.models';
 import { BadgePerfilComponent } from '../../../../shared/components/badge-perfil/badge-perfil.component';
 import { ButtonModule } from 'primeng/button';
 import { ClienteGestaoModalComponent } from '../cliente-gestao-modal/cliente-gestao-modal.component';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-cliente-list',
@@ -24,7 +24,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     BadgePerfilComponent,
     ClienteGestaoModalComponent,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
   ],
   templateUrl: './cliente-list.component.html',
   styleUrl: './cliente-list.component.scss',
@@ -35,10 +35,10 @@ export class ClienteListComponent implements OnInit {
   clientes: Cliente[] = [];
 
   constructor(
-    private luxoService: LuxoService,
+    private clienteService: ClienteService,
     private router: Router,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
   ) {}
 
   ngOnInit() {
@@ -46,13 +46,13 @@ export class ClienteListComponent implements OnInit {
   }
 
   private carregarClientes() {
-    this.luxoService.getClientes().subscribe((dados) => {
+    this.clienteService.listarTodos().subscribe((dados) => {
       this.clientes = dados;
     });
   }
 
   irParaNovoCliente() {
-    this.router.navigate(['/clientes/cadastro']);
+    this.router.navigate(['/clientes/cadastro'], { replaceUrl: true });
   }
 
   abrirEdicao(cliente: Cliente) {
@@ -65,7 +65,8 @@ export class ClienteListComponent implements OnInit {
 
   confirmarExclusao(id: number) {
     this.confirmationService.confirm({
-      message: 'Esta ação não pode ser desfeita. Deseja realmente remover este membro VIP?',
+      message:
+        'Esta ação não pode ser desfeita. Deseja realmente remover este membro VIP?',
       header: 'Confirmar Exclusão',
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Sim, Excluir',
@@ -74,17 +75,17 @@ export class ClienteListComponent implements OnInit {
       acceptButtonStyleClass: 'p-button-danger',
       accept: () => {
         this.executarExclusao(id);
-      }
+      },
     });
   }
 
   private executarExclusao(id: number) {
-    this.luxoService.excluirCliente(id).subscribe(() => {
+    this.clienteService.excluir(id).subscribe(() => {
       this.carregarClientes();
       this.messageService.add({
         severity: 'info',
         summary: 'Removido',
-        detail: 'O registro do cliente foi excluído.'
+        detail: 'O registro do cliente foi excluído.',
       });
     });
   }

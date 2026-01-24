@@ -9,7 +9,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { Cliente } from '../../../../models/luxo.models';
 import { MessageService } from 'primeng/api';
-import { LuxoService } from '../../../../services/luxo.service';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-cliente-cadastro',
@@ -57,12 +57,12 @@ export class ClienteCadastroComponent {
   constructor(
     private router: Router,
     private messageService: MessageService,
-    private luxoService: LuxoService
+    private clienteService: ClienteService
   ) {}
 
   confirmarInscricao() {
     // Simulando a chamada ao service que você fará no futuro
-    this.luxoService.adicionarCliente(this.cliente).subscribe({
+    this.clienteService.adicionar(this.cliente).subscribe({
       next: (res) => {
         // 1. Mostra o aviso de sucesso
         this.messageService.add({

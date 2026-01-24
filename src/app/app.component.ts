@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ClienteListComponent } from './features/cliente/components/cliente-list/cliente-list.component';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
 import { SystemStatusService } from './core/services/system-status.service';
@@ -8,12 +7,12 @@ import { SystemStatusService } from './core/services/system-status.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, ClienteListComponent],
+  imports: [CommonModule, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'LUXO EM PASSOS';
+  title = 'Luxo em Passos - Gestão VIP';
   isOnline$: Observable<boolean>;
 
   constructor(private statusService: SystemStatusService) {

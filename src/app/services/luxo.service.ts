@@ -39,78 +39,62 @@ export class LuxoService {
         uf: 'SP',
       },
     },
-    {
-      id: 3,
-      nome: 'Audrey Hepburn',
-      email: 'audrey@breakfast.com',
-      telefone: '(11) 97777-6666',
-      perfil: 'BLACK',
-      gastoAcumulado: 12400.5,
-      dataCadastro: '2025-02-10',
-      endereco: {
-        logradouro: '5th Avenue',
-        numero: '727',
-        bairro: 'Manhattan',
-        cidade: 'New York',
-        uf: 'NY',
-      },
-    },
-    {
-      id: 4,
-      nome: 'Naomi Campbell',
-      email: 'naomi@runway.com',
-      telefone: '(11) 96666-5555',
-      perfil: 'GOLD',
-      gastoAcumulado: 4200.0,
-      dataCadastro: '2025-08-20',
-      endereco: {
-        logradouro: 'Bond Street',
-        numero: '12',
-        bairro: 'Mayfair',
-        cidade: 'London',
-        uf: 'UK',
-      },
-    },
-    {
-      id: 5,
-      nome: 'Marilyn Monroe',
-      email: 'marilyn@diamonds.com',
-      telefone: '(11) 95555-4444',
-      perfil: 'STANDARD',
-      gastoAcumulado: 950.0,
-      dataCadastro: '2025-11-05',
-      endereco: {
-        logradouro: 'Sunset Blvd',
-        numero: '12300',
-        bairro: 'Brentwood',
-        cidade: 'Los Angeles',
-        uf: 'CA',
-      },
-    },
+    // ... manter os outros clientes que você já tinha
   ];
 
+  // Lista de Sandálias seguindo RIGOROSAMENTE o modelo Java
   private sandalias: Sandalia[] = [
-    { sku: 'SND-001', nome: 'Scarpin Dourado VIP', preco: 1200.0, estoque: 10 },
+    {
+      sku: 'SND-001',
+      modelo: 'Scarpin Dourado VIP',
+      tamanho: 36,
+      categoria: 'SCARPIN',
+      precoCusto: 685.7,
+      precoVenda: 1200.0,
+      estoque: 10,
+      imageUrl:
+        'assets/images/produtos/scarpin-gold.jpg',
+    },
     {
       sku: 'SND-002',
-      nome: 'Sandália Minimalist Black',
-      preco: 850.0,
+      modelo: 'Sandália Minimalist Black',
+      tamanho: 37,
+      categoria: 'RASTEIRINHA',
+      precoCusto: 566.6,
+      precoVenda: 850.0,
       estoque: 15,
+      imageUrl:
+        'https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=600&auto=format&fit=crop',
     },
-    { sku: 'SND-003', nome: 'Stiletto Red Velvet', preco: 1500.0, estoque: 5 },
+    {
+      sku: 'SND-003',
+      modelo: 'Stiletto Red Velvet',
+      tamanho: 35,
+      categoria: 'SALTO_ALTO',
+      precoCusto: 833.3,
+      precoVenda: 1500.0,
+      estoque: 5,
+      imageUrl:
+        'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=400',
+    },
     {
       sku: 'SND-004',
-      nome: 'Plataforma Crystal Shine',
-      preco: 2100.0,
+      modelo: 'Plataforma Crystal Shine',
+      tamanho: 38,
+      categoria: 'EDICAO_LIMITADA',
+      precoCusto: 840.0,
+      precoVenda: 2100.0,
       estoque: 3,
+      imageUrl:
+        'https://images.unsplash.com/photo-1562273138-f46be4ebdf33?q=80&w=600&auto=format&fit=crop',
     },
   ];
 
+  // --- MÉTODOS DE CLIENTE ---
   getClientes(): Observable<Cliente[]> {
     return of(this.clientes);
   }
 
-  // Novo método para o formulário de cadastro usar no futuro
   adicionarCliente(novoCliente: Cliente): Observable<Cliente> {
     const id = this.clientes.length + 1;
     const clienteComId = { ...novoCliente, id };
@@ -121,13 +105,24 @@ export class LuxoService {
   excluirCliente(id: number): Observable<boolean> {
     const index = this.clientes.findIndex((c) => c.id === id);
     if (index !== -1) {
-      this.clientes.splice(index, 1); // Remove do array local
+      this.clientes.splice(index, 1);
       return of(true);
     }
     return of(false);
   }
 
+  // --- MÉTODOS DE SANDÁLIA ---
   getSandalias(): Observable<Sandalia[]> {
     return of(this.sandalias);
+  }
+
+  // Método essencial para o MVP: Atualizar estoque após uma venda
+  baixarEstoque(sku: string, quantidade: number): Observable<boolean> {
+    const sandalia = this.sandalias.find((s) => s.sku === sku);
+    if (sandalia && sandalia.estoque >= quantidade) {
+      sandalia.estoque -= quantidade;
+      return of(true);
+    }
+    return of(false);
   }
 }
