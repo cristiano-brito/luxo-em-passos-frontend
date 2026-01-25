@@ -12,22 +12,25 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ## ✨ Funcionalidades Implementadas
 
-### 📊 Business Intelligence & Analytics (Novo)
+### 📊 Business Intelligence & Analytics
 * **Dashboard Executivo Reativo:** Visualização em tempo real de KPIs críticos (Faturamento, Ticket Médio e Conversão) orquestrados via `combineLatest`.
 * **Motor de Filtros Temporais:** Alternância dinâmica entre períodos (**Hoje, Este Mês, Total**) com atualização instantânea de gráficos e indicadores sem refresh de página.
-* **Inteligência de Inventário:** Painel de **Estoque Crítico** com alertas visuais dinâmicos (Barra de status em vermelho para itens com 3 unidades ou menos) e exibição de quantidades exatas.
+* **Inteligência de Inventário:** Painel de **Estoque Crítico** com alertas visuais dinâmicos e exibição de quantidades exatas.
 * **CRM Analytics (Ranking VIP):** Identificação automática dos *Top Spenders* com segmentação visual por perfil de cliente (**BLACK** e **GOLD**).
-* **Evolução Financeira:** Gráficos de barras e roscas customizados via Chart.js, otimizados para reatividade através de gestão rigorosa de imutabilidade.
+
+### 📦 Gestão de Inventário & Curadoria (Novo)
+* **Fluxo CRUD Completo:** Sistema de gestão total de peças permitindo inclusão, exclusão e edição detalhada com persistência em estado global.
+* **Formulário Inteligente Dual-Mode:** Componente otimizado que alterna entre **Cadastro** e **Edição** via parâmetros de rota (`ActivatedRoute`), com bloqueio de integridade de SKU em modo de edição.
+* **Curadoria com Live Preview:** Visualização em tempo real da peça através da URL da imagem, garantindo precisão estética no catálogo.
+* **Busca Reativa Global:** Filtragem instantânea por modelo ou SKU utilizando `Observables` e `BehaviorSubjects`.
+* **Tags Metálicas Dinâmicas:** Segmentação visual por categoria (**Scarpin, Rasteirinha, Salto Alto, Edição Limitada**).
+
+
 
 ### 👥 Gestão de Clientes VIP
-* **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem (Container) e o modal especializado de gestão (Presentational).
+* **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem e o modal especializado de gestão.
 * **Dual-Mode UX:** Interface versátil com estados de **Insights** (Leitura) e **Edit** (Escrita) com tratamento de imutabilidade via clonagem de objetos.
 * **Sincronização Reativa:** Uso de `@Output` e `EventEmitter` para atualização instantânea da UI após persistência.
-
-### 📦 Gestão de Inventário & Curadoria
-* **Busca Reativa Global:** Filtragem em tempo real por modelo ou SKU utilizando `Observables` e `BehaviorSubjects`.
-* **Segmentação por Categoria:** Filtros inteligentes para Scarpin, Rasteirinha, Salto Alto e Edições Limitadas.
-* **Vitrine de Luxo:** Listagem dinâmica com tipografia clássica e tags metálicas customizadas.
 
 ### 🛍️ Módulo de Vendas & Checkout
 * **Checkout VIP:** Processo de venda com busca preditiva de clientes e validação de estoque em tempo real.
@@ -40,10 +43,12 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | Tecnologia | Descrição |
 | :--- | :--- |
 | **Angular 17** | Componentes standalone e arquitetura baseada em serviços de fachada. |
-| **RxJS** | Gestão de estados assíncronos e operadores de combinação (`combineLatest`, `map`, `switchMap`). |
-| **PrimeNG** | Suite de componentes UI personalizada com paleta *Professional Slate*. |
-| **Chart.js** | Visualização de dados analíticos com suporte a re-renderização reativa. |
-| **SASS/SCSS** | Estilização avançada com foco em design minimalista e luxuoso. |
+| **RxJS** | Gestão de estados assíncronos e operadores de combinação (`combineLatest`, `map`). |
+| **PrimeNG** | Suite de componentes UI personalizada com foco em design minimalista. |
+| **SASS/SCSS** | Estilização avançada utilizando paleta *Luxury* (**Azul Petróleo e Ouro Bronze**). |
+| **Angular Router** | Navegação dinâmica com parâmetros de rota para gestão de estados de edição. |
+
+
 
 ---
 
@@ -54,7 +59,7 @@ src/app/
 ├── features/       
 │   ├── cliente/     # Gestão VIP (Listagem e Modais)
 │   ├── relatorio/   # BI e Analytics (Dashboard, Gráficos, KPIs)
-│   ├── sandalia/    # Gestão de Inventário e Curadoria
+│   ├── sandalia/    # Gestão de Inventário e Curadoria (CRUD)
 │   └── venda/       # Checkout e Transações
 ├── core/            # Serviços globais e persistência (Storage Service)
 ├── models/          # Interfaces e Enums (Contratos de Dados)
