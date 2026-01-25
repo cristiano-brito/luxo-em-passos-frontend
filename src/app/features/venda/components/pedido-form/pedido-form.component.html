@@ -2,164 +2,153 @@
 
 <section class="luxo-checkout-container fadein">
   <header class="checkout-header">
-    <div class="breadcrumb">
-      <button type="button" class="btn-back" routerLink="/">
-        <i class="pi pi-arrow-left"></i> VOLTAR AO HUB
-      </button>
+    <button class="btn-back" (click)="voltarParaHistorico()">
+      <i class="pi pi-arrow-left"></i> VOLTAR PARA O HISTÓRICO
+    </button>
+    <div class="header-content">
+      <span class="category-tag">Concierge Digital</span>
+      <h1>Finalização de Pedido VIP</h1>
     </div>
-    <span class="category-tag">Private Sale</span>
-    <h1>Finalizar Pedido VIP</h1>
   </header>
 
-  <form [formGroup]="pedidoForm" (ngSubmit)="finalizarVenda()" class="checkout-grid">
+  <form [formGroup]="pedidoForm" (ngSubmit)="finalizarVenda()">
+    <div class="checkout-grid">
 
-    <div class="checkout-main">
-      <div class="checkout-card">
-        <h3><i class="pi pi-user" aria-hidden="true"></i> Identificação do Cliente</h3>
-        <div class="luxo-input-group">
-          <label for="cliente-search">BUSCAR CLIENTE VIP</label>
+      <div class="selection-area">
+
+        <div class="checkout-card">
+          <h3><i class="pi pi-user"></i> SELECIONAR CLIENTE VIP</h3>
           <p-autoComplete
-            inputId="cliente-search"
             formControlName="cliente"
             [suggestions]="clientesFiltrados"
             (completeMethod)="filtrarClientes($event)"
             field="nome"
-            placeholder="Digite o nome do cliente..."
             [dropdown]="true"
-            styleClass="luxo-autocomplete">
+            placeholder="Comece a digitar o nome da cliente..."
+            styleClass="luxo-autocomplete"
+            [forceSelection]="true">
             <ng-template let-cliente pTemplate="item">
-              <div class="cliente-suggestion">
-                <span class="nome">{{cliente.nome}}</span>
-                <span class="perfil-tag" [attr.data-perfil]="cliente.perfil">{{cliente.perfil}}</span>
+              <div class="flex justify-content-between align-items-center w-full">
+                <span>{{ cliente.nome }}</span>
+                <span class="text-xs gold-tag">{{ cliente.perfil }}</span>
               </div>
             </ng-template>
           </p-autoComplete>
         </div>
-      </div>
 
-      <div class="checkout-card">
-        <div class="card-header-flex">
-          <h3><i class="pi pi-shopping-bag" aria-hidden="true"></i> Itens da Coleção</h3>
-          <div class="luxo-dropdown-group">
+        <div class="checkout-card">
+          <div class="card-header-flex">
+            <h3><i class="pi pi-shopping-bag"></i> ITENS DA CURADORIA</h3>
             <p-dropdown
-              inputId="add-produto"
               [options]="sandaliasDisponiveis"
               optionLabel="modelo"
-              placeholder="Adicionar Produto"
+              placeholder="ADICIONAR CALÇADO À VENDA"
               (onChange)="adicionarItem($event.value)"
-              styleClass="luxo-dropdown-add">
-              <ng-template let-sandalia pTemplate="item">
+              styleClass="luxo-dropdown-add"
+              [filter]="true">
+              <ng-template let-s pTemplate="item">
                 <div class="product-dropdown-item">
-                  <span>{{sandalia.modelo}}</span>
-                  <small class="stock-badge" [class.low-stock]="sandalia.estoque < 3">
-                    Stock: {{sandalia.estoque}}
-                  </small>
+                  <div class="flex flex-column">
+                    <span class="font-bold">{{ s.modelo }}</span>
+                    <small class="text-600">SKU: {{ s.sku }}</small>
+                  </div>
+                  <span class="stock-badge" [class.low-stock]="s.estoque < 3">
+                    {{ s.estoque }} DISP.
+                  </span>
                 </div>
               </ng-template>
             </p-dropdown>
           </div>
-        </div>
 
-        <p-table [value]="itens.controls" class="luxo-table-cart">
-          <ng-template pTemplate="header">
-            <tr>
-              <th scope="col">PRODUTO</th>
-              <th scope="col" class="text-center">QTD / DISPONÍVEL</th>
-              <th scope="col" class="text-right">PREÇO</th>
-              <th scope="col" class="text-right">SUBTOTAL</th>
-              <th scope="col"></th>
-            </tr>
-          </ng-template>
+          <p-table [value]="itens.controls" styleClass="p-datatable-sm" *ngIf="itens.length > 0">
+            <ng-template pTemplate="header">
+              <tr>
+                <th>PRODUTO</th>
+                <th class="text-center">QUANTIDADE</th>
+                <th class="text-right">UNITÁRIO</th>
+                <th class="text-right">SUBTOTAL</th>
+                <th></th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item let-i="index">
+              <tr [formGroupName]="i">
+                <td>
+                  <div class="product-info">
+                    <span class="sku">{{ item.value.sandalia.sku }}</span>
+                    <span class="modelo">{{ item.value.sandalia.modelo }}</span>
+                  </div>
+                </td>
+                <td>
+                  <div class="stock-control-wrapper">
+                    <p-inputNumber
+                      formControlName="quantidade"
+                      [showButtons]="true"
+                      buttonLayout="horizontal"
+                      spinnerMode="horizontal"
+                      decrementButtonClass="p-button-text"
+                      incrementButtonClass="p-button-text"
+                      incrementButtonIcon="pi pi-plus"
+                      decrementButtonIcon="pi pi-minus"
+                      [min]="1"
+                      [max]="item.value.sandalia.estoque"
+                      (onInput)="calcularTotal()">
+                    </p-inputNumber>
+                    <span class="stock-info">Estoque: {{ item.value.sandalia.estoque }}</span>
+                  </div>
+                </td>
+                <td class="text-right">{{ item.value.precoVendaNoAto | currency:'BRL' }}</td>
+                <td class="text-right font-bold">{{ (item.value.precoVendaNoAto * item.value.quantidade) | currency:'BRL' }}</td>
+                <td class="text-center">
+                  <button type="button" class="btn-remove" (click)="removerItem(i)">
+                    <i class="pi pi-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
 
-          <ng-template pTemplate="body" let-itemControl let-i="rowIndex">
-            <tr [formGroup]="itemControl">
-              <td>
-                <div class="product-info">
-                  <span class="sku">{{itemControl.get('sandalia').value.sku}}</span>
-                  <span class="modelo">{{itemControl.get('sandalia').value.modelo}}</span>
-                </div>
-              </td>
-              <td>
-                <div class="stock-control-wrapper">
-                  <p-inputNumber
-                    formControlName="quantidade"
-                    [showButtons]="true"
-                    buttonLayout="horizontal"
-                    spinnerMode="horizontal"
-                    decrementButtonClass="p-button-secondary"
-                    incrementButtonClass="p-button-secondary"
-                    incrementButtonIcon="pi pi-plus"
-                    decrementButtonIcon="pi pi-minus"
-                    (onInput)="calcularTotal()"
-                    [min]="1"
-                    [max]="itemControl.get('sandalia').value.estoque">
-                  </p-inputNumber>
-                  <small class="stock-info">Max: {{itemControl.get('sandalia').value.estoque}}</small>
-                </div>
-              </td>
-              <td class="text-right">
-                {{itemControl.get('precoVendaNoAto').value | currency:'BRL'}}
-              </td>
-              <td class="text-right">
-                <strong>{{(itemControl.get('precoVendaNoAto').value * itemControl.get('quantidade').value) | currency:'BRL'}}</strong>
-              </td>
-              <td class="text-center">
-                <button type="button" class="btn-remove" (click)="removerItem(i)">
-                  <i class="pi pi-trash"></i>
-                </button>
-              </td>
-            </tr>
-          </ng-template>
-        </p-table>
-
-        <div *ngIf="itens.length === 0" class="empty-cart">
-          <p>Selecione um produto para iniciar a venda.</p>
+          <div *ngIf="itens.length === 0" class="empty-cart">
+            Nenhum item selecionado para esta transação.
+          </div>
         </div>
       </div>
-    </div>
 
-    <aside class="checkout-sidebar">
-      <div class="summary-card">
-        <h3>RESUMO DA TRANSAÇÃO</h3>
+      <aside class="summary-card">
+        <h3>RESUMO DO PEDIDO</h3>
 
         <div class="summary-row">
-          <span>Subtotal</span>
-          <span>{{pedidoForm.get('valorTotal')?.value | currency:'BRL'}}</span>
+          <span>Itens na curadoria</span>
+          <span>{{ itens.length }}</span>
         </div>
-
         <div class="summary-row">
-          <span>Taxa VIP</span>
-          <span class="free">ISENTO</span>
+          <span>Embalagem Especial</span>
+          <span class="free">CORTESIA VIP</span>
+        </div>
+        <div class="summary-row">
+          <span>Envio por Concierge</span>
+          <span class="free">GRATUITO</span>
         </div>
 
         <hr class="divider">
 
         <div class="total-row">
-          <span class="luxo-label-text">VALOR TOTAL</span>
-          <span class="amount">
-            {{pedidoForm.get('valorTotal')?.value | currency:'BRL'}}
-          </span>
+          <span class="luxo-label-text">VALOR TOTAL DO INVESTIMENTO</span>
+          <span class="amount">{{ pedidoForm.get('valorTotal')?.value | currency:'BRL' }}</span>
         </div>
 
-        <button
-          type="submit"
-          class="btn-finalize"
-          [disabled]="pedidoForm.invalid || itens.length === 0">
-          CONCLUIR VENDA
+        <button type="submit" class="btn-finalize" [disabled]="pedidoForm.invalid || itens.length === 0">
+          FINALIZAR VENDA VIP
         </button>
 
-        <button
-          type="button"
-          class="btn-reset"
-          (click)="resetarFormulario()"
-          *ngIf="pedidoForm.dirty || itens.length > 0">
-          LIMPAR / NOVA VENDA
+        <button type="button" class="btn-reset" (click)="resetarFormulario()">
+          LIMPAR FORMULÁRIO
         </button>
 
         <p class="disclaimer">
-          Transação segura com atualização em tempo real do inventário.
+          Ao finalizar, o estoque será abatido automaticamente e os pontos de fidelidade serão creditados à cliente.
         </p>
-      </div>
-    </aside>
+      </aside>
+
+    </div>
   </form>
 </section>

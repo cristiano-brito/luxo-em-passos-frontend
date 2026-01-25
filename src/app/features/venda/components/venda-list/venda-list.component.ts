@@ -43,9 +43,16 @@ export class VendaListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Escuta o "banco de dados" reativo
+    this.sincronizarHistoricoVendas();
+  }
+
+  sincronizarHistoricoVendas(): void {
+    this.vendaService.listarVendas().subscribe();
+
     this.luxoService.vendas$.subscribe(dados => {
-      this.vendas = dados;
+      this.vendas = [...dados].sort((a, b) =>
+        new Date(b.dataHora).getTime() - new Date(a.dataHora).getTime()
+      );
     });
   }
 

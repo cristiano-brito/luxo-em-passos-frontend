@@ -1,3 +1,5 @@
+/* REUTILIZANDO E APERFEIÇOANDO O SEU ESTILO */
+
 .luxo-checkout-container {
   max-width: 1200px;
   margin: 2rem auto;
@@ -40,65 +42,43 @@
 
 .checkout-grid {
   display: grid;
-  grid-template-columns: 1fr 350px;
+  grid-template-columns: 1fr 380px; /* Largura levemente maior para o preto brilhar */
   gap: 2rem;
   align-items: start;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .checkout-card {
   background: #FFF;
   border: 1px solid #F0F0F0;
-  padding: 2rem;
+  padding: 2.5rem;
   margin-bottom: 2rem;
 
   h3 {
     font-size: 0.8rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.15em;
     margin-bottom: 1.5rem;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    color: #333;
+    gap: 0.7rem;
+    color: #1a1a1a;
+    font-weight: 700;
   }
 
   .card-header-flex {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
     h3 { margin: 0; }
   }
 }
 
-// Estilo para o Dropdown com info de Stock
-.product-dropdown-item {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  align-items: center;
-
-  .stock-badge {
-    font-size: 0.6rem;
-    color: #999;
-    &.low-stock { color: #B32828; font-weight: bold; }
-  }
-}
-
-.stock-control-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.2rem;
-
-  .stock-info {
-    font-size: 0.6rem;
-    color: #AAA;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-}
-
+/* Dropdown e AutoComplete de Luxo */
 ::ng-deep {
   .luxo-autocomplete, .luxo-dropdown-add {
     width: 100%;
@@ -108,61 +88,83 @@
       border-radius: 0 !important;
       padding: 0.8rem 0 !important;
       background: transparent !important;
-      &:focus { border-bottom-color: #000 !important; box-shadow: none !important; }
+      font-size: 0.95rem;
+      &:focus { border-bottom-color: #B38728 !important; box-shadow: none !important; }
     }
+    .p-dropdown-label { padding-left: 0 !important; }
   }
 
+  /* InputNumber minimalista */
   .p-inputnumber-buttons-horizontal .p-inputnumber-input {
-    width: 60px !important;
+    width: 50px !important;
     text-align: center;
     border: none !important;
     background: #F9F9F9 !important;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    padding: 0.5rem !important;
   }
 }
 
 .product-info {
   display: flex;
   flex-direction: column;
-  .sku { font-size: 0.6rem; color: #B38728; font-weight: bold; }
-  .modelo { font-size: 0.9rem; font-weight: 400; color: #333; }
+  .sku { font-size: 0.6rem; color: #B38728; font-weight: bold; letter-spacing: 0.05em; }
+  .modelo { font-size: 0.85rem; font-weight: 500; color: #1a1a1a; }
+}
+
+.stock-control-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  .stock-info { font-size: 0.55rem; color: #BBB; text-transform: uppercase; }
 }
 
 .btn-remove {
   background: none;
   border: none;
-  color: #CCC;
+  color: #DDD;
   cursor: pointer;
-  transition: 0.3s;
-  &:hover { color: #B32828; }
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  &:hover { color: #B32828; transform: scale(1.1); }
 }
 
+/* CARD PRETO DE RESUMO - O CORAÇÃO DO DESIGN */
 .summary-card {
   background: #000;
   color: #FFF;
-  padding: 2.5rem;
+  padding: 3rem;
   position: sticky;
   top: 2rem;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.2);
 
-  h3 { font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 1rem; }
+  h3 {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #222;
+    padding-bottom: 1.5rem;
+    color: #FFF;
+  }
 
   .summary-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 1rem;
-    font-size: 0.85rem;
-    color: #AAA;
-    .free { color: #B38728; font-weight: bold; }
+    margin-bottom: 1.2rem;
+    font-size: 0.8rem;
+    color: #888;
+    .free { color: #B38728; font-weight: bold; font-size: 0.7rem; }
   }
 
-  .divider { border: 0; border-top: 1px solid #333; margin: 2rem 0; }
+  .divider { border: 0; border-top: 1px solid #222; margin: 2.5rem 0; }
 
   .total-row {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2.5rem;
-    .luxo-label-text { font-size: 0.6rem; letter-spacing: 0.2em; color: #B38728; margin-bottom: 0.5rem; }
-    .amount { font-size: 2.2rem; font-weight: 200; }
+    margin-bottom: 3rem;
+    .luxo-label-text { font-size: 0.6rem; letter-spacing: 0.25em; color: #B38728; margin-bottom: 0.7rem; }
+    .amount { font-size: 2.5rem; font-weight: 200; font-family: 'Inter', sans-serif; }
   }
 
   .btn-finalize {
@@ -170,48 +172,65 @@
     background: #FFF;
     color: #000;
     border: none;
-    padding: 1.2rem;
+    padding: 1.4rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.8rem;
-    font-weight: bold;
+    letter-spacing: 0.25em;
+    font-size: 0.75rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: 0.3s;
-    &:disabled { background: #333; color: #666; cursor: not-allowed; }
-    &:not(:disabled):hover { background: #B38728; color: #FFF; }
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+    &:disabled { background: #222; color: #555; cursor: not-allowed; }
+    &:not(:disabled):hover {
+      background: #B38728;
+      color: #FFF;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(179, 135, 40, 0.3);
+    }
   }
 
   .btn-reset {
     width: 100%;
     background: transparent;
-    color: #777;
-    border: 1px solid #333;
+    color: #555;
+    border: 1px solid #222;
     padding: 1rem;
-    margin-top: 1.2rem;
+    margin-top: 1.5rem;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-size: 0.65rem;
-    font-weight: bold;
+    letter-spacing: 0.15em;
+    font-size: 0.6rem;
+    font-weight: 600;
     cursor: pointer;
     transition: 0.3s;
-    &:hover { color: #FFF; border-color: #B38728; background: #111; }
+    &:hover { color: #FFF; border-color: #444; }
   }
 
   .disclaimer {
-    font-size: 0.6rem;
-    color: #444;
-    margin-top: 1.5rem;
-    line-height: 1.4;
+    font-size: 0.55rem;
+    color: #333;
+    margin-top: 2rem;
+    line-height: 1.6;
     text-align: center;
+    letter-spacing: 0.05em;
   }
 }
 
 .empty-cart {
-  padding: 3rem;
+  padding: 4rem 2rem;
   text-align: center;
-  color: #999;
+  color: #CCC;
   font-style: italic;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  border: 1px dashed #EEE;
+}
+
+/* Helpers */
+.gold-tag {
+  background: #B38728;
+  color: #FFF;
+  padding: 0.2rem 0.5rem;
+  border-radius: 2px;
+  font-weight: bold;
 }
 
 .text-right { text-align: right; }

@@ -267,6 +267,14 @@ export class LuxoService {
     return of(false);
   }
 
+  getVendas(): Observable<Pedido[]> {
+    return of(this.vendasSubject.value);
+  }
+
+  atualizarVendas(vendas: Pedido[]): void {
+    this.vendasSubject.next(vendas);
+  }
+
   setFiltro(periodo: 'HOJE' | 'MES' | 'TOTAL') {
     this.filtroPeriodoSubject.next(periodo);
   }

@@ -137,4 +137,8 @@ export class PedidoFormComponent implements OnInit {
     });
   }
 
+  voltarParaHistorico(): void {
+    this.router.navigate(['/vendas']);
+  }
+
 }
