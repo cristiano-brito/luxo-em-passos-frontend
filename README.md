@@ -12,9 +12,10 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ## ✨ Funcionalidades Implementadas
 
-### 📊 Business Intelligence & Relatórios (Novo)
+### 📊 Business Intelligence & Relatórios (Atualizado)
 * **Dashboard Executivo:** Visualização em tempo real de KPIs críticos como Faturamento Bruto e Ticket Médio.
-* **Análise de Mix de Produtos:** Gráficos de rosca reativos (Doughnut) que detalham a performance de vendas por categoria (Scarpin, Rasteirinha, etc).
+* **Filtros Temporais Inteligentes:** Alternância dinâmica entre períodos (Hoje, Este Mês, Total) utilizando `combineLatest` para processamento reativo.
+* **Análise de Mix de Produtos:** Gráficos de rosca (Doughnut) integrados com a identidade visual da marca para detalhamento de vendas por categoria.
 * **Monitoramento de Conversão:** Rastreamento de pedidos finalizados versus estornos para análise de saúde operacional.
 
 ### 🛍️ Módulo de Vendas & Checkout
@@ -38,7 +39,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | **Angular 17** | Uso de componentes standalone e injeção de dependência moderna. |
 | **PrimeNG** | Componentes de UI de alta fidelidade e sistema de notificações reativo. |
 | **Chart.js** | Motor gráfico para visualização de dados e métricas de BI. |
-| **RxJS** | Gestão de estados assíncronos via `BehaviorSubjects` no `LuxoService`. |
+| **RxJS** | Gestão de estados assíncronos via `BehaviorSubjects` e operadores de combinação. |
 | **Local Storage** | Estratégia de persistência Client-side para manutenção dos dados. |
 
 ---
