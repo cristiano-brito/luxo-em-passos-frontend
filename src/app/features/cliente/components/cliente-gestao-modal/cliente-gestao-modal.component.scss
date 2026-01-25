@@ -1,9 +1,9 @@
 :host ::ng-deep {
-    /* 1. Máscara de fundo (Overlay) com efeito de desfoque */
+    /* 1. Máscara de fundo (Overlay) */
     .luxury-mask {
-        background-color: rgba(255, 255, 255, 0.6) !important;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.7) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
     }
 
     /* 2. Container principal do Modal */
@@ -13,23 +13,22 @@
         box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.15);
         border-radius: 0;
 
-        .p-dialog-header {
-            padding: 3rem 3rem 1.5rem;
-            background: #fff;
+        /* Removemos barras duplas garantindo que apenas o conteúdo do PrimeNG role */
+        .p-dialog-content {
+            overflow-y: auto !important;
+            padding: 0 !important; // Deixamos o padding para o nosso form-container
+        }
 
+        .p-dialog-header {
+            padding: 2.5rem 3rem 1rem;
+            background: #fff;
             .p-dialog-title {
                 font-family: 'Inter', sans-serif;
                 font-weight: 300;
-                letter-spacing: 0.25rem;
+                letter-spacing: 0.2rem;
                 text-transform: uppercase;
-                font-size: 0.85rem;
+                font-size: 0.8rem;
                 color: #1a1a1a;
-            }
-
-            .p-dialog-header-icon {
-                color: #999;
-                transition: color 0.3s;
-                &:hover { color: #1a1a1a; background: transparent; }
             }
         }
 
@@ -38,32 +37,40 @@
         }
     }
 
-    /* 3. Tipografia e Rótulos */
+    /* 3. Seções e Títulos */
     .luxury-label {
         display: block;
         font-size: 0.6rem;
         font-weight: 600;
-        letter-spacing: 0.15rem;
+        letter-spacing: 0.12rem;
         text-transform: uppercase;
         color: #aaa;
-        margin-bottom: 0.75rem;
+        margin-bottom: 0.6rem;
     }
 
-    /* 4. Correção de Alinhamento e Estilização de Inputs */
-    .luxury-input,
-    .p-dropdown,
-    .p-inputnumber,
-    .p-inputnumber-input {
+    .address-section-title {
+        font-size: 0.65rem;
+        color: #1a1a1a;
+        font-weight: 700;
+        letter-spacing: 0.15rem;
+        border-bottom: 1px solid #f2f2f2;
+        padding-bottom: 0.5rem;
+        text-transform: uppercase;
+        margin-top: 1rem;
+    }
+
+    /* 4. Estilização de Inputs (Minimalistas) */
+    .luxury-input, .p-dropdown, .p-inputnumber, .p-inputnumber-input, .p-inputtext {
         border: none !important;
-        border-bottom: 1px solid #ededed !important;
+        border-bottom: 1px solid #eeeeee !important;
         border-radius: 0 !important;
         background: transparent !important;
-        font-size: 1rem !important;
-        font-weight: 300 !important;
+        font-size: 0.9rem !important;
         color: #1a1a1a !important;
-        transition: all 0.4s ease;
-        width: 100%;
-        height: 40px; // Altura fixa para alinhar a linha inferior
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        transition: border-color 0.4s ease;
+        min-height: 38px;
         display: flex;
         align-items: center;
 
@@ -73,68 +80,55 @@
         }
     }
 
-    /* Ajuste específico para tirar o recuo interno do Dropdown e InputNumber */
-    .p-dropdown .p-dropdown-label,
-    .p-inputnumber-input {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
+    /* 5. Modo Leitura (Disabled) */
+    .p-disabled, .p-inputtext:disabled {
+        opacity: 0.7 !important;
+        border-bottom: 1px dashed #ddd !important;
+        color: #777 !important;
     }
 
-    /* 5. Estado Desabilitado (Modo Visualização/Olho) */
-    .p-disabled,
-    .p-inputtext:disabled {
-        opacity: 0.8 !important;
-        cursor: default !important;
-        border-bottom: 1px dashed #ddd !important; // Linha pontilhada elegante
-        color: #666 !important;
-    }
-
-    /* Remove a seta do dropdown no modo leitura */
     .p-dropdown.p-disabled .p-dropdown-trigger {
         display: none !important;
     }
 
-    /* 6. Grid e Instruções */
-    .grid {
-        display: flex;
-        margin-top: 0;
-    }
-
-    .form-instruction {
-        font-size: 0.7rem;
-        color: #ccc;
-        font-style: italic;
-        margin-top: 2.5rem;
-        letter-spacing: 0.05rem;
-    }
-
-    /* 7. Rodapé (Footer) */
+    /* 6. Footer e Botões */
     .footer-divider {
         height: 1px;
         background: #f8f8f8;
-        margin: 0 3rem 2rem;
+        margin: 0 3rem 1.5rem;
     }
 
     .luxury-save-btn {
         background: transparent !important;
         border: none !important;
         color: #1a1a1a !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.15rem;
-        font-size: 0.75rem;
-        padding: 1rem 2rem !important;
-
-        &:hover { background: #f9f9f9 !important; }
+        font-weight: 700 !important;
+        letter-spacing: 0.1rem;
+        font-size: 0.7rem;
+        padding: 0.8rem 1.5rem !important;
+        &:hover { background: #fafafa !important; }
     }
 
     .luxury-cancel-btn {
         background: transparent !important;
         border: none !important;
-        color: #999 !important;
-        font-weight: 400 !important;
-        letter-spacing: 0.1rem;
-        font-size: 0.75rem;
-
-        &:hover { color: #666 !important; }
+        color: #bbb !important;
+        font-size: 0.7rem;
+        &:hover { color: #888 !important; }
     }
+
+    .form-instruction {
+        font-size: 0.65rem;
+        color: #ddd;
+        font-style: italic;
+    }
+}
+
+/* Scrollbar Customizada (Fina e Discreta) */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background: #e0e0e0;
+    border-radius: 10px;
+    &:hover { background: #ccc; }
 }
