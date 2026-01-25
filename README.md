@@ -12,6 +12,12 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ## ✨ Funcionalidades Implementadas
 
+### 👥 Gestão de Clientes VIP (Full CRUD & UI)
+* **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem de clientes (Container) e o modal especializado de gestão (Presentational), facilitando a manutenção e o isolamento de lógica.
+* **Comunicação Reativa Bidirecional:** Fluxo de dados orquestrado via `@ViewChild` para inicialização e `@Output` com `EventEmitter` para sincronização automática da UI após persistência no serviço.
+* **Dual-Mode UX:** Modal versátil com estados de **Insights** (Modo Leitura com tipografia clássica e linhas pontilhadas) e **Edit** (Modo Escrita com inputs minimalistas).
+* **Tratamento de Imutabilidade:** Garantia de integridade de dados através de clonagem de objetos, assegurando que alterações canceladas não afetem o estado global da aplicação.
+
 ### 📦 Gestão de Inventário & Curadoria (Atualizado)
 * **Busca Reativa Global:** Sistema de filtragem em tempo real por modelo ou SKU utilizando `Observables` e `BehaviorSubjects`.
 * **Filtro por Categoria:** Segmentação inteligente do acervo (Scarpin, Rasteirinha, etc.) integrada ao motor de dados reativo.
@@ -21,14 +27,11 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 ### 📊 Business Intelligence & Relatórios
 * **Dashboard Executivo:** Visualização de KPIs críticos como Faturamento Bruto e Ticket Médio com processamento via `combineLatest`.
 * **Filtros Temporais:** Alternância dinâmica entre períodos (Hoje, Este Mês, Total) para análise de performance.
-* **Análise de Mix de Produtos:** Gráficos de rosca (Doughnut) integrados com a identidade visual da marca.
+* **Análise de Mix de Produtos:** Gráficos de rosca (Doughnut) integrados com a identidade visual da marca via Chart.js.
 
 ### 🛍️ Módulo de Vendas & Checkout
 * **Checkout VIP:** Processo de venda orquestrado com busca preditiva de clientes e validação de estoque em tempo real.
 * **Gestão de Estoque:** Abatimento automático pós-venda e sistema de estorno com retorno imediato ao acervo.
-
-### 👥 Gestão de Clientes VIP
-* **Controle de Fidelidade:** Cadastro e listagem de clientes com monitoramento de gasto acumulado e perfil de consumo.
 
 ---
 
@@ -48,11 +51,15 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ```text
 src/app/
-├── core/           # Serviços globais (Storage, Connection Status)
+├── core/           # Serviços globais e persistência (Storage)
 ├── features/       # Módulos de negócio independentes
-│   ├── cliente/    # Gestão de Clientes VIP
-│   ├── relatorio/  # BI e Gráficos de Performance
-│   ├── sandalia/   # Inventário e Curadoria (Search & CRUD)
+│   ├── cliente/    
+│   │   ├── components/
+│   │   │   ├── cliente-list/           # Listagem (Smart Component)
+│   │   │   └── cliente-gestao-modal/   # Gestão & Insights (Dumb Component)
+│   │   └── services/                   # ClienteService (Fachada)
+│   ├── relatorio/  # BI e Business Intelligence
+│   ├── sandalia/   # Inventário e Curadoria Reativa
 │   └── venda/      # Checkout e Histórico de Transações
 ├── models/         # Interfaces e Enums (Contratos de Dados)
 └── services/       # LuxoService (Single Source of Truth / Repository)
