@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Cliente, Sandalia } from '../models/luxo.models';
-import { Observable, of } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Cliente, Sandalia, Pedido, ItemPedido, StatusPedido } from '../models/luxo.models';
+import { StorageService } from '../core/services/storage/storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LuxoService {
+  private vendasSubject = new BehaviorSubject<Pedido[]>([]);
+  public vendas$ = this.vendasSubject.asObservable();
+
   private clientes: Cliente[] = [
     {
       id: 1,
@@ -84,6 +88,17 @@ export class LuxoService {
     },
   ];
 
+  constructor(private storage: StorageService) {
+    this.hidratarDados();
+  }
+
+  private hidratarDados(): void {
+    const vendasSalvas = this.storage.get<Pedido[]>('vendas');
+    if (vendasSalvas) {
+      this.vendasSubject.next(vendasSalvas);
+    }
+  }
+
   getClientes(): Observable<Cliente[]> {
     return of(this.clientes);
   }
@@ -102,6 +117,13 @@ export class LuxoService {
       return of(true);
     }
     return of(false);
+  }
+
+  private incrementarGastoCliente(id: number, valor: number): void {
+    const cliente = this.clientes.find(c => c.id === id);
+    if (cliente) {
+      cliente.gastoAcumulado += valor;
+    }
   }
 
   getSandalias(): Observable<Sandalia[]> {
@@ -132,6 +154,80 @@ export class LuxoService {
       this.sandalias.splice(index, 1);
       return of(true);
     }
+    return of(false);
+  }
+
+  finalizarPedido(cliente: Cliente, itensSelecionados: ItemPedido[]): Observable<Pedido> {
+    // 1. Validar estoque de todos os itens antes de começar
+    const estoqueOk = itensSelecionados.every(item => {
+      const s = this.sandalias.find(sand => sand.sku === item.sandalia.sku);
+      return s && s.estoque >= item.quantidade;
+    });
+
+    if (!estoqueOk) {
+      throw new Error('Um ou mais itens ficaram sem estoque durante a transação.');
+    }
+
+    const novoPedido: Pedido = {
+      protocolo: Math.random().toString(36).substring(2, 10).toUpperCase(),
+      cliente: cliente,
+      status: StatusPedido.FINALIZADO,
+      dataHora: new Date(),
+      itens: itensSelecionados,
+      valorTotal: itensSelecionados.reduce((acc, item) => acc + (item.precoVendaNoAto * item.quantidade), 0)
+    };
+
+    itensSelecionados.forEach(item => {
+      this.baixarEstoque(item.sandalia.sku, item.quantidade).subscribe();
+    });
+
+    if (cliente.id) {
+      this.incrementarGastoCliente(cliente.id, novoPedido.valorTotal);
+    }
+
+    const listaAtualizada = [...this.vendasSubject.value, novoPedido];
+    this.vendasSubject.next(listaAtualizada);
+    this.storage.save('vendas', listaAtualizada);
+
+    return of(novoPedido);
+  }
+
+/**
+ * Cancela um pedido, estorna o estoque e subtrai o gasto do cliente.
+ */
+  cancelarPedido(protocolo: string): Observable<boolean> {
+    const vendas = this.vendasSubject.value;
+    const index = vendas.findIndex(p => p.protocolo === protocolo);
+
+    if (index !== -1 && vendas[index].status !== StatusPedido.CANCELADO) {
+      const pedido = vendas[index];
+
+      // 1. Estornar Estoque
+      pedido.itens.forEach(item => {
+        const sandalia = this.sandalias.find(s => s.sku === item.sandalia.sku);
+        if (sandalia) {
+          sandalia.estoque += item.quantidade;
+        }
+      });
+
+      // 2. Estornar Gasto do Cliente
+      if (pedido.cliente.id) {
+        const cliente = this.clientes.find(c => c.id === pedido.cliente.id);
+        if (cliente) {
+          cliente.gastoAcumulado -= pedido.valorTotal;
+        }
+      }
+
+      // 3. Atualizar Status e Persistir
+      pedido.status = StatusPedido.CANCELADO;
+      vendas[index] = { ...pedido }; // Imutabilidade
+
+      this.vendasSubject.next([...vendas]);
+      this.storage.save('vendas', vendas);
+
+      return of(true);
+    }
+
     return of(false);
   }
 }

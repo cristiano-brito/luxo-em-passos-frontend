@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { SystemStatusService } from './core/services/system-status.service';
+import { SystemStatusService } from './core/services/status/system-status.service';
 
 @Component({
   selector: 'app-root',

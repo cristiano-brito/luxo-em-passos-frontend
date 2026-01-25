@@ -3,6 +3,8 @@ import { HomeHubComponent } from './features/dashboard/components/home-hub/home-
 import { ClienteListComponent } from './features/cliente/components/cliente-list/cliente-list.component';
 import { ClienteCadastroComponent } from './features/cliente/components/cliente-cadastro/cliente-cadastro.component';
 import { SandaliaListComponent } from './features/sandalia/components/sandalia-list/sandalia-list.component';
+import { PedidoFormComponent } from './features/venda/components/pedido-form/pedido-form.component';
+import { VendaListComponent } from './features/venda/components/venda-list/venda-list.component';
 
 export const routes: Routes = [
   { path: '', component: HomeHubComponent, pathMatch: 'full' },
@@ -20,6 +22,14 @@ export const routes: Routes = [
     children: [
       { path: '', component: SandaliaListComponent }, // Rota: /sandalias
       // { path: 'cadastro', component: SandaliaCadastroComponent }, // Futura rota de cadastro
+    ],
+  },
+
+  {
+    path: 'vendas',
+    children: [
+      { path: '', component: VendaListComponent },
+      { path: 'novo-pedido', component: PedidoFormComponent }, // Rota: /venda/novo-pedido
     ],
   },
 

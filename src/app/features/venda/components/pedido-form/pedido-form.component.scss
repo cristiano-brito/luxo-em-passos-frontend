@@ -1,0 +1,218 @@
+.luxo-checkout-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+
+  .category-tag {
+    color: #B38728;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-weight: 200;
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+}
+
+.checkout-header {
+  margin-bottom: 3rem;
+  .btn-back {
+    background: none;
+    border: none;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    color: #666;
+    cursor: pointer;
+    margin-bottom: 1rem;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    &:hover { color: #000; }
+  }
+}
+
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 2rem;
+  align-items: start;
+}
+
+.checkout-card {
+  background: #FFF;
+  border: 1px solid #F0F0F0;
+  padding: 2rem;
+  margin-bottom: 2rem;
+
+  h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #333;
+  }
+
+  .card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    h3 { margin: 0; }
+  }
+}
+
+// Estilo para o Dropdown com info de Stock
+.product-dropdown-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+
+  .stock-badge {
+    font-size: 0.6rem;
+    color: #999;
+    &.low-stock { color: #B32828; font-weight: bold; }
+  }
+}
+
+.stock-control-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+
+  .stock-info {
+    font-size: 0.6rem;
+    color: #AAA;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+::ng-deep {
+  .luxo-autocomplete, .luxo-dropdown-add {
+    width: 100%;
+    .p-inputtext, .p-dropdown {
+      border: none !important;
+      border-bottom: 1px solid #EEE !important;
+      border-radius: 0 !important;
+      padding: 0.8rem 0 !important;
+      background: transparent !important;
+      &:focus { border-bottom-color: #000 !important; box-shadow: none !important; }
+    }
+  }
+
+  .p-inputnumber-buttons-horizontal .p-inputnumber-input {
+    width: 60px !important;
+    text-align: center;
+    border: none !important;
+    background: #F9F9F9 !important;
+    font-size: 0.9rem;
+  }
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  .sku { font-size: 0.6rem; color: #B38728; font-weight: bold; }
+  .modelo { font-size: 0.9rem; font-weight: 400; color: #333; }
+}
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: #CCC;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover { color: #B32828; }
+}
+
+.summary-card {
+  background: #000;
+  color: #FFF;
+  padding: 2.5rem;
+  position: sticky;
+  top: 2rem;
+
+  h3 { font-size: 0.75rem; letter-spacing: 0.2em; margin-bottom: 2rem; border-bottom: 1px solid #333; padding-bottom: 1rem; }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    color: #AAA;
+    .free { color: #B38728; font-weight: bold; }
+  }
+
+  .divider { border: 0; border-top: 1px solid #333; margin: 2rem 0; }
+
+  .total-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2.5rem;
+    .luxo-label-text { font-size: 0.6rem; letter-spacing: 0.2em; color: #B38728; margin-bottom: 0.5rem; }
+    .amount { font-size: 2.2rem; font-weight: 200; }
+  }
+
+  .btn-finalize {
+    width: 100%;
+    background: #FFF;
+    color: #000;
+    border: none;
+    padding: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    &:disabled { background: #333; color: #666; cursor: not-allowed; }
+    &:not(:disabled):hover { background: #B38728; color: #FFF; }
+  }
+
+  .btn-reset {
+    width: 100%;
+    background: transparent;
+    color: #777;
+    border: 1px solid #333;
+    padding: 1rem;
+    margin-top: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover { color: #FFF; border-color: #B38728; background: #111; }
+  }
+
+  .disclaimer {
+    font-size: 0.6rem;
+    color: #444;
+    margin-top: 1.5rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+}
+
+.empty-cart {
+  padding: 3rem;
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }

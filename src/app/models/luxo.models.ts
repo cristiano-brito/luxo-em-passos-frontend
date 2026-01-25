@@ -32,17 +32,25 @@ export interface Sandalia {
     imageUrl?: string;   // Opcional (?) pois no início o lojista pode não ter a foto
 }
 
-export interface Pedido {
-  protocolo: string;
-  cliente: Cliente;
-  itens: ItemPedido[];
-  valorTotal: number;
-  data: Date;
-  status: 'GERADO' | 'FINALIZADO' | 'CANCELADO';
+export enum StatusPedido {
+  ABERTO = 'ABERTO',
+  FINALIZADO = 'FINALIZADO',
+  CANCELADO = 'CANCELADO'
 }
 
 export interface ItemPedido {
+  id?: number;
   sandalia: Sandalia;
   quantidade: number;
-  precoUnitario: number;
+  precoVendaNoAto: number;
+}
+
+export interface Pedido {
+  id?: number;
+  protocolo: string;
+  cliente: Cliente;
+  status: StatusPedido;
+  dataHora: Date;
+  valorTotal: number;
+  itens: ItemPedido[];
 }

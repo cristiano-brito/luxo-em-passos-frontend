@@ -1,0 +1,65 @@
+.luxo-list-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 2rem;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2rem;
+
+  .category-tag {
+    color: #B38728;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  h1 {
+    font-weight: 200;
+    font-size: 2.5rem;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+}
+
+.luxo-card {
+  background: #FFF;
+  border: 1px solid #F0F0F0;
+  padding: 1rem;
+}
+
+.protocol-text {
+  font-family: 'Courier New', Courier, monospace;
+  color: #666;
+}
+
+.cliente-info {
+  display: flex;
+  flex-direction: column;
+  small { font-size: 0.6rem; color: #B38728; font-weight: bold; }
+}
+
+.row-cancelled {
+  opacity: 0.6;
+  background-color: #FAFAFA !important;
+  td { text-decoration: line-through; text-decoration-color: #ff000033; }
+  .p-tag, .text-center { text-decoration: none !important; }
+}
+
+::ng-deep {
+  .p-button-black {
+    background: #000 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.1em !important;
+  }
+}
+
+.text-right { text-align: right; }
+.text-center { text-align: center; }
