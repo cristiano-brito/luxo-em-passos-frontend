@@ -5,6 +5,7 @@ import { CardModule } from 'primeng/card';
 import { ChartModule } from 'primeng/chart';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { RelatorioService } from '../../services/relatorio.service';
+import { ExportService } from '../../../../core/services/export/export.service';
 
 @Component({
   selector: 'app-relatorio-dashboard',
@@ -44,7 +45,10 @@ export class RelatorioDashboardComponent implements OnInit {
   topClientes: any[] = [];
   produtosCriticos: any[] = [];
 
-  constructor(private relatorioService: RelatorioService) {}
+  constructor(
+    private relatorioService: RelatorioService,
+    private exportService: ExportService
+  ) {}
 
   ngOnInit(): void {
     this.carregarDadosDashboard();
@@ -153,5 +157,16 @@ export class RelatorioDashboardComponent implements OnInit {
         .toString(16)
         .slice(1)
     );
+  }
+
+  baixarRelatorioPDF(): void {
+    // Buscamos as vendas do serviço para alimentar o PDF
+    this.relatorioService.obterVendasParaRelatorio().subscribe({
+      next: (vendas) => {
+        const titulo = `Relatório Performance - ${this.periodoSelecionado}`;
+        this.exportService.gerarRelatorioVendasPDF(vendas, titulo);
+      },
+      error: (err) => console.error('Erro ao buscar dados para PDF', err)
+    });
   }
 }

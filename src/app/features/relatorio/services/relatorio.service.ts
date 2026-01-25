@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { LuxoService } from '../../../services/luxo.service';
 import { Sandalia } from '../../../models/luxo.models';
 
@@ -51,6 +51,39 @@ export class RelatorioService {
           labels: Object.keys(faturamentoPorMes),
           values: Object.values(faturamentoPorMes)
         };
+      })
+    );
+  }
+
+  obterVendasParaRelatorio(): Observable<any[]> {
+    return combineLatest([
+      this.luxoService.vendas$,
+      this.luxoService.getSandalias() // Precisamos das sandálias para ver o custo
+    ]).pipe(
+      map(([vendas, sandalias]) => {
+        const relatorioFormatado: any[] = [];
+
+        vendas.filter(v => v.status === 'FINALIZADO').forEach(pedido => {
+          pedido.itens.forEach(item => {
+            // Encontra a sandália original para pegar o preço de custo
+            const infoOriginal = sandalias.find(s => s.sku === item.sandalia.sku);
+            const custoTotal = (infoOriginal?.precoCusto || 0) * item.quantidade;
+            const vendaTotal = item.precoVendaNoAto * item.quantidade;
+            const lucro = vendaTotal - custoTotal;
+
+            relatorioFormatado.push({
+              data: new Date(pedido.dataHora).toLocaleDateString('pt-BR'),
+              cliente: pedido.cliente.nome,
+              produto: item.sandalia.modelo,
+              qtd: item.quantidade,
+              valorVenda: vendaTotal,
+              lucro: lucro,
+              margem: (lucro / vendaTotal) * 100 // Margem em %
+            });
+          });
+        });
+
+        return relatorioFormatado.reverse();
       })
     );
   }

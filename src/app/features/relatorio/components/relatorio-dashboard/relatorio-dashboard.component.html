@@ -7,6 +7,14 @@
       </div>
 
       <div class="filter-area">
+        <button
+          class="btn-export-pdf"
+          (click)="baixarRelatorioPDF()"
+          title="Gerar Relatório PDF">
+          <i class="pi pi-file-pdf"></i>
+          <span>EXPORTAR PDF</span>
+        </button>
+
         <p-selectButton
           [options]="opcoesPeriodo"
           [(ngModel)]="periodoSelecionado"
@@ -89,7 +97,8 @@
             <div class="stock-status-wrapper">
               <span class="stock-qty">{{ produto.estoque }} un.</span>
               <span class="stock-badge" [class.danger]="produto.estoque <= 3">
-                {{ produto.estoque <= 3 ? 'CRÍTICO' : 'BAIXO' }} </span>
+                {{ produto.estoque <= 3 ? 'CRÍTICO' : 'BAIXO' }}
+              </span>
             </div>
           </div>
           <div class="progress-bar-bg">
