@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject, map } from 'rxjs';
+import { Observable, of, BehaviorSubject, map, combineLatest } from 'rxjs';
 import { Cliente, Sandalia, Pedido, ItemPedido, StatusPedido } from '../models/luxo.models';
 import { StorageService } from '../core/services/storage/storage.service';
 
@@ -9,6 +9,7 @@ import { StorageService } from '../core/services/storage/storage.service';
 export class LuxoService {
   private vendasSubject = new BehaviorSubject<Pedido[]>([]);
   public vendas$ = this.vendasSubject.asObservable();
+  private filtroPeriodoSubject = new BehaviorSubject<'HOJE' | 'MES' | 'TOTAL'>('TOTAL');
 
   private clientes: Cliente[] = [
     {
@@ -231,27 +232,45 @@ export class LuxoService {
     return of(false);
   }
 
-  /**
-   * Método central que calcula os indicadores do Dashboard
-   */
+  setFiltro(periodo: 'HOJE' | 'MES' | 'TOTAL') {
+    this.filtroPeriodoSubject.next(periodo);
+  }
+
   getEstatisticasVendas(): Observable<any> {
-    return this.vendas$.pipe(
-      map(vendas => {
-        const ativas = vendas.filter(v => v.status === StatusPedido.FINALIZADO);
-        const faturamento = ativas.reduce((acc, v) => acc + v.valorTotal, 0);
+    // Combinamos as vendas com o filtro ativo
+    return combineLatest([this.vendas$, this.filtroPeriodoSubject]).pipe(
+      map(([vendas, filtro]) => {
+        const agora = new Date();
+
+        const vendasFiltradas = vendas.filter(v => {
+          const dataVenda = new Date(v.dataHora);
+          if (v.status !== StatusPedido.FINALIZADO) return false;
+
+          if (filtro === 'HOJE') {
+            return dataVenda.toDateString() === agora.toDateString();
+          }
+          if (filtro === 'MES') {
+            return dataVenda.getMonth() === agora.getMonth() &&
+                  dataVenda.getFullYear() === agora.getFullYear();
+          }
+          return true; // TOTAL
+        });
+
+        const faturamento = vendasFiltradas.reduce((acc, v) => acc + v.valorTotal, 0);
 
         return {
           faturamento,
-          ticketMedio: ativas.length > 0 ? faturamento / ativas.length : 0,
-          totalVendas: ativas.length,
+          ticketMedio: vendasFiltradas.length > 0 ? faturamento / vendasFiltradas.length : 0,
+          totalVendas: vendasFiltradas.length,
           totalCanceladas: vendas.filter(v => v.status === StatusPedido.CANCELADO).length,
-          distribuicao: this.calcularDistribuicaoPorPerfil(ativas)
+          distribuicao: this.calcularDistribuicaoPorCategoria(vendasFiltradas),
+          periodoAtivo: filtro
         };
       })
     );
   }
 
-  private calcularDistribuicaoPorPerfil(vendas: Pedido[]) {
+  private calcularDistribuicaoPorCategoria(vendas: Pedido[]) {
     const counts = { RASTEIRINHA: 0, SALTO_ALTO: 0, SCARPIN: 0, EDICAO_LIMITADA: 0 };
 
     vendas.forEach(v => {

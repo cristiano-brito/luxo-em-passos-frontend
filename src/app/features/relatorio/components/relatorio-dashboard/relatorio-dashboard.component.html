@@ -1,13 +1,27 @@
 <section class="relatorio-container fadein">
   <header class="relatorio-header">
-    <span class="category-tag">Business Intelligence</span>
-    <h1>Performance de Vendas</h1>
+    <div class="header-flex">
+      <div>
+        <span class="category-tag">Business Intelligence</span>
+        <h1>Performance de Vendas</h1>
+      </div>
+
+      <div class="filter-area">
+        <p-selectButton
+          [options]="opcoesPeriodo"
+          [(ngModel)]="periodoSelecionado"
+          (onChange)="alterarFiltro()"
+          optionLabel="label"
+          optionValue="value">
+        </p-selectButton>
+      </div>
+    </div>
   </header>
 
   <div class="kpi-grid">
     <p-card header="FATURAMENTO" class="kpi-card">
       <div class="kpi-value highlight">{{ kpis.faturamento | currency:'BRL' }}</div>
-      <small class="kpi-label">Vendas Finalizadas</small>
+      <small class="kpi-label">Vendas Finalizadas ({{ kpis.periodoAtivo }})</small>
     </p-card>
 
     <p-card header="TICKET MÉDIO" class="kpi-card">

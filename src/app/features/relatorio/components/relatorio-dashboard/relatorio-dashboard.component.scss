@@ -7,6 +7,18 @@
 .relatorio-header {
   margin-bottom: 3rem;
 
+  .header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+  }
+
   .category-tag {
     color: #b38728;
     text-transform: uppercase;
@@ -96,7 +108,7 @@
   }
 }
 
-/* Customização dos Cards do PrimeNG para o tema Luxo */
+/* Customização dos Cards e SelectButton para o tema Luxo */
 ::ng-deep {
   .p-card {
     border: 1px solid #f0f0f0;
@@ -111,8 +123,29 @@
       text-transform: uppercase;
     }
 
-    .p-card-body {
-      padding: 1.5rem;
+    .p-card-body { padding: 1.5rem; }
+  }
+
+  /* Estilo Luxo para os botões de filtro */
+  .p-selectbutton {
+    .p-button {
+      background: #ffffff;
+      border-color: #eee;
+      color: #666;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+
+      &.p-highlight {
+        background: #1a1a1a !important;
+        border-color: #1a1a1a !important;
+        color: #b38728 !important; // Texto dourado no fundo preto
+      }
+
+      &:hover:not(.p-highlight) {
+        background: #fafafa;
+        color: #000;
+      }
     }
   }
 }
