@@ -52,17 +52,52 @@
       </div>
     </p-card>
 
-    <p-card header="INSIGHTS DE CURADORIA" class="insights-card">
-      <div class="insight-content">
-        <p>
-          O equilíbrio entre as categorias garante a rotatividade do estoque.
-          Monitore as <strong>Edições Limitadas</strong> para manter o desejo pela marca.
-        </p>
-        <hr>
-        <p>
-          Ticket Médio atual: <strong>{{ kpis.ticketMedio | currency:'BRL' }}</strong>.
-          Valores acima de R$ 900,00 indicam uma excelente performance da equipe de vendas VIP.
-        </p>
+    <p-card header="TOP SPENDERS (CRM VIP)" class="ranking-card">
+      <div class="ranking-container">
+        <div *ngFor="let cliente of topClientes; let i = index" class="ranking-item">
+          <div class="rank-number">{{ i + 1 }}º</div>
+          <div class="rank-info">
+            <span class="rank-name">{{ cliente.nome }}</span>
+            <span class="rank-profile" [attr.data-perfil]="cliente.perfil">{{ cliente.perfil }}</span>
+          </div>
+          <div class="rank-value">{{ cliente.gastoAcumulado | currency:'BRL' }}</div>
+        </div>
+      </div>
+    </p-card>
+  </div>
+
+  <div class="bottom-grid">
+    <p-card header="EVOLUÇÃO MENSAL" class="bar-chart-card">
+      <div class="chart-wrapper">
+        <p-chart
+          type="bar"
+          [data]="barData"
+          [options]="barOptions"
+          height="300px">
+        </p-chart>
+      </div>
+    </p-card>
+
+    <p-card header="ESTOQUE CRÍTICO" class="stock-card">
+      <div class="stock-list">
+        <div *ngFor="let produto of produtosCriticos" class="stock-item">
+          <div class="product-info">
+            <div class="prod-main">
+              <span class="sku">{{ produto.sku }}</span>
+              <span class="modelo">{{ produto.modelo }}</span>
+            </div>
+            <div class="stock-status-wrapper">
+              <span class="stock-qty">{{ produto.estoque }} un.</span>
+              <span class="stock-badge" [class.danger]="produto.estoque <= 3">
+                {{ produto.estoque <= 3 ? 'CRÍTICO' : 'BAIXO' }} </span>
+            </div>
+          </div>
+          <div class="progress-bar-bg">
+            <div class="progress-fill" [class.bg-danger]="produto.estoque <= 3"
+              [style.width.%]="(produto.estoque / 10) * 100">
+            </div>
+          </div>
+        </div>
       </div>
     </p-card>
   </div>

@@ -20,7 +20,6 @@ import { RelatorioService } from '../../services/relatorio.service';
   styleUrl: './relatorio-dashboard.component.scss',
 })
 export class RelatorioDashboardComponent implements OnInit {
-  // Indicadores de performance
   kpis: any = {
     faturamento: 0,
     ticketMedio: 0,
@@ -29,11 +28,12 @@ export class RelatorioDashboardComponent implements OnInit {
     periodoAtivo: 'TOTAL',
   };
 
-  // Configurações do Gráfico
   pieData: any;
   pieOptions: any;
 
-  // Configurações do Filtro
+  barData: any;
+  barOptions: any;
+
   periodoSelecionado: 'HOJE' | 'MES' | 'TOTAL' = 'TOTAL';
   opcoesPeriodo = [
     { label: 'Hoje', value: 'HOJE' },
@@ -41,39 +41,39 @@ export class RelatorioDashboardComponent implements OnInit {
     { label: 'Total', value: 'TOTAL' },
   ];
 
+  topClientes: any[] = [];
+  produtosCriticos: any[] = [];
+
   constructor(private relatorioService: RelatorioService) {}
 
   ngOnInit(): void {
     this.carregarDadosDashboard();
   }
 
-  /**
-   * Inscrição reativa aos dados do LuxoService.
-   * O combineLatest no service garante que qualquer troca de filtro
-   * ou nova venda atualize este componente automaticamente.
-   */
   private carregarDadosDashboard(): void {
     this.relatorioService.obterEstatisticasDashboard().subscribe({
       next: (dados) => {
         this.kpis = dados;
-        this.configurarGrafico(dados.distribuicao);
+        this.configurarGraficoPizza(dados.distribuicao);
       },
-      error: (err) => console.error('Erro ao carregar dashboard:', err),
+      error: (err) => console.error(err),
+    });
+
+    this.relatorioService.obterTopSpenders().subscribe(res => this.topClientes = res);
+
+    this.relatorioService.obterEstoqueCritico().subscribe(res => this.produtosCriticos = res);
+
+    this.relatorioService.obterFaturamentoMensal().subscribe(res => {
+      this.configurarGraficoBarras(res);
     });
   }
 
-  /**
-   * Dispara a mudança de filtro para o motor do LuxoService
-   */
   alterarFiltro(): void {
     this.relatorioService.atualizarFiltro(this.periodoSelecionado);
   }
 
-  /**
-   * Define a estética do gráfico de rosca (Doughnut)
-   */
-  configurarGrafico(dist: any) {
-    const cores = ['#F2C80F', '#5F6B6D', '#325E6A', '#252423'];
+  private configurarGraficoPizza(dist: any) {
+    const cores = ['#325E6A', '#C08457', '#82937E', '#5F6B6D'];
 
     this.pieData = {
       labels: ['SCARPIN', 'RASTEIRINHA', 'SALTO ALTO', 'EDIÇÃO LIMITADA'],
@@ -88,45 +88,53 @@ export class RelatorioDashboardComponent implements OnInit {
           backgroundColor: cores,
           borderColor: '#ffffff',
           borderWidth: 2,
-          hoverBackgroundColor: cores.map((c) => this.shadyColor(c, -20)), // Escurece no hover
-          hoverOffset: 10,
+          hoverBackgroundColor: cores.map((c) => this.shadyColor(c, -20)),
+          hoverOffset: 15,
         },
       ],
     };
 
     this.pieOptions = {
-      cutout: '70%',
+      cutout: '75%',
       plugins: {
         legend: {
           position: 'bottom',
           labels: {
             usePointStyle: true,
-            pointStyle: 'circle',
             padding: 25,
-            color: '#252423', // Cor do texto do Power BI
-            font: {
-              family: "'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-              size: 12,
-              weight: '600',
-            },
+            color: '#252423',
+            font: { family: "'Segoe UI', sans-serif", size: 12, weight: '600' },
           },
-        },
-        tooltip: {
-          backgroundColor: '#ffffff',
-          titleColor: '#252423',
-          bodyColor: '#252423',
-          borderColor: '#EAEAEA',
-          borderWidth: 1,
-          padding: 10,
-          boxPadding: 5,
-          bodyFont: { size: 14 },
         },
       },
       maintainAspectRatio: false,
     };
   }
 
-  // Helper opcional para escurecer as cores no hover
+  private configurarGraficoBarras(res: any) {
+    this.barData = {
+      labels: res.labels,
+      datasets: [
+        {
+          label: 'Faturamento',
+          backgroundColor: '#325E6A',
+          hoverBackgroundColor: '#C08457',
+          data: res.values,
+          borderRadius: 8
+        }
+      ]
+    };
+
+    this.barOptions = {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { color: '#999' } },
+        y: { grid: { color: '#f0f0f0' }, ticks: { color: '#999' } }
+      },
+      maintainAspectRatio: false
+    };
+  }
+
   private shadyColor(color: string, percent: number) {
     const f = parseInt(color.slice(1), 16),
       t = percent < 0 ? 0 : 255,
