@@ -6,8 +6,34 @@
     <p class="luxury-subtitle mt-2">Gestão de stock e curadoria de peças</p>
   </header>
 
+  <div class="luxury-filter-bar mb-5">
+    <div class="grid p-fluid">
+      <div class="col-12 md:col-8">
+        <span class="p-input-icon-left w-full">
+          <i class="pi pi-search"></i>
+          <input
+            pInputText
+            type="text"
+            [(ngModel)]="filtroTermo"
+            (input)="aoFiltrar()"
+            placeholder="Pesquisar por modelo ou SKU..."
+            class="luxury-input" />
+        </span>
+      </div>
+      <div class="col-12 md:col-4">
+        <p-dropdown
+          [options]="categoriasOptions"
+          [(ngModel)]="categoriaSelecionada"
+          (onChange)="aoFiltrar()"
+          placeholder="Todas as Categorias"
+          styleClass="luxury-dropdown">
+        </p-dropdown>
+      </div>
+    </div>
+  </div>
+
   <div class="grid">
-    <div *ngFor="let s of sandalias" class="col-12 md:col-6 lg:col-3 p-3">
+    <div *ngFor="let s of sandalias$ | async" class="col-12 md:col-6 lg:col-3 p-3">
       <div class="product-card">
 
         <div class="category-tag-wrapper">
@@ -21,7 +47,6 @@
                class="product-img">
 
           <i *ngIf="!s.imageUrl" class="pi pi-image"></i>
-
           <span class="size-indicator">Tam: {{ s.tamanho }}</span>
         </div>
 
@@ -58,56 +83,3 @@
     </div>
   </div>
 </div>
-
-<p-dialog header="Editar Peça do Acervo"
-          [(visible)]="displayEdicao"
-          [modal]="true"
-          [style]="{width: '35vw'}"
-          [draggable]="false"
-          [resizable]="false"
-          styleClass="luxury-dialog">
-
-    <div class="p-fluid grid mt-2">
-        <div class="field col-12">
-            <label for="modelo" class="font-bold">Modelo</label>
-            <input pInputText id="modelo" [(ngModel)]="sandaliaSelecionada.modelo" />
-        </div>
-
-        <div class="field col-12 md:col-6">
-            <label for="preco" class="font-bold">Preço de Venda</label>
-            <p-inputNumber id="preco"
-                           [(ngModel)]="sandaliaSelecionada.precoVenda"
-                           mode="currency"
-                           currency="BRL"
-                           locale="pt-BR">
-            </p-inputNumber>
-        </div>
-
-        <div class="field col-12 md:col-6">
-            <label for="estoque" class="font-bold">Stock Disponível</label>
-            <p-inputNumber id="estoque" [(ngModel)]="sandaliaSelecionada.estoque"></p-inputNumber>
-        </div>
-    </div>
-
-    <ng-template pTemplate="footer">
-        <button pButton
-                label="Cancelar"
-                icon="pi pi-times"
-                class="p-button-text p-button-secondary"
-                (click)="displayEdicao = false">
-        </button>
-        <button pButton
-                label="Confirmar Alterações"
-                icon="pi pi-check"
-                class="p-button-gold"
-                (click)="salvarEdicao()">
-        </button>
-    </ng-template>
-</p-dialog>
-
-<p-confirmDialog [style]="{width: '450px'}"
-                 acceptLabel="Confirmar"
-                 rejectLabel="Cancelar">
-</p-confirmDialog>
-
-<p-toast position="top-right"></p-toast>

@@ -1,9 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Montserrat:wght@300;400;500&display=swap');
 
+// Variáveis de Identidade
+$luxury-gold: #b19470;
+$luxury-black: #1a1a1a;
+$luxury-bg-soft: #f9f9f9;
+
 .inventory-container {
     padding: 2rem;
     max-width: 1400px;
     margin: 0 auto;
+    font-family: 'Montserrat', sans-serif;
 
     .section-header {
         text-align: center;
@@ -11,19 +17,19 @@
             text-transform: uppercase;
             letter-spacing: 4px;
             font-size: 0.7rem;
-            color: #b19470;
+            color: $luxury-gold;
             font-weight: 500;
         }
         .luxury-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin: 0.5rem 0;
-            color: #1a1a1a;
+            color: $luxury-black;
         }
         .luxury-divider {
             width: 50px;
             height: 2px;
-            background: #b19470;
+            background: $luxury-gold;
             margin: 0 auto;
         }
         .luxury-subtitle {
@@ -34,6 +40,53 @@
     }
 }
 
+// --- NOVA BARRA DE FILTROS LUXURY ---
+.luxury-filter-bar {
+    background: #fff;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+
+    .luxury-input {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #e0e0e0;
+        border-radius: 0;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.9rem;
+        transition: all 0.3s;
+
+        &:focus {
+            box-shadow: none;
+            border-bottom-color: $luxury-gold;
+        }
+    }
+}
+
+// Customização de componentes PrimeNG para o tema
+::ng-deep {
+    .luxury-dropdown {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+        border-radius: 0 !important;
+
+        .p-dropdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.85rem;
+            color: #666;
+            padding-left: 0;
+        }
+
+        &:not(.p-disabled).p-focus {
+            box-shadow: none !important;
+            border-bottom-color: $luxury-gold !important;
+        }
+    }
+}
+
+// --- PRODUTO CARDS ---
 .product-card {
     background: #fff;
     border: 1px solid #eee;
@@ -46,7 +99,7 @@
     &:hover {
         transform: translateY(-5px);
         box-shadow: 0 15px 30px rgba(0,0,0,0.05);
-        border-color: #b19470;
+        border-color: $luxury-gold;
     }
 
     .category-tag-wrapper {
@@ -55,15 +108,14 @@
         left: 15px;
         z-index: 2;
 
-        // Classes Metálicas que você definiu no TS
-        .tag-black { background: #000; color: #fff; padding: 4px 10px; font-size: 0.6rem; letter-spacing: 1px; }
-        .tag-gold { background: linear-gradient(45deg, #b19470, #e1c699); color: #fff; padding: 4px 10px; font-size: 0.6rem; letter-spacing: 1px; }
-        .tag-standard { background: #f4f4f4; color: #666; padding: 4px 10px; font-size: 0.6rem; }
+        .tag-black { background: #000; color: #fff; padding: 4px 10px; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase; }
+        .tag-gold { background: linear-gradient(45deg, $luxury-gold, #e1c699); color: #fff; padding: 4px 10px; font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase;}
+        .tag-standard { background: #f4f4f4; color: #666; padding: 4px 10px; font-size: 0.6rem; text-transform: uppercase;}
     }
 
     .product-image-placeholder {
         height: 280px;
-        background: #f9f9f9;
+        background: $luxury-bg-soft;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -111,14 +163,14 @@
 
         .product-price {
             font-weight: 500;
-            color: #b19470;
+            color: $luxury-gold;
             font-size: 1.1rem;
         }
     }
 
     .product-actions {
         padding: 1rem;
-        border-top: 1px solid #f9f9f9;
+        border-top: 1px solid $luxury-bg-soft;
         display: flex;
         justify-content: center;
         gap: 1rem;

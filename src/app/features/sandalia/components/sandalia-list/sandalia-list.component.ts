@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { SandaliaService } from '../../services/sandalia.service';
 import { Sandalia, Categoria } from '../../../../models/luxo.models';
+
+// PrimeNG Imports
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
@@ -11,13 +14,14 @@ import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-sandalia-list',
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     ButtonModule,
     TagModule,
     TooltipModule,
@@ -26,62 +30,61 @@ import { FormsModule } from '@angular/forms';
     DialogModule,
     InputTextModule,
     InputNumberModule,
-    FormsModule
+    DropdownModule // Adicionado para o filtro de categorias
   ],
   templateUrl: './sandalia-list.component.html',
   styleUrl: './sandalia-list.component.scss',
 })
 export class SandaliaListComponent implements OnInit {
-  sandalias: Sandalia[] = [];
+  // Estado dos Filtros
+  filtroTermo: string = '';
+  categoriaSelecionada: string = '';
+
+  // Opções para o Dropdown de filtro
+  categoriasOptions = [
+    { label: 'Todas as Categorias', value: '' },
+    { label: 'Scarpin', value: 'SCARPIN' },
+    { label: 'Rasteirinha', value: 'RASTEIRINHA' },
+    { label: 'Salto Alto', value: 'SALTO_ALTO' },
+    { label: 'Edição Limitada', value: 'EDICAO_LIMITADA' }
+  ];
+
+  // Fluxo reativo de dados
+  sandalias$ = this.sandaliaService.getSandaliasFiltradas();
+
+  // Propriedades de controle de UI
   displayEdicao: boolean = false;
   sandaliaSelecionada: Sandalia = {} as Sandalia;
 
   constructor(
-  private sandaliaService: SandaliaService,
-  private confirmationService: ConfirmationService,
-  private messageService: MessageService
-) {}
+    private sandaliaService: SandaliaService,
+    private confirmationService: ConfirmationService,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
-    this.carregarSandalias();
+    this.aoFiltrar();
   }
 
-  carregarSandalias(): void {
-    this.sandaliaService.getSandalias().subscribe((dados) => {
-      this.sandalias = dados;
-    });
+  aoFiltrar(): void {
+    this.sandaliaService.filtrar(this.filtroTermo, this.categoriaSelecionada);
   }
 
-  // Define a cor do badge de estoque (PrimeNG padrão)
-  getSeverity(
-    estoque: number,
-  ):
-    | 'success'
-    | 'secondary'
-    | 'info'
-    | 'warning'
-    | 'danger'
-    | 'contrast'
-    | undefined {
+  getSeverity(estoque: number): 'success' | 'warning' | 'danger' | undefined {
     if (estoque > 10) return 'success';
     if (estoque > 0) return 'warning';
     return 'danger';
   }
 
-  // Aplica as suas classes metálicas personalizadas
   getTagClass(categoria: Categoria): string {
     switch (categoria) {
-      case 'EDICAO_LIMITADA':
-        return 'tag-black';
-      case 'SCARPIN':
-        return 'tag-gold';
-      default:
-        return 'tag-standard';
+      case 'EDICAO_LIMITADA': return 'tag-black';
+      case 'SCARPIN': return 'tag-gold';
+      default: return 'tag-standard';
     }
   }
 
   abrirEdicao(sandalia: Sandalia) {
-    // Criamos uma cópia para não alterar a lista original antes de salvar
     this.sandaliaSelecionada = { ...sandalia };
     this.displayEdicao = true;
   }
@@ -89,13 +92,16 @@ export class SandaliaListComponent implements OnInit {
   salvarEdicao() {
     this.sandaliaService.atualizar(this.sandaliaSelecionada).subscribe((sucesso) => {
       if (sucesso) {
-        this.messageService.add({ severity: 'success', summary: 'Atualizado', detail: 'Peça atualizada no acervo' });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Atualizado',
+          detail: 'Peça atualizada no acervo'
+        });
         this.displayEdicao = false;
-        this.carregarSandalias();
+        this.aoFiltrar(); // Atualiza a lista respeitando os filtros ativos
       }
     });
   }
-
 
   confirmarExclusao(sandalia: Sandalia) {
     this.confirmationService.confirm({
@@ -103,7 +109,6 @@ export class SandaliaListComponent implements OnInit {
       header: 'Confirmação de Exclusão',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        // Ajustado para usar o sku e o serviço correto
         this.sandaliaService.excluir(sandalia.sku).subscribe((sucesso) => {
           if (sucesso) {
             this.messageService.add({
@@ -111,11 +116,10 @@ export class SandaliaListComponent implements OnInit {
               summary: 'Sucesso',
               detail: 'Sandália removida do acervo',
             });
-            this.carregarSandalias(); // Recarrega a vitrine
+            this.aoFiltrar(); // Atualiza a lista reativa
           }
         });
       },
     });
   }
-
 }

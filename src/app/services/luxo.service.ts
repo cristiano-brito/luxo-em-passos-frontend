@@ -9,7 +9,9 @@ import { StorageService } from '../core/services/storage/storage.service';
 export class LuxoService {
   private vendasSubject = new BehaviorSubject<Pedido[]>([]);
   public vendas$ = this.vendasSubject.asObservable();
+
   private filtroPeriodoSubject = new BehaviorSubject<'HOJE' | 'MES' | 'TOTAL'>('TOTAL');
+  private filtroSandaliaSubject = new BehaviorSubject<{termo: string, categoria: string}>({termo: '', categoria: ''});
 
   private clientes: Cliente[] = [
     {
@@ -158,6 +160,24 @@ export class LuxoService {
     return of(false);
   }
 
+  setFiltroSandalia(termo: string, categoria: string) {
+    this.filtroSandaliaSubject.next({ termo, categoria });
+  }
+
+  // Sandálias Filtradas Reativas
+  getSandaliasFiltradas(): Observable<Sandalia[]> {
+    return combineLatest([of(this.sandalias), this.filtroSandaliaSubject]).pipe(
+      map(([sandalias, filtro]) => {
+        return sandalias.filter(s => {
+          const matchTermo = s.modelo.toLowerCase().includes(filtro.termo.toLowerCase()) ||
+                            s.sku.toLowerCase().includes(filtro.termo.toLowerCase());
+          const matchCategoria = filtro.categoria ? s.categoria === filtro.categoria : true;
+          return matchTermo && matchCategoria;
+        });
+      })
+    );
+  }
+
   finalizarPedido(cliente: Cliente, itensSelecionados: ItemPedido[]): Observable<Pedido> {
     // 1. Validar estoque de todos os itens antes de começar
     const estoqueOk = itensSelecionados.every(item => {
@@ -237,7 +257,6 @@ export class LuxoService {
   }
 
   getEstatisticasVendas(): Observable<any> {
-    // Combinamos as vendas com o filtro ativo
     return combineLatest([this.vendas$, this.filtroPeriodoSubject]).pipe(
       map(([vendas, filtro]) => {
         const agora = new Date();
