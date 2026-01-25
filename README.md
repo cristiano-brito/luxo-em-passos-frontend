@@ -12,23 +12,23 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ## ✨ Funcionalidades Implementadas
 
-### 📊 Business Intelligence & Relatórios (Atualizado)
-* **Dashboard Executivo:** Visualização em tempo real de KPIs críticos como Faturamento Bruto e Ticket Médio.
-* **Filtros Temporais Inteligentes:** Alternância dinâmica entre períodos (Hoje, Este Mês, Total) utilizando `combineLatest` para processamento reativo.
-* **Análise de Mix de Produtos:** Gráficos de rosca (Doughnut) integrados com a identidade visual da marca para detalhamento de vendas por categoria.
-* **Monitoramento de Conversão:** Rastreamento de pedidos finalizados versus estornos para análise de saúde operacional.
+### 📦 Gestão de Inventário & Curadoria (Atualizado)
+* **Busca Reativa Global:** Sistema de filtragem em tempo real por modelo ou SKU utilizando `Observables` e `BehaviorSubjects`.
+* **Filtro por Categoria:** Segmentação inteligente do acervo (Scarpin, Rasteirinha, etc.) integrada ao motor de dados reativo.
+* **Vitrine de Luxo:** Listagem dinâmica com tratamento visual diferenciado, tipografia clássica (*Playfair Display*) e tags metálicas customizadas.
+* **Edição em Modal:** Interface fluida via `p-dialog` para atualização de preços e estoque com persistência atômica.
+
+### 📊 Business Intelligence & Relatórios
+* **Dashboard Executivo:** Visualização de KPIs críticos como Faturamento Bruto e Ticket Médio com processamento via `combineLatest`.
+* **Filtros Temporais:** Alternância dinâmica entre períodos (Hoje, Este Mês, Total) para análise de performance.
+* **Análise de Mix de Produtos:** Gráficos de rosca (Doughnut) integrados com a identidade visual da marca.
 
 ### 🛍️ Módulo de Vendas & Checkout
-* **Checkout VIP:** Processo de venda orquestrado com busca preditiva de clientes e seleção de produtos em tempo real.
-* **Gestão de Estoque Atômica:** Validação rigorosa de inventário que impede vendas sem saldo e realiza o abatimento automático.
-* **Histórico & Estorno:** Listagem de transações com funcionalidade de cancelamento total e retorno automático de produtos ao acervo.
-
-### 📦 Gestão de Inventário (Full CRUD)
-* **Vitrine de Luxo:** Listagem dinâmica com tratamento visual diferenciado e tags de identificação de perfil.
-* **Edição em Modal:** Interface fluida via `p-dialog` para atualização de preços e estoque sem perda de contexto.
+* **Checkout VIP:** Processo de venda orquestrado com busca preditiva de clientes e validação de estoque em tempo real.
+* **Gestão de Estoque:** Abatimento automático pós-venda e sistema de estorno com retorno imediato ao acervo.
 
 ### 👥 Gestão de Clientes VIP
-* **Controle de Fidelidade:** Cadastro e listagem de clientes com histórico de gastos acumulados automaticamente.
+* **Controle de Fidelidade:** Cadastro e listagem de clientes com monitoramento de gasto acumulado e perfil de consumo.
 
 ---
 
@@ -37,10 +37,10 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | Tecnologia | Descrição |
 | :--- | :--- |
 | **Angular 17** | Uso de componentes standalone e injeção de dependência moderna. |
-| **PrimeNG** | Componentes de UI de alta fidelidade e sistema de notificações reativo. |
-| **Chart.js** | Motor gráfico para visualização de dados e métricas de BI. |
-| **RxJS** | Gestão de estados assíncronos via `BehaviorSubjects` e operadores de combinação. |
-| **Local Storage** | Estratégia de persistência Client-side para manutenção dos dados. |
+| **PrimeNG** | Suite de componentes UI de alta fidelidade para o segmento premium. |
+| **RxJS** | Gestão de estados assíncronos e operadores de combinação para filtros dinâmicos. |
+| **SASS/SCSS** | Estilização avançada com foco em design minimalista e luxuoso. |
+| **Local Storage** | Estratégia de persistência Client-side para manutenção dos dados transacionais. |
 
 ---
 
@@ -51,9 +51,8 @@ src/app/
 ├── core/           # Serviços globais (Storage, Connection Status)
 ├── features/       # Módulos de negócio independentes
 │   ├── cliente/    # Gestão de Clientes VIP
-│   ├── dashboard/  # Home Hub (Centro de Comando)
 │   ├── relatorio/  # BI e Gráficos de Performance
-│   ├── sandalia/   # Inventário e Curadoria
+│   ├── sandalia/   # Inventário e Curadoria (Search & CRUD)
 │   └── venda/      # Checkout e Histórico de Transações
 ├── models/         # Interfaces e Enums (Contratos de Dados)
 └── services/       # LuxoService (Single Source of Truth / Repository)
