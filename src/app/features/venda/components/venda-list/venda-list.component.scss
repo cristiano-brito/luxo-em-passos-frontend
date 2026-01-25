@@ -63,3 +63,55 @@
 
 .text-right { text-align: right; }
 .text-center { text-align: center; }
+
+.luxury-search {
+  .luxury-search-input {
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    border-radius: 0 !important;
+    width: 220px;
+    font-weight: 300;
+    font-size: 0.8rem;
+    padding-left: 2.5rem !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &:focus {
+      box-shadow: none !important;
+      border-bottom-color: #b38728 !important;
+      width: 300px;
+    }
+  }
+  i { color: #ccc; left: 0.5rem !important; }
+}
+
+::ng-deep {
+  .p-datatable-luxury {
+    .p-datatable-thead > tr > th {
+      background: #fff !important;
+      color: #999 !important;
+      font-size: 0.65rem !important;
+      letter-spacing: 0.1rem !important;
+      border-bottom: 1px solid #f0f0f0 !important;
+
+      &.p-highlight {
+        color: #B38728 !important;
+        .p-sortable-column-icon { color: #B38728 !important; }
+      }
+    }
+
+    .p-paginator {
+      border: none !important;
+      padding: 1.5rem !important;
+      font-size: 0.8rem;
+
+      .p-highlight {
+        background: transparent !important;
+        color: #B38728 !important;
+        font-weight: bold;
+        border-bottom: 2px solid #B38728 !important;
+        border-radius: 0 !important;
+      }
+    }
+  }
+}

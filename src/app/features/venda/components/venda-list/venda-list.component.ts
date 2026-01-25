@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { VendaService } from '../../services/venda.service';
 import { Pedido } from '../../../../models/luxo.models';
 import { LuxoService } from '../../../../services/luxo.service';
+import { InputTextModule } from 'primeng/inputtext';
 
 
 @Component({
@@ -24,7 +25,8 @@ import { LuxoService } from '../../../../services/luxo.service';
     ButtonModule,
     TooltipModule,
     ConfirmDialogModule,
-    ToastModule
+    ToastModule,
+    InputTextModule
   ],
   providers: [MessageService, ConfirmationService],
   templateUrl: './venda-list.component.html',

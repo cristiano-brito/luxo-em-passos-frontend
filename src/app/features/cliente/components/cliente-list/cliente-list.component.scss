@@ -1,13 +1,14 @@
 .luxury-card {
     background: transparent;
     padding: 2rem 0;
+    min-height: 70vh;
 }
 
 .luxury-subtitle {
     display: block;
     font-size: 0.65rem;
     letter-spacing: 0.3rem;
-    color: #b38728; /* Dourado sutil */
+    color: #b38728; /* Dourado VIP */
     text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
@@ -21,15 +22,44 @@
     margin: 0;
 }
 
+/* --- ESTILIZAÇÃO DA BUSCA --- */
+.luxury-search {
+    .luxury-search-input {
+        background: transparent !important;
+        border: none !important;
+        border-bottom: 1px solid #eee !important;
+        border-radius: 0 !important;
+        width: 200px;
+        font-weight: 300;
+        font-size: 0.8rem;
+        padding-left: 2.5rem !important;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &:focus {
+            box-shadow: none !important;
+            border-bottom-color: #b38728 !important;
+            width: 280px; // Expansão elegante ao focar
+        }
+    }
+
+    i {
+        color: #ccc;
+        font-size: 0.85rem;
+        left: 0.5rem !important;
+    }
+}
+
 .luxury-add-btn {
     font-size: 0.7rem !important;
     letter-spacing: 0.15rem !important;
     color: #1a1a1a !important;
     font-weight: 600 !important;
+    white-space: nowrap;
 }
 
 :host ::ng-deep {
     .p-datatable-luxury {
+        /* Cabeçalho da Tabela */
         .p-datatable-thead > tr > th {
             background: transparent !important;
             color: #999 !important;
@@ -37,8 +67,17 @@
             letter-spacing: 0.15rem !important;
             border-bottom: 1px solid #eee !important;
             padding: 1.5rem 1rem !important;
+            transition: color 0.3s;
+
+            &.p-highlight {
+                color: #b38728 !important;
+                .p-sortable-column-icon { color: #b38728 !important; }
+            }
+
+            &:focus { box-shadow: none !important; }
         }
 
+        /* Linhas da Tabela */
         .luxury-row {
             background: transparent !important;
             border-bottom: 1px solid #f9f9f9 !important;
@@ -47,18 +86,49 @@
             &:hover {
                 background-color: #fcfcfc !important;
             }
+
+            td {
+                padding: 1.25rem 1rem !important;
+                border: none !important;
+            }
         }
 
+        /* Paginador Minimalista */
+        .p-paginator {
+            background: transparent !important;
+            border: none !important;
+            padding: 2.5rem 0 !important;
+
+            .p-paginator-pages .p-paginator-page {
+                border-radius: 0 !important;
+                font-size: 0.75rem;
+                color: #aaa;
+                min-width: 2rem;
+                height: 2rem;
+
+                &.p-highlight {
+                    background: transparent !important;
+                    color: #1a1a1a !important;
+                    font-weight: 700;
+                    border-bottom: 2px solid #b38728 !important;
+                }
+            }
+
+            .p-paginator-current {
+                font-size: 0.65rem;
+                color: #ccc;
+                letter-spacing: 0.05rem;
+                margin-right: auto;
+            }
+        }
+
+        /* Ícones de Ação */
         .action-icon {
-            color: #ccc !important;
+            color: #ddd !important;
             &:hover {
                 color: #1a1a1a !important;
                 background: transparent !important;
             }
-            .p-button-icon {
-                font-size: 0.9rem;
-            }
         }
     }
 }
-

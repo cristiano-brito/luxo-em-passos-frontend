@@ -11,6 +11,7 @@ import { ClienteGestaoModalComponent } from '../cliente-gestao-modal/cliente-ges
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from '../../services/cliente.service';
+import { InputTextModule } from 'primeng/inputtext';
 
 @Component({
   selector: 'app-cliente-list',
@@ -25,6 +26,7 @@ import { ClienteService } from '../../services/cliente.service';
     ClienteGestaoModalComponent,
     ConfirmDialogModule,
     ToastModule,
+    InputTextModule
   ],
   templateUrl: './cliente-list.component.html',
   styleUrl: './cliente-list.component.scss',
@@ -45,7 +47,7 @@ export class ClienteListComponent implements OnInit {
     this.carregarClientes();
   }
 
-  private carregarClientes() {
+  carregarClientes() {
     this.clienteService.listarTodos().subscribe((dados) => {
       this.clientes = dados;
     });

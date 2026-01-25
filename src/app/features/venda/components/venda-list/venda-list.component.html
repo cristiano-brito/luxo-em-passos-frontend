@@ -7,31 +7,48 @@
       <span class="category-tag">Gestão de Transações</span>
       <h1>Histórico de Vendas VIP</h1>
     </div>
-    <button pButton label="NOVA VENDA" icon="pi pi-plus" class="p-button-black" routerLink="/vendas/novo-pedido"></button>
+
+    <div class="flex align-items-center gap-3">
+      <span class="p-input-icon-left luxury-search">
+        <i class="pi pi-search"></i>
+        <input
+          pInputText
+          type="text"
+          (input)="dt.filterGlobal($any($event.target).value, 'contains')"
+          placeholder="Protocolo, cliente ou perfil..."
+          class="p-inputtext-sm luxury-search-input"
+        />
+      </span>
+
+      <button pButton label="NOVA VENDA" icon="pi pi-plus" class="p-button-black" routerLink="/vendas/novo-pedido"></button>
+    </div>
   </header>
 
   <div class="luxo-card">
     <p-table
+      #dt
       [value]="vendas"
       [rows]="10"
       [paginator]="true"
+      [globalFilterFields]="['protocolo', 'cliente.nome', 'cliente.perfil', 'status']"
       responsiveLayout="stack"
       [breakpoint]="'960px'"
-      styleClass="p-datatable-sm">
+      styleClass="p-datatable-sm p-datatable-luxury"
+      [rowsPerPageOptions]="[10, 20, 50]">
 
       <ng-template pTemplate="header">
         <tr>
-          <th scope="col">DATA</th>
-          <th scope="col">PROTOCOLO</th>
-          <th scope="col">CLIENTE</th>
-          <th scope="col" class="text-right">VALOR TOTAL</th>
+          <th scope="col" pSortableColumn="dataHora">DATA <p-sortIcon field="dataHora"></p-sortIcon></th>
+          <th scope="col" pSortableColumn="protocolo">PROTOCOLO <p-sortIcon field="protocolo"></p-sortIcon></th>
+          <th scope="col" pSortableColumn="cliente.nome">CLIENTE <p-sortIcon field="cliente.nome"></p-sortIcon></th>
+          <th scope="col" class="text-right" pSortableColumn="valorTotal">TOTAL <p-sortIcon field="valorTotal"></p-sortIcon></th>
           <th scope="col" class="text-center">STATUS</th>
           <th scope="col"></th>
         </tr>
       </ng-template>
 
       <ng-template pTemplate="body" let-pedido>
-        <tr [class.row-cancelled]="pedido.status === 'CANCELADO'">
+        <tr [class.row-cancelled]="pedido.status === 'CANCELADO'" class="luxury-row">
           <td>{{ pedido.dataHora | date:'dd/MM/yyyy HH:mm' }}</td>
           <td><strong class="protocol-text">{{ pedido.protocolo }}</strong></td>
           <td>
@@ -60,8 +77,9 @@
 
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td colspan="6" class="text-center p-5">
-            Nenhuma venda realizada até o momento.
+          <td colspan="6" class="text-center p-8">
+            <i class="pi pi-search-minus text-4xl mb-3 block text-300"></i>
+            <span class="text-600 font-light">Nenhuma transação encontrada para esta busca.</span>
           </td>
         </tr>
       </ng-template>
