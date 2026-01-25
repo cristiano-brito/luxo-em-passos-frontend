@@ -5,6 +5,7 @@ import { ClienteCadastroComponent } from './features/cliente/components/cliente-
 import { SandaliaListComponent } from './features/sandalia/components/sandalia-list/sandalia-list.component';
 import { PedidoFormComponent } from './features/venda/components/pedido-form/pedido-form.component';
 import { VendaListComponent } from './features/venda/components/venda-list/venda-list.component';
+import { RelatorioDashboardComponent } from './features/relatorio/components/relatorio-dashboard/relatorio-dashboard.component';
 
 export const routes: Routes = [
   { path: '', component: HomeHubComponent, pathMatch: 'full' },
@@ -30,6 +31,13 @@ export const routes: Routes = [
     children: [
       { path: '', component: VendaListComponent },
       { path: 'novo-pedido', component: PedidoFormComponent }, // Rota: /venda/novo-pedido
+    ],
+  },
+
+  {
+    path: 'relatorios',
+    children: [
+      { path: '', component: RelatorioDashboardComponent }, // Rota: /relatorios
     ],
   },
 

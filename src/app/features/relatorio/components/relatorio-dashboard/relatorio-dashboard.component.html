@@ -1,0 +1,55 @@
+<section class="relatorio-container fadein">
+  <header class="relatorio-header">
+    <span class="category-tag">Business Intelligence</span>
+    <h1>Performance de Vendas</h1>
+  </header>
+
+  <div class="kpi-grid">
+    <p-card header="FATURAMENTO" class="kpi-card">
+      <div class="kpi-value highlight">{{ kpis.faturamento | currency:'BRL' }}</div>
+      <small class="kpi-label">Vendas Finalizadas</small>
+    </p-card>
+
+    <p-card header="TICKET MÉDIO" class="kpi-card">
+      <div class="kpi-value">{{ kpis.ticketMedio | currency:'BRL' }}</div>
+      <small class="kpi-label">Média por Transação</small>
+    </p-card>
+
+    <p-card header="PEDIDOS" class="kpi-card">
+      <div class="kpi-value">{{ kpis.totalVendas }}</div>
+      <small class="kpi-label">Volume de Conversão</small>
+    </p-card>
+
+    <p-card header="ESTORNOS" class="kpi-card cancel-kpi">
+      <div class="kpi-value">{{ kpis.totalCanceladas }}</div>
+      <small class="kpi-label">Pedidos Cancelados</small>
+    </p-card>
+  </div>
+
+  <div class="charts-grid">
+    <p-card header="DISTRIBUIÇÃO POR CATEGORIA" class="chart-card">
+      <div class="chart-wrapper">
+        <p-chart
+          type="doughnut"
+          [data]="pieData"
+          [options]="pieOptions"
+          height="300px">
+        </p-chart>
+      </div>
+    </p-card>
+
+    <p-card header="INSIGHTS DE CURADORIA" class="insights-card">
+      <div class="insight-content">
+        <p>
+          O equilíbrio entre as categorias garante a rotatividade do estoque.
+          Monitore as <strong>Edições Limitadas</strong> para manter o desejo pela marca.
+        </p>
+        <hr>
+        <p>
+          Ticket Médio atual: <strong>{{ kpis.ticketMedio | currency:'BRL' }}</strong>.
+          Valores acima de R$ 900,00 indicam uma excelente performance da equipe de vendas VIP.
+        </p>
+      </div>
+    </p-card>
+  </div>
+</section>

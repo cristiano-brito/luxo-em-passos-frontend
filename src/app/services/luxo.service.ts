@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, BehaviorSubject } from 'rxjs';
+import { Observable, of, BehaviorSubject, map } from 'rxjs';
 import { Cliente, Sandalia, Pedido, ItemPedido, StatusPedido } from '../models/luxo.models';
 import { StorageService } from '../core/services/storage/storage.service';
 
@@ -229,5 +229,39 @@ export class LuxoService {
     }
 
     return of(false);
+  }
+
+  /**
+   * Método central que calcula os indicadores do Dashboard
+   */
+  getEstatisticasVendas(): Observable<any> {
+    return this.vendas$.pipe(
+      map(vendas => {
+        const ativas = vendas.filter(v => v.status === StatusPedido.FINALIZADO);
+        const faturamento = ativas.reduce((acc, v) => acc + v.valorTotal, 0);
+
+        return {
+          faturamento,
+          ticketMedio: ativas.length > 0 ? faturamento / ativas.length : 0,
+          totalVendas: ativas.length,
+          totalCanceladas: vendas.filter(v => v.status === StatusPedido.CANCELADO).length,
+          distribuicao: this.calcularDistribuicaoPorPerfil(ativas)
+        };
+      })
+    );
+  }
+
+  private calcularDistribuicaoPorPerfil(vendas: Pedido[]) {
+    const counts = { RASTEIRINHA: 0, SALTO_ALTO: 0, SCARPIN: 0, EDICAO_LIMITADA: 0 };
+
+    vendas.forEach(v => {
+      v.itens.forEach(item => {
+        const cat = item.sandalia.categoria as keyof typeof counts;
+        if (counts[cat] !== undefined) {
+          counts[cat] += item.quantidade;
+        }
+      });
+    });
+    return counts;
   }
 }

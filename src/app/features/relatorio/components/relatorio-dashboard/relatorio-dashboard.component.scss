@@ -1,0 +1,118 @@
+.relatorio-container {
+  max-width: 1200px;
+  margin: 2.5rem auto;
+  padding: 0 2rem;
+}
+
+.relatorio-header {
+  margin-bottom: 3rem;
+
+  .category-tag {
+    color: #b38728;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.4em;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-weight: 200;
+    font-size: 2.5rem;
+    margin: 0;
+    color: #1a1a1a;
+  }
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.kpi-value {
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #333;
+  margin: 0.5rem 0;
+
+  &.highlight {
+    color: #000;
+    font-weight: 500;
+  }
+}
+
+.kpi-label {
+  color: #aaa;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cancel-kpi {
+  .kpi-value {
+    color: #b32828;
+  }
+}
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+
+  @media (max-width: 992px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  min-height: 300px;
+}
+
+.insights-card {
+  .insight-content {
+    p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.7;
+      margin: 1.2rem 0;
+
+      strong {
+        color: #000;
+      }
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid #eee;
+      margin: 1rem 0;
+    }
+  }
+}
+
+/* Customização dos Cards do PrimeNG para o tema Luxo */
+::ng-deep {
+  .p-card {
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02) !important;
+    border-radius: 4px;
+
+    .p-card-title {
+      font-size: 0.7rem !important;
+      color: #888;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .p-card-body {
+      padding: 1.5rem;
+    }
+  }
+}
