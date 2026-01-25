@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -7,6 +7,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
 import { Cliente } from '../../../../models/luxo.models';
+import { ClienteService } from '../../services/cliente.service';
 
 @Component({
   selector: 'app-cliente-gestao-modal',
@@ -24,6 +25,8 @@ import { Cliente } from '../../../../models/luxo.models';
   styleUrl: './cliente-gestao-modal.component.scss'
 })
 export class ClienteGestaoModalComponent {
+  @Output() salvou = new EventEmitter<void>();
+
   display: boolean = false;
   modalTitle: string = '';
   isReadOnly: boolean = false;
@@ -50,15 +53,15 @@ export class ClienteGestaoModalComponent {
     { label: 'STANDARD', value: 'STANDARD' }
   ];
 
-  // O nome agora indica que os dados serão carregados para alteração
+  constructor(private clienteService: ClienteService) {}
+
   abrirParaEdicao(clienteParaEditar: Cliente) {
     this.modalTitle = 'EDIT PROFILE';
     this.isReadOnly = false;
-    this.cliente = { ...clienteParaEditar };
+    this.cliente = JSON.parse(JSON.stringify(clienteParaEditar)); // Deep clone para segurança
     this.display = true;
   }
 
-  // O nome indica que é apenas para leitura/consulta
   abrirParaVisualizacao(clienteParaConsultar: Cliente) {
     this.modalTitle = 'CLIENT INSIGHTS';
     this.isReadOnly = true;
@@ -72,8 +75,13 @@ export class ClienteGestaoModalComponent {
 
   confirmarAlteracoes() {
     if (!this.isReadOnly) {
-      console.log('Dados validados e prontos para o Java:', this.cliente);
-      this.fecharModal();
+      // Chama o serviço de fato para persistir no LuxoService
+      this.clienteService.atualizar(this.cliente).subscribe(sucesso => {
+        if (sucesso) {
+          this.salvou.emit(); // Avisa o ClienteListComponent (pai) que deu certo
+          this.fecharModal();
+        }
+      });
     }
   }
 }

@@ -22,4 +22,12 @@ export class ClienteService {
   excluir(id: number): Observable<boolean> {
     return this.luxoData.excluirCliente(id);
   }
+
+  obterPorId(id: number) {
+    return this.luxoData.getClienteById(id);
+  }
+
+  atualizar(cliente: Cliente) {
+    return this.luxoData.atualizarCliente(cliente);
+  }
 }

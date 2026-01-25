@@ -6,7 +6,9 @@
   [resizable]="false"
   [blockScroll]="true"
   styleClass="luxury-dialog-management"
-  maskStyleClass="luxury-mask">
+  maskStyleClass="luxury-mask"
+  [breakpoints]="{'960px': '75vw', '640px': '95vw'}"
+  [style]="{width: '35vw'}">
 
   <div class="luxury-form-container p-fluid">
     <div class="field mb-5">
@@ -21,19 +23,32 @@
         placeholder="Ex: Sophia Loren">
     </div>
 
+    <div class="field mb-5">
+      <label for="email" class="luxury-label">E-mail de Contato</label>
+      <input
+        pInputText
+        id="email"
+        type="email"
+        class="luxury-input"
+        [(ngModel)]="cliente.email"
+        [disabled]="isReadOnly"
+        placeholder="cliente@luxury.com">
+    </div>
+
     <div class="grid">
-      <div class="col-6 field mb-5">
+      <div class="col-12 md:col-6 field mb-5">
         <label for="perfil" class="luxury-label">Perfil de Consumo</label>
         <p-dropdown
           inputId="perfil"
           [options]="perfis"
           [(ngModel)]="cliente.perfil"
           [disabled]="isReadOnly"
-          placeholder="Selecione">
+          placeholder="Selecione o Perfil"
+          styleClass="luxury-dropdown">
         </p-dropdown>
       </div>
 
-      <div class="col-6 field mb-5">
+      <div class="col-12 md:col-6 field mb-5">
         <label for="gasto" class="luxury-label">Gasto Acumulado</label>
         <p-inputNumber
           inputId="gasto"
@@ -41,36 +56,42 @@
           mode="currency"
           currency="BRL"
           locale="pt-BR"
-          [disabled]="isReadOnly">
+          [disabled]="true">
         </p-inputNumber>
       </div>
     </div>
 
     <p class="form-instruction" *ngIf="!isReadOnly">
-      As alterações serão sincronizadas com o banco de dados VIP.
+      <i class="pi pi-info-circle mr-1"></i>
+      As alterações serão sincronizadas com o banco de dados VIP e refletidas na listagem.
     </p>
   </div>
 
   <ng-template pTemplate="footer">
-    <div class="footer-divider"></div>
+    <div class="footer-divider mb-4"></div>
     <div class="flex justify-content-end gap-3 px-4 pb-4">
 
       <button
         *ngIf="isReadOnly"
-        pButton label="FECHAR"
+        pButton
+        label="FECHAR"
         class="p-button-text luxury-save-btn"
         (click)="fecharModal()">
       </button>
 
       <ng-container *ngIf="!isReadOnly">
         <button
-          pButton label="CANCELAR"
+          pButton
+          label="CANCELAR"
           class="p-button-text luxury-cancel-btn"
           (click)="fecharModal()">
         </button>
+
         <button
-          pButton label="SALVAR ALTERAÇÕES"
+          pButton
+          label="SALVAR ALTERAÇÕES"
           class="p-button-text luxury-save-btn"
+          icon="pi pi-check"
           (click)="confirmarAlteracoes()">
         </button>
       </ng-container>

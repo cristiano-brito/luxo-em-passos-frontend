@@ -129,6 +129,21 @@ export class LuxoService {
     }
   }
 
+  // Adicione estes métodos ao seu LuxoService
+  getClienteById(id: number): Observable<Cliente | undefined> {
+    const cliente = this.clientes.find(c => c.id === id);
+    return of(cliente);
+  }
+
+  atualizarCliente(clienteEditado: Cliente): Observable<boolean> {
+    const index = this.clientes.findIndex(c => c.id === clienteEditado.id);
+    if (index !== -1) {
+      this.clientes[index] = { ...clienteEditado }; // Mantendo imutabilidade
+      return of(true);
+    }
+    return of(false);
+  }
+
   getSandalias(): Observable<Sandalia[]> {
     return of(this.sandalias);
   }
