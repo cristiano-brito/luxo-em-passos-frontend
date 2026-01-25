@@ -6,6 +6,7 @@ import { SandaliaListComponent } from './features/sandalia/components/sandalia-l
 import { PedidoFormComponent } from './features/venda/components/pedido-form/pedido-form.component';
 import { VendaListComponent } from './features/venda/components/venda-list/venda-list.component';
 import { RelatorioDashboardComponent } from './features/relatorio/components/relatorio-dashboard/relatorio-dashboard.component';
+import { SandaliaFormComponent } from './features/sandalia/components/sandalia-form/sandalia-form.component';
 
 export const routes: Routes = [
   { path: '', component: HomeHubComponent, pathMatch: 'full' },
@@ -22,7 +23,8 @@ export const routes: Routes = [
     path: 'sandalias',
     children: [
       { path: '', component: SandaliaListComponent }, // Rota: /sandalias
-      // { path: 'cadastro', component: SandaliaCadastroComponent }, // Futura rota de cadastro
+      { path: 'novo', component: SandaliaFormComponent }, // Rota: /sandalias/novo
+      { path: 'editar/:sku', component: SandaliaFormComponent },
     ],
   },
 

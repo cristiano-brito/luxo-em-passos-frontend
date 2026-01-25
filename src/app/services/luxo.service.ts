@@ -193,6 +193,11 @@ export class LuxoService {
     );
   }
 
+  adicionarSandalia(novaSandalia: Sandalia): Observable<boolean> {
+    this.sandalias.push(novaSandalia);
+    return of(true);
+  }
+
   finalizarPedido(cliente: Cliente, itensSelecionados: ItemPedido[]): Observable<Pedido> {
     // 1. Validar estoque de todos os itens antes de começar
     const estoqueOk = itensSelecionados.every(item => {

@@ -15,6 +15,7 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { DropdownModule } from 'primeng/dropdown';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sandalia-list',
@@ -59,7 +60,8 @@ export class SandaliaListComponent implements OnInit {
   constructor(
     private sandaliaService: SandaliaService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -121,5 +123,13 @@ export class SandaliaListComponent implements OnInit {
         });
       },
     });
+  }
+
+  irParaCadastro(): void {
+    this.router.navigate(['/sandalias/novo']);
+  }
+
+  irParaEdicao(sku: string): void {
+    this.router.navigate(['/sandalias/editar', sku]);
   }
 }

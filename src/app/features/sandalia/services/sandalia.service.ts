@@ -38,4 +38,8 @@ export class SandaliaService {
   baixarEstoque(sku: string, qtd: number) {
     return this.luxoData.baixarEstoque(sku, qtd);
   }
+
+  adicionar(sandalia: Sandalia): Observable<boolean> {
+    return this.luxoData.adicionarSandalia(sandalia);
+  }
 }

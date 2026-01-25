@@ -13,6 +13,8 @@ $luxury-bg-soft: #f9f9f9;
 
     .section-header {
         text-align: center;
+        position: relative; // Adicionado para controle de layout se necessário
+
         .luxury-badge {
             text-transform: uppercase;
             letter-spacing: 4px;
@@ -20,22 +22,47 @@ $luxury-bg-soft: #f9f9f9;
             color: $luxury-gold;
             font-weight: 500;
         }
+
         .luxury-title {
             font-family: 'Playfair Display', serif;
             font-size: 2.5rem;
             margin: 0.5rem 0;
             color: $luxury-black;
         }
+
         .luxury-divider {
             width: 50px;
             height: 2px;
             background: $luxury-gold;
             margin: 0 auto;
         }
+
         .luxury-subtitle {
             font-size: 0.9rem;
             color: #888;
             font-weight: 300;
+        }
+
+        // --- ESTILO DO NOVO BOTÃO DE CADASTRO ---
+        .luxury-button-gold {
+            background: transparent !important;
+            border: 1px solid $luxury-gold !important;
+            color: $luxury-gold !important;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 0.8rem 1.8rem !important;
+            border-radius: 0 !important; // Estilo minimalista quadrado
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+
+            &:hover {
+                background: $luxury-gold !important;
+                color: #fff !important;
+                box-shadow: 0 4px 15px rgba(177, 148, 112, 0.2);
+                transform: translateY(-1px);
+            }
         }
     }
 }
@@ -64,7 +91,7 @@ $luxury-bg-soft: #f9f9f9;
     }
 }
 
-// Customização de componentes PrimeNG para o tema
+// Customização de componentes PrimeNG
 ::ng-deep {
     .luxury-dropdown {
         background: transparent !important;
@@ -174,5 +201,9 @@ $luxury-bg-soft: #f9f9f9;
         display: flex;
         justify-content: center;
         gap: 1rem;
+
+        .p-button-gold {
+            color: $luxury-gold !important;
+        }
     }
 }

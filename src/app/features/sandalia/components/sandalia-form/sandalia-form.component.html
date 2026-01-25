@@ -1,0 +1,89 @@
+<p-toast></p-toast>
+
+<div class="luxury-form-container fadein">
+  <header class="form-header mb-5">
+    <h1 class="luxury-title">
+      {{ isEdicao ? 'Edição: ' + sandalia.modelo : 'Curadoria: Nova Peça' }}
+    </h1>
+    <div class="luxury-divider"></div>
+  </header>
+
+  <div class="grid">
+    <div class="col-12 lg:col-8">
+      <div class="luxury-card">
+        <h3 class="section-title">Dados do Produto</h3>
+        <div class="grid p-fluid">
+          <div class="col-12 md:col-4 field">
+            <label for="input-sku">SKU</label>
+            <input pInputText id="input-sku" [(ngModel)]="sandalia.sku" [disabled]="isEdicao" placeholder="Ex: SND-001">
+          </div>
+          <div class="col-12 md:col-8 field">
+            <label for="input-modelo">Modelo</label>
+            <input pInputText id="input-modelo" [(ngModel)]="sandalia.modelo" placeholder="Nome da sandália">
+          </div>
+
+          <div class="col-12 field">
+            <label for="dropdown-categoria">Categoria</label>
+            <div class="flex gap-2">
+              <p-dropdown inputId="dropdown-categoria" [options]="categorias" [(ngModel)]="sandalia.categoria" class="flex-grow-1"></p-dropdown>
+              <button pButton icon="pi pi-plus" class="p-button-warn" (click)="displayNovaCategoria = true" pTooltip="Nova Categoria"></button>
+            </div>
+          </div>
+
+          <div class="col-12 field">
+            <label for="input-image">URL da Imagem</label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon"><i class="pi pi-link"></i></span>
+              <input pInputText id="input-image" [(ngModel)]="sandalia.imageUrl" placeholder="https://exemplo.com/foto.jpg">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 lg:col-4">
+      <div class="luxury-card mb-4">
+        <h3 class="section-title">Visualização</h3>
+        <div class="image-preview-container">
+          <img *ngIf="sandalia.imageUrl" [src]="sandalia.imageUrl" alt="Preview" class="img-fluid border-round">
+          <div *ngIf="!sandalia.imageUrl" class="no-image">
+            <i class="pi pi-image"></i>
+            <p>Aguardando URL...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="luxury-card">
+        <h3 class="section-title">Comercial</h3>
+        <div class="p-fluid">
+          <div class="field">
+            <label for="input-preco">Preço Venda</label>
+            <p-inputNumber inputId="input-preco" [(ngModel)]="sandalia.precoVenda" mode="currency" currency="BRL"></p-inputNumber>
+          </div>
+          <div class="field">
+            <label for="input-estoque">Estoque Inicial</label>
+            <p-inputNumber inputId="input-estoque" [(ngModel)]="sandalia.estoque" [showButtons]="true"></p-inputNumber>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-column gap-2 mt-4">
+        <button pButton [label]="isEdicao ? 'Salvar Alterações' : 'Salvar Sandália'"
+                icon="pi pi-check" class="p-button-success" (click)="salvar()"></button>
+        <button pButton label="Cancelar" icon="pi pi-times" class="p-button-text p-button-secondary" (click)="voltar()"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Cadastrar Nova Categoria" [(visible)]="displayNovaCategoria" [modal]="true" [style]="{width: '350px'}">
+  <div class="p-fluid">
+    <div class="field">
+      <label for="input-nova-cat">Nome da Categoria</label>
+      <input pInputText id="input-nova-cat" [(ngModel)]="novaCategoriaNome" placeholder="Ex: ANABELA">
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton label="Adicionar" icon="pi pi-plus" (click)="adicionarCategoria()"></button>
+  </ng-template>
+</p-dialog>

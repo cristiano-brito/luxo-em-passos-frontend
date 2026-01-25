@@ -1,7 +1,19 @@
 <div class="inventory-container">
   <header class="section-header mb-6">
-    <span class="luxury-badge">Acervo Boutique</span>
-    <h1 class="luxury-title">Inventário de Exclusividades</h1>
+    <div class="flex justify-content-between align-items-end">
+      <div>
+        <span class="luxury-badge">Acervo Boutique</span>
+        <h1 class="luxury-title">Inventário de Exclusividades</h1>
+      </div>
+
+      <button
+        pButton
+        label="Nova Peça"
+        icon="pi pi-plus"
+        class="luxury-button-gold"
+        (click)="irParaCadastro()">
+      </button>
+    </div>
     <div class="luxury-divider"></div>
     <p class="luxury-subtitle mt-2">Gestão de stock e curadoria de peças</p>
   </header>
@@ -66,7 +78,7 @@
           <button pButton
                   icon="pi pi-pencil"
                   class="p-button-text p-button-gold"
-                  (click)="abrirEdicao(s)"
+                  (click)="irParaEdicao(s.sku)"
                   pTooltip="Editar Peça"
                   tooltipPosition="bottom">
           </button>
@@ -83,3 +95,6 @@
     </div>
   </div>
 </div>
+
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
