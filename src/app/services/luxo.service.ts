@@ -38,11 +38,9 @@ export class LuxoService {
         cidade: 'São Paulo',
         uf: 'SP',
       },
-    },
-    // ... manter os outros clientes que você já tinha
+    }
   ];
 
-  // Lista de Sandálias seguindo RIGOROSAMENTE o modelo Java
   private sandalias: Sandalia[] = [
     {
       sku: 'SND-001',
@@ -52,8 +50,7 @@ export class LuxoService {
       precoCusto: 685.7,
       precoVenda: 1200.0,
       estoque: 10,
-      imageUrl:
-        'assets/images/produtos/scarpin-gold.jpg',
+      imageUrl: 'assets/images/produtos/scarpin-gold.jpg',
     },
     {
       sku: 'SND-002',
@@ -63,8 +60,7 @@ export class LuxoService {
       precoCusto: 566.6,
       precoVenda: 850.0,
       estoque: 15,
-      imageUrl:
-        'https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=600&auto=format&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=600&auto=format&fit=crop',
     },
     {
       sku: 'SND-003',
@@ -74,8 +70,7 @@ export class LuxoService {
       precoCusto: 833.3,
       precoVenda: 1500.0,
       estoque: 5,
-      imageUrl:
-        'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=400',
+      imageUrl: 'https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&q=80&w=400',
     },
     {
       sku: 'SND-004',
@@ -85,12 +80,10 @@ export class LuxoService {
       precoCusto: 840.0,
       precoVenda: 2100.0,
       estoque: 3,
-      imageUrl:
-        'https://images.unsplash.com/photo-1562273138-f46be4ebdf33?q=80&w=600&auto=format&fit=crop',
+      imageUrl: 'https://images.unsplash.com/photo-1562273138-f46be4ebdf33?q=80&w=600&auto=format&fit=crop',
     },
   ];
 
-  // --- MÉTODOS DE CLIENTE ---
   getClientes(): Observable<Cliente[]> {
     return of(this.clientes);
   }
@@ -111,16 +104,32 @@ export class LuxoService {
     return of(false);
   }
 
-  // --- MÉTODOS DE SANDÁLIA ---
   getSandalias(): Observable<Sandalia[]> {
     return of(this.sandalias);
   }
 
-  // Método essencial para o MVP: Atualizar estoque após uma venda
   baixarEstoque(sku: string, quantidade: number): Observable<boolean> {
     const sandalia = this.sandalias.find((s) => s.sku === sku);
     if (sandalia && sandalia.estoque >= quantidade) {
       sandalia.estoque -= quantidade;
+      return of(true);
+    }
+    return of(false);
+  }
+
+  atualizarSandalia(sandaliaEditada: Sandalia): Observable<boolean> {
+    const index = this.sandalias.findIndex(s => s.sku === sandaliaEditada.sku);
+    if (index !== -1) {
+      this.sandalias[index] = sandaliaEditada;
+      return of(true);
+    }
+    return of(false);
+  }
+
+  excluirSandalia(sku: string): Observable<boolean> {
+    const index = this.sandalias.findIndex((s) => s.sku === sku);
+    if (index !== -1) {
+      this.sandalias.splice(index, 1);
       return of(true);
     }
     return of(false);

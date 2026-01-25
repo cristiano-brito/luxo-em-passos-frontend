@@ -1,49 +1,113 @@
 <div class="inventory-container">
-    <header class="section-header mb-6">
-        <span class="luxury-badge">Acervo Boutique</span>
-        <h1 class="luxury-title">Inventário de Exclusividades</h1>
-        <div class="luxury-divider"></div>
-        <p class="luxury-subtitle mt-2">Gestão de estoque e curadoria de peças</p>
-    </header>
+  <header class="section-header mb-6">
+    <span class="luxury-badge">Acervo Boutique</span>
+    <h1 class="luxury-title">Inventário de Exclusividades</h1>
+    <div class="luxury-divider"></div>
+    <p class="luxury-subtitle mt-2">Gestão de stock e curadoria de peças</p>
+  </header>
 
-    <div class="grid">
-        <div *ngFor="let s of sandalias" class="col-12 md:col-6 lg:col-3 p-3">
-            <div class="product-card">
+  <div class="grid">
+    <div *ngFor="let s of sandalias" class="col-12 md:col-6 lg:col-3 p-3">
+      <div class="product-card">
 
-                <div class="category-tag-wrapper">
-                    <span [class]="getTagClass(s.categoria)">{{ s.categoria }}</span>
-                </div>
+        <div class="category-tag-wrapper">
+          <span [class]="getTagClass(s.categoria)">{{ s.categoria }}</span>
+        </div>
 
-                <div class="product-image-placeholder">
-                    <img *ngIf="s.imageUrl" [src]="s.imageUrl" [alt]="s.modelo" class="product-img">
+        <div class="product-image-placeholder">
+          <img *ngIf="s.imageUrl"
+               [src]="s.imageUrl"
+               [alt]="s.modelo"
+               class="product-img">
 
-                    <i *ngIf="!s.imageUrl" class="pi pi-image"></i>
+          <i *ngIf="!s.imageUrl" class="pi pi-image"></i>
 
-                    <span class="size-indicator">Tam: {{ s.tamanho }}</span>
-                </div>
+          <span class="size-indicator">Tam: {{ s.tamanho }}</span>
+        </div>
 
-                <div class="product-info">
-                    <span class="product-sku">{{ s.sku }}</span>
-                    <h3 class="product-name">{{ s.modelo }}</h3>
-                    <p class="product-price">{{ s.precoVenda | currency:'BRL' }}</p>
+        <div class="product-info">
+          <span class="product-sku">{{ s.sku }}</span>
+          <h3 class="product-name">{{ s.modelo }}</h3>
+          <p class="product-price">{{ s.precoVenda | currency:'BRL' }}</p>
 
-                    <div class="product-status mt-3">
-                        <p-tag [value]="s.estoque + ' em estoque'"
-                               [severity]="getSeverity(s.estoque)">
-                        </p-tag>
-                    </div>
-                </div>
+          <div class="product-status mt-3">
+            <p-tag [value]="s.estoque + ' em stock'"
+                   [severity]="getSeverity(s.estoque)">
+            </p-tag>
+          </div>
+        </div>
 
-                <div class="product-actions">
-                    <button pButton icon="pi pi-pencil"
-                            class="p-button-text p-button-gold"
-                            pTooltip="Editar Peça"></button>
+        <div class="product-actions">
+          <button pButton
+                  icon="pi pi-pencil"
+                  class="p-button-text p-button-gold"
+                  (click)="abrirEdicao(s)"
+                  pTooltip="Editar Peça"
+                  tooltipPosition="bottom">
+          </button>
 
-                    <button pButton icon="pi pi-trash"
-                            class="p-button-text p-button-danger"
-                            pTooltip="Remover do Acervo"></button>
-                </div>
-            </div>
+          <button pButton
+                  icon="pi pi-trash"
+                  class="p-button-text p-button-danger"
+                  (click)="confirmarExclusao(s)"
+                  pTooltip="Remover do Acervo"
+                  tooltipPosition="bottom">
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p-dialog header="Editar Peça do Acervo"
+          [(visible)]="displayEdicao"
+          [modal]="true"
+          [style]="{width: '35vw'}"
+          [draggable]="false"
+          [resizable]="false"
+          styleClass="luxury-dialog">
+
+    <div class="p-fluid grid mt-2">
+        <div class="field col-12">
+            <label for="modelo" class="font-bold">Modelo</label>
+            <input pInputText id="modelo" [(ngModel)]="sandaliaSelecionada.modelo" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+            <label for="preco" class="font-bold">Preço de Venda</label>
+            <p-inputNumber id="preco"
+                           [(ngModel)]="sandaliaSelecionada.precoVenda"
+                           mode="currency"
+                           currency="BRL"
+                           locale="pt-BR">
+            </p-inputNumber>
+        </div>
+
+        <div class="field col-12 md:col-6">
+            <label for="estoque" class="font-bold">Stock Disponível</label>
+            <p-inputNumber id="estoque" [(ngModel)]="sandaliaSelecionada.estoque"></p-inputNumber>
         </div>
     </div>
-</div>
+
+    <ng-template pTemplate="footer">
+        <button pButton
+                label="Cancelar"
+                icon="pi pi-times"
+                class="p-button-text p-button-secondary"
+                (click)="displayEdicao = false">
+        </button>
+        <button pButton
+                label="Confirmar Alterações"
+                icon="pi pi-check"
+                class="p-button-gold"
+                (click)="salvarEdicao()">
+        </button>
+    </ng-template>
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"
+                 acceptLabel="Confirmar"
+                 rejectLabel="Cancelar">
+</p-confirmDialog>
+
+<p-toast position="top-right"></p-toast>

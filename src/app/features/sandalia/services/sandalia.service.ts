@@ -1,40 +1,26 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Sandalia } from '../../../models/luxo.models';
 import { LuxoService } from '../../../services/luxo.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SandaliaService {
+  constructor(private luxoData: LuxoService) {}
 
-  constructor(private luxoData: LuxoService) { }
-
-  /**
-   * Retorna a lista completa de sandálias do acervo
-   */
-  getSandalias(): Observable<Sandalia[]> {
+  getSandalias() {
     return this.luxoData.getSandalias();
   }
 
-  /**
-   * Busca uma sandália específica pelo SKU
-   * Útil para ver detalhes ou iniciar uma venda
-   */
-  buscarPorSku(sku: string): Observable<Sandalia | undefined> {
-    return new Observable(observer => {
-      this.luxoData.getSandalias().subscribe(lista => {
-        const item = lista.find(s => s.sku === sku);
-        observer.next(item);
-        observer.complete();
-      });
-    });
+  excluir(sku: string) {
+    return this.luxoData.excluirSandalia(sku);
   }
 
-  /**
-   * Atualiza o estoque após uma transação
-   */
-  atualizarEstoque(sku: string, qtd: number): Observable<boolean> {
+  atualizar(sandalia: Sandalia) {
+    return this.luxoData.atualizarSandalia(sandalia);
+  }
+
+  baixarEstoque(sku: string, qtd: number) {
     return this.luxoData.baixarEstoque(sku, qtd);
   }
 }
