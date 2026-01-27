@@ -14,23 +14,19 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ### 🌐 Integração Backend & Arquitetura SaaS (Multi-tenant)
 * **Contrato Genérico de API:** Implementação da interface `ApiResponse<T>`, garantindo que toda comunicação com o Spring Boot siga um envelope padronizado (`sucesso`, `mensagem`, `dados`, `timestamp`).
-* **Tenant Isolation (X-Tenant-ID):** Implementação de `TenantInterceptor` que injeta automaticamente a identidade da boutique em cada requisição, permitindo o isolamento de dados transparente no backend.
-* **Interceptor de Erros Global:** Motor de interceptação HTTP que captura falhas de validação (Jakarta Bean Validation) e erros de infraestrutura, disparando feedbacks visuais via **Toast** automaticamente.
-* **Ambiente SaaS Ready:** Infraestrutura preparada para operação em nuvem com monitoramento de status de conexão e persistência de contexto de loja via `localStorage`.
+* **Tenant Isolation (X-Tenant-ID):** Implementação de `TenantInterceptor` que injeta automaticamente a identidade da boutique em cada requisição via Header customizado, permitindo isolamento de dados no nível de infraestrutura.
+* **Interceptor de Erros Global:** Motor de interceptação HTTP que captura falhas de validação e erros de infraestrutura, disparando feedbacks visuais via **Toast** automaticamente.
+* **Ambiente SaaS Ready:** Persistência de contexto de loja via `localStorage` e monitoramento de latência do servidor (`tempoProcessamentoMs`).
 
-### 📊 Business Intelligence & Analytics
-* **Dashboard Executivo Reativo:** Visualização em tempo real de KPIs críticos (Faturamento, Ticket Médio e Conversão) orquestrados via `combineLatest`.
-* **Motor de Filtros Temporais:** Alternância dinâmica entre períodos (**Hoje, Este Mês, Total**) com atualização instantânea de indicadores.
-* **CRM Analytics (Ranking VIP):** Identificação automática dos *Top Spenders* com segmentação visual por perfil (**BLACK DIAMOND** e **OURO POLIDO**).
+### 🛒 Vendas Transacionais & Logística
+* **Fluxo de Pedidos Reativo:** Motor de fechamento de vendas que valida estoque em tempo real, gera protocolos únicos e atualiza o LTV (*Lifetime Value*) do cliente de forma atômica.
+* **Estorno Inteligente:** Lógica de cancelamento de pedidos com reposição automática de inventário e recalculo dinâmico do perfil de fidelidade.
+* **Gestão de Inventário por SKU:** Controle rigoroso de estoque para peças de luxo com suporte a categorias premium e visualização de curadoria.
 
-### 📦 Gestão de Inventário & Curadoria
-* **Fluxo CRUD Completo:** Sistema de gestão total de peças permitindo inclusão, exclusão e edição detalhada com persistência em estado global.
-* **Curadoria com Live Preview:** Visualização em tempo real da peça através da URL da imagem, garantindo precisão estética no catálogo.
-
-### 👥 Gestão de Clientes VIP
-* **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem e componentes especializados de gestão.
-* **Sincronização Reativa:** Integração total com o banco de dados via `ClienteService`, suportando listagem e cadastro com filtragem automática por Tenant.
-* **Identidade Visual VIP:** Tags metálicas personalizadas com gradientes complexos para categorização de clientes com base no LTV (*Lifetime Value*).
+### 👥 CRM & Gestão de Clientes VIP
+* **Ranking de Fidelidade:** Segmentação visual automática por perfil (**BLACK DIAMOND**, **GOLD** e **STANDARD**) baseada no gasto acumulado.
+* **Arquitetura Smart & Presentational:** Separação rigorosa de responsabilidades entre componentes de listagem e modais especializados de gestão.
+* **Type-Safe Forms:** Uso de *Non-null Assertion* e inicialização de modelos para garantir integridade em formulários complexos de endereçamento sob o modo estrito do Angular 17.
 
 ---
 
@@ -39,10 +35,10 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | Tecnologia | Descrição |
 | :--- | :--- |
 | **Angular 17** | Componentes standalone e arquitetura baseada em serviços de fachada. |
-| **RxJS** | Gestão de estados assíncronos e operadores de combinação (`tap`, `catchError`, `map`). |
-| **PrimeNG** | Suite de componentes UI personalizada com foco em design minimalista. |
+| **RxJS** | Gestão de estados assíncronos via `BehaviorSubject` e `combineLatest`. |
+| **PrimeNG** | Suite de componentes UI customizada para design minimalista de alto padrão. |
 | **SASS/SCSS** | Estilização avançada utilizando paleta *Luxury* (**Ouro, Black e Platina**). |
-| **Arquitetura de Core** | Uso estratégico de Interceptors para injeção de Headers e tratamento global de erros. |
+| **Arquitetura Core** | Centralização de regras de negócio em Services (Single Source of Truth). |
 
 ---
 
@@ -51,12 +47,13 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 ```text
 src/app/
 ├── features/       
-│   ├── cliente/     # Gestão VIP (Listagem e Serviços)
-│   ├── relatorio/   # BI e Analytics (Dashboard, Gráficos)
+│   ├── cliente/     # CRM VIP (Listagem, Cadastro e Gestão)
+│   ├── relatorio/   # Dashboard e Analytics reativo
 │   └── sandalia/    # Gestão de Inventário (CRUD)
-├── core/            # Interceptors (Tenant e Erros), Guards e Models Globais
-├── environments/    # Configurações de API (Local, Staging, Prod)
-├── models/          # Interfaces de domínio (Cliente, Sandalia)
+├── core/            # Interceptors (Tenant/Erros) e Storage Service
+├── models/          # Interfaces de domínio (Cliente, Sandalia, Pedido)
+├── services/        # Central de inteligência reativa (LuxoService)
+└── environments/    # Configurações de API (Local, Staging, Prod)
 
 ## 🚀 Como Executar o Projeto
 
