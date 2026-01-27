@@ -14,7 +14,7 @@ export interface Cliente {
   telefone: string;
   email: string;
   dataCadastro?: string | Date;
-  endereco: Endereco;
+  endereco?: Endereco;
   perfil: PerfilFidelidade;
   gastoAcumulado: number;
 }

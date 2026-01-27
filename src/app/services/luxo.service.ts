@@ -132,6 +132,12 @@ export class LuxoService {
   // Adicione estes métodos ao seu LuxoService
   getClienteById(id: number): Observable<Cliente | undefined> {
     const cliente = this.clientes.find(c => c.id === id);
+
+    // Se achou o cliente, garante que o objeto endereco exista para o Template não quebrar
+    if (cliente && !cliente.endereco) {
+      cliente.endereco = {};
+    }
+
     return of(cliente);
   }
 
