@@ -2,7 +2,7 @@
 
 ![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular)
 ![PrimeNG](https://img.shields.io/badge/PrimeNG-Components-06B6D4?style=for-the-badge&logo=primeng)
-![Chart.js](https://img.shields.io/badge/Chart.js-Analytics-FF6384?style=for-the-badge&logo=chartdotjs)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-Integrado-6DB33F?style=for-the-badge&logo=springboot)
 ![RxJS](https://img.shields.io/badge/RxJS-Reactive-B7178C?style=for-the-badge&logo=reactivex)
 ![Sass](https://img.shields.io/badge/SASS-Styles-CC6699?style=for-the-badge&logo=sass)
 
@@ -12,29 +12,24 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ## ✨ Funcionalidades Implementadas
 
+### 🌐 Integração Backend & Arquitetura SaaS (Novo)
+* **Contrato Genérico de API:** Implementação da interface `ApiResponse<T>`, garantindo que toda comunicação com o Spring Boot siga um envelope padronizado (`sucesso`, `mensagem`, `dados`, `timestamp`).
+* **Interceptor de Erros Global:** Motor de interceptação HTTP que captura falhas de validação (Jakarta Bean Validation) e erros de infraestrutura, disparando feedbacks visuais via **Toast** automaticamente.
+* **Ambiente Multi-Tenancy Ready:** Infraestrutura preparada para isolamento de dados por empresa (Tenant), com suporte a headers customizados e monitoramento de status de conexão em tempo real.
+
 ### 📊 Business Intelligence & Analytics
 * **Dashboard Executivo Reativo:** Visualização em tempo real de KPIs críticos (Faturamento, Ticket Médio e Conversão) orquestrados via `combineLatest`.
-* **Motor de Filtros Temporais:** Alternância dinâmica entre períodos (**Hoje, Este Mês, Total**) com atualização instantânea de gráficos e indicadores sem refresh de página.
-* **Inteligência de Inventário:** Painel de **Estoque Crítico** com alertas visuais dinâmicos e exibição de quantidades exatas.
-* **CRM Analytics (Ranking VIP):** Identificação automática dos *Top Spenders* com segmentação visual por perfil de cliente (**BLACK** e **GOLD**).
+* **Motor de Filtros Temporais:** Alternância dinâmica entre períodos (**Hoje, Este Mês, Total**) com atualização instantânea de indicadores.
+* **CRM Analytics (Ranking VIP):** Identificação automática dos *Top Spenders* com segmentação visual por perfil (**BLACK DIAMOND** e **OURO POLIDO**).
 
-### 📦 Gestão de Inventário & Curadoria (Novo)
+### 📦 Gestão de Inventário & Curadoria
 * **Fluxo CRUD Completo:** Sistema de gestão total de peças permitindo inclusão, exclusão e edição detalhada com persistência em estado global.
-* **Formulário Inteligente Dual-Mode:** Componente otimizado que alterna entre **Cadastro** e **Edição** via parâmetros de rota (`ActivatedRoute`), com bloqueio de integridade de SKU em modo de edição.
 * **Curadoria com Live Preview:** Visualização em tempo real da peça através da URL da imagem, garantindo precisão estética no catálogo.
-* **Busca Reativa Global:** Filtragem instantânea por modelo ou SKU utilizando `Observables` e `BehaviorSubjects`.
-* **Tags Metálicas Dinâmicas:** Segmentação visual por categoria (**Scarpin, Rasteirinha, Salto Alto, Edição Limitada**).
-
-
 
 ### 👥 Gestão de Clientes VIP
-* **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem e o modal especializado de gestão.
-* **Dual-Mode UX:** Interface versátil com estados de **Insights** (Leitura) e **Edit** (Escrita) com tratamento de imutabilidade via clonagem de objetos.
-* **Sincronização Reativa:** Uso de `@Output` e `EventEmitter` para atualização instantânea da UI após persistência.
-
-### 🛍️ Módulo de Vendas & Checkout
-* **Checkout VIP:** Processo de venda com busca preditiva de clientes e validação de estoque em tempo real.
-* **Gestão Transacional:** Abatimento automático pós-venda e sistema de estorno/cancelamento com re-cálculo imediato de faturamento.
+* **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem e componentes especializados de gestão.
+* **Sincronização Reativa:** Integração total com o banco de dados via `ClienteService`, suportando listagem e cadastro com validação em tempo real.
+* **Identidade Visual VIP:** Tags metálicas personalizadas com gradientes complexos para categorização de clientes com base no LTV (*Lifetime Value*).
 
 ---
 
@@ -43,12 +38,10 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | Tecnologia | Descrição |
 | :--- | :--- |
 | **Angular 17** | Componentes standalone e arquitetura baseada em serviços de fachada. |
-| **RxJS** | Gestão de estados assíncronos e operadores de combinação (`combineLatest`, `map`). |
+| **RxJS** | Gestão de estados assíncronos e operadores de combinação (`tap`, `catchError`, `map`). |
 | **PrimeNG** | Suite de componentes UI personalizada com foco em design minimalista. |
-| **SASS/SCSS** | Estilização avançada utilizando paleta *Luxury* (**Azul Petróleo e Ouro Bronze**). |
-| **Angular Router** | Navegação dinâmica com parâmetros de rota para gestão de estados de edição. |
-
-
+| **SASS/SCSS** | Estilização avançada utilizando paleta *Luxury* (**Ouro, Black e Platina**). |
+| **Arquitetura de Core** | Implementação de Interceptors e Contracts para padronização de API. |
 
 ---
 
@@ -56,14 +49,13 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ```text
 src/app/
-├── features/       
-│   ├── cliente/     # Gestão VIP (Listagem e Modais)
-│   ├── relatorio/   # BI e Analytics (Dashboard, Gráficos, KPIs)
-│   ├── sandalia/    # Gestão de Inventário e Curadoria (CRUD)
-│   └── venda/       # Checkout e Transações
-├── core/            # Serviços globais e persistência (Storage Service)
-├── models/          # Interfaces e Enums (Contratos de Dados)
-└── services/        # LuxoService (Single Source of Truth / Repository Pattern)
+├── features/       
+│   ├── cliente/     # Gestão VIP (Listagem e Serviços)
+│   ├── relatorio/   # BI e Analytics (Dashboard, Gráficos)
+│   └── sandalia/    # Gestão de Inventário (CRUD)
+├── core/            # Interceptors, Guards e Models Globais (ApiResponse)
+├── environments/    # Configurações de API (Local, Staging, Prod)
+├── models/          # Interfaces de domínio (Cliente, Sandalia)
 
 ## 🚀 Como Executar o Projeto
 
