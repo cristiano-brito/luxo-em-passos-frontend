@@ -12,10 +12,11 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ## ✨ Funcionalidades Implementadas
 
-### 🌐 Integração Backend & Arquitetura SaaS (Novo)
+### 🌐 Integração Backend & Arquitetura SaaS (Multi-tenant)
 * **Contrato Genérico de API:** Implementação da interface `ApiResponse<T>`, garantindo que toda comunicação com o Spring Boot siga um envelope padronizado (`sucesso`, `mensagem`, `dados`, `timestamp`).
+* **Tenant Isolation (X-Tenant-ID):** Implementação de `TenantInterceptor` que injeta automaticamente a identidade da boutique em cada requisição, permitindo o isolamento de dados transparente no backend.
 * **Interceptor de Erros Global:** Motor de interceptação HTTP que captura falhas de validação (Jakarta Bean Validation) e erros de infraestrutura, disparando feedbacks visuais via **Toast** automaticamente.
-* **Ambiente Multi-Tenancy Ready:** Infraestrutura preparada para isolamento de dados por empresa (Tenant), com suporte a headers customizados e monitoramento de status de conexão em tempo real.
+* **Ambiente SaaS Ready:** Infraestrutura preparada para operação em nuvem com monitoramento de status de conexão e persistência de contexto de loja via `localStorage`.
 
 ### 📊 Business Intelligence & Analytics
 * **Dashboard Executivo Reativo:** Visualização em tempo real de KPIs críticos (Faturamento, Ticket Médio e Conversão) orquestrados via `combineLatest`.
@@ -28,7 +29,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ### 👥 Gestão de Clientes VIP
 * **Arquitetura Smart & Presentational:** Separação de responsabilidades entre a listagem e componentes especializados de gestão.
-* **Sincronização Reativa:** Integração total com o banco de dados via `ClienteService`, suportando listagem e cadastro com validação em tempo real.
+* **Sincronização Reativa:** Integração total com o banco de dados via `ClienteService`, suportando listagem e cadastro com filtragem automática por Tenant.
 * **Identidade Visual VIP:** Tags metálicas personalizadas com gradientes complexos para categorização de clientes com base no LTV (*Lifetime Value*).
 
 ---
@@ -41,7 +42,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | **RxJS** | Gestão de estados assíncronos e operadores de combinação (`tap`, `catchError`, `map`). |
 | **PrimeNG** | Suite de componentes UI personalizada com foco em design minimalista. |
 | **SASS/SCSS** | Estilização avançada utilizando paleta *Luxury* (**Ouro, Black e Platina**). |
-| **Arquitetura de Core** | Implementação de Interceptors e Contracts para padronização de API. |
+| **Arquitetura de Core** | Uso estratégico de Interceptors para injeção de Headers e tratamento global de erros. |
 
 ---
 
@@ -49,13 +50,13 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ```text
 src/app/
-├── features/       
-│   ├── cliente/     # Gestão VIP (Listagem e Serviços)
-│   ├── relatorio/   # BI e Analytics (Dashboard, Gráficos)
-│   └── sandalia/    # Gestão de Inventário (CRUD)
-├── core/            # Interceptors, Guards e Models Globais (ApiResponse)
-├── environments/    # Configurações de API (Local, Staging, Prod)
-├── models/          # Interfaces de domínio (Cliente, Sandalia)
+├── features/       
+│   ├── cliente/     # Gestão VIP (Listagem e Serviços)
+│   ├── relatorio/   # BI e Analytics (Dashboard, Gráficos)
+│   └── sandalia/    # Gestão de Inventário (CRUD)
+├── core/            # Interceptors (Tenant e Erros), Guards e Models Globais
+├── environments/    # Configurações de API (Local, Staging, Prod)
+├── models/          # Interfaces de domínio (Cliente, Sandalia)
 
 ## 🚀 Como Executar o Projeto
 
