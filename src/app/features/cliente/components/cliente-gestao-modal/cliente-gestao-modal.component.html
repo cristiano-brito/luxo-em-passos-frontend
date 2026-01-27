@@ -78,7 +78,7 @@
         <input
           pInputText
           id="modal_logradouro"
-          [(ngModel)]="cliente.endereco.logradouro"
+          [(ngModel)]="cliente.endereco!.logradouro"
           [disabled]="isReadOnly"
           class="luxury-input">
       </div>
@@ -87,7 +87,7 @@
         <input
           pInputText
           id="modal_numero"
-          [(ngModel)]="cliente.endereco.numero"
+          [(ngModel)]="cliente.endereco!.numero"
           [disabled]="isReadOnly"
           class="luxury-input">
       </div>
@@ -99,7 +99,7 @@
         <input
           pInputText
           id="modal_bairro"
-          [(ngModel)]="cliente.endereco.bairro"
+          [(ngModel)]="cliente.endereco!.bairro"
           [disabled]="isReadOnly"
           class="luxury-input">
       </div>
@@ -108,7 +108,7 @@
         <input
           pInputText
           id="modal_cidade"
-          [(ngModel)]="cliente.endereco.cidade"
+          [(ngModel)]="cliente.endereco!.cidade"
           [disabled]="isReadOnly"
           class="luxury-input">
       </div>
@@ -117,7 +117,7 @@
         <input
           pInputText
           id="modal_uf"
-          [(ngModel)]="cliente.endereco.uf"
+          [(ngModel)]="cliente.endereco!.uf"
           [disabled]="isReadOnly"
           class="luxury-input"
           maxlength="2">
