@@ -4,13 +4,13 @@ import { environment } from '../../../environments/environment';
 export const tenantInterceptor: HttpInterceptorFn = (req, next) => {
   const tenantId = localStorage.getItem('tenant') || 'luxo-default';
 
-  // Só adiciona o header se a requisição for para a nossa API
-  if (req.url.startsWith(environment.apiUrl)) {
+  if (req.url.includes('/api/') || req.url.startsWith('api/')) {
     const tenantReq = req.clone({
       setHeaders: {
         'X-Tenant-ID': tenantId
       }
     });
+
     return next(tenantReq);
   }
 
