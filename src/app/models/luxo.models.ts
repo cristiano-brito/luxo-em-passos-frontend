@@ -5,7 +5,8 @@ export interface Endereco {
   numero?: string;
   bairro?: string;
   cidade?: string;
-  uf?: string;
+  cep?: string;
+  uf?: string; //Não tem no backend
 }
 
 export interface Cliente {
@@ -16,7 +17,7 @@ export interface Cliente {
   dataCadastro?: string | Date;
   endereco?: Endereco;
   perfil: PerfilFidelidade;
-  gastoAcumulado: number;
+  gastoTotalAcumulado: number;
 }
 
 export type Categoria = 'RASTEIRINHA' | 'SALTO_ALTO' | 'SCARPIN' | 'EDICAO_LIMITADA';
