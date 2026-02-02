@@ -14,6 +14,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ### 🌐 Integração Backend & Arquitetura SaaS (Multi-tenant)
 * **Contrato Genérico de API:** Implementação da interface `ApiResponse<T>`, garantindo que toda comunicação com o Spring Boot siga um envelope padronizado (`sucesso`, `mensagem`, `dados`, `timestamp`).
+* **Consumo de DTOs Otimizados:** Integração com **Java Records** do backend, garantindo payloads leves e tempos de resposta sub-50ms (Média atual: 34ms).
 * **Tenant Isolation (X-Tenant-ID):** Implementação de `TenantInterceptor` que injeta automaticamente a identidade da boutique em cada requisição via Header customizado, permitindo isolamento de dados no nível de infraestrutura.
 * **Interceptor de Erros Global:** Motor de interceptação HTTP que captura falhas de validação e erros de infraestrutura, disparando feedbacks visuais via **Toast** automaticamente.
 * **Ambiente SaaS Ready:** Persistência de contexto de loja via `localStorage` e monitoramento de latência do servidor (`tempoProcessamentoMs`).
@@ -24,7 +25,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 * **Gestão de Inventário por SKU:** Controle rigoroso de estoque para peças de luxo com suporte a categorias premium e visualização de curadoria.
 
 ### 👥 CRM & Gestão de Clientes VIP
-* **Ranking de Fidelidade:** Segmentação visual automática por perfil (**BLACK DIAMOND**, **GOLD** e **STANDARD**) baseada no gasto acumulado.
+* **Ranking de Fidelidade:** Segmentação visual automática por perfil (**BLACK**, **GOLD** e **STANDARD**) baseada no gasto acumulado.
 * **Arquitetura Smart & Presentational:** Separação rigorosa de responsabilidades entre componentes de listagem e modais especializados de gestão.
 * **Type-Safe Forms:** Uso de *Non-null Assertion* e inicialização de modelos para garantir integridade em formulários complexos de endereçamento sob o modo estrito do Angular 17.
 
@@ -39,6 +40,7 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 | **PrimeNG** | Suite de componentes UI customizada para design minimalista de alto padrão. |
 | **SASS/SCSS** | Estilização avançada utilizando paleta *Luxury* (**Ouro, Black e Platina**). |
 | **Arquitetura Core** | Centralização de regras de negócio em Services (Single Source of Truth). |
+| **Proxy Configuration** | Redirecionamento de tráfego local para contornar políticas de CORS em desenvolvimento. |
 
 ---
 
@@ -46,11 +48,11 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 
 ```text
 src/app/
-├── features/       
+├── core/            # Interceptors (Tenant/Erros) e Storage Service
+├── features/        
 │   ├── cliente/     # CRM VIP (Listagem, Cadastro e Gestão)
 │   ├── relatorio/   # Dashboard e Analytics reativo
 │   └── sandalia/    # Gestão de Inventário (CRUD)
-├── core/            # Interceptors (Tenant/Erros) e Storage Service
 ├── models/          # Interfaces de domínio (Cliente, Sandalia, Pedido)
 ├── services/        # Central de inteligência reativa (LuxoService)
 └── environments/    # Configurações de API (Local, Staging, Prod)
@@ -61,8 +63,8 @@ Para garantir a melhor experiência de desenvolvimento, certifique-se de ter o *
 
 ---
 
-### 📥 1. Clonar o Repositório
-Inicie clonando o acervo digital para sua máquina local:
+### 📥 1. Clonar e Instalar
 ```bash
 git clone [https://github.com/cristiano-brito/luxo-em-passos-frontend.git](https://github.com/cristiano-brito/luxo-em-passos-frontend.git)
 cd luxo-em-passos-frontend
+npm install
