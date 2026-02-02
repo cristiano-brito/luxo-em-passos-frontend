@@ -20,7 +20,7 @@ export class LuxoService {
       email: 'sophia@luxury.com',
       telefone: '(11) 99999-8888',
       perfil: 'BLACK',
-      gastoAcumulado: 8750.0,
+      gastoTotalAcumulado: 8750.0,
       dataCadastro: '2025-01-01',
       endereco: {
         logradouro: 'Via Appia',
@@ -36,7 +36,7 @@ export class LuxoService {
       email: 'gisele@vogue.com',
       telefone: '(11) 98888-7777',
       perfil: 'GOLD',
-      gastoAcumulado: 2500.0,
+      gastoTotalAcumulado: 2500.0,
       dataCadastro: '2025-05-15',
       endereco: {
         logradouro: 'Av. Brasil',
@@ -125,7 +125,7 @@ export class LuxoService {
   private incrementarGastoCliente(id: number, valor: number): void {
     const cliente = this.clientes.find(c => c.id === id);
     if (cliente) {
-      cliente.gastoAcumulado += valor;
+      cliente.gastoTotalAcumulado += valor;
     }
   }
 
@@ -261,7 +261,7 @@ export class LuxoService {
       if (pedido.cliente.id) {
         const cliente = this.clientes.find(c => c.id === pedido.cliente.id);
         if (cliente) {
-          cliente.gastoAcumulado -= pedido.valorTotal;
+          cliente.gastoTotalAcumulado -= pedido.valorTotal;
         }
       }
 

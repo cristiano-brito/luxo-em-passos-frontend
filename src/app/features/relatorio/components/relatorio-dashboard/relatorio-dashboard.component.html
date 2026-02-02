@@ -68,7 +68,7 @@
             <span class="rank-name">{{ cliente.nome }}</span>
             <span class="rank-profile" [attr.data-perfil]="cliente.perfil">{{ cliente.perfil }}</span>
           </div>
-          <div class="rank-value">{{ cliente.gastoAcumulado | currency:'BRL' }}</div>
+          <div class="rank-value">{{ cliente.gastoTotalAcumulado | currency:'BRL' }}</div>
         </div>
       </div>
     </p-card>

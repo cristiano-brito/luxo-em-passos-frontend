@@ -37,7 +37,7 @@ export class ClienteGestaoModalComponent {
     email: '',
     telefone: '',
     perfil: 'STANDARD',
-    gastoAcumulado: 0,
+    gastoTotalAcumulado: 0,
     endereco: {
       logradouro: '',
       numero: '',

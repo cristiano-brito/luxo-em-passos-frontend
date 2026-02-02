@@ -50,8 +50,8 @@
         <th scope="col" pSortableColumn="perfil">
           PERFIL <p-sortIcon field="perfil"></p-sortIcon>
         </th>
-        <th scope="col" class="text-right" pSortableColumn="gastoAcumulado">
-          GASTO ACUMULADO <p-sortIcon field="gastoAcumulado"></p-sortIcon>
+        <th scope="col" class="text-right" pSortableColumn="gastoTotalAcumulado">
+          GASTO ACUMULADO <p-sortIcon field="gastoTotalAcumulado"></p-sortIcon>
         </th>
         <th scope="col" class="text-center">AÇÕES</th>
       </tr>
@@ -69,7 +69,7 @@
           <app-badge-perfil [perfil]="cliente.perfil"></app-badge-perfil>
         </td>
         <td class="text-right text-600 font-light">
-          {{ cliente.gastoAcumulado | currency:'BRL' }}
+          {{ cliente.gastoTotalAcumulado | currency:'BRL' }}
         </td>
 
         <td class="text-center action-cells">

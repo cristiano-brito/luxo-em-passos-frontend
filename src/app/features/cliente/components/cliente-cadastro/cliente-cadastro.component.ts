@@ -35,7 +35,7 @@ export class ClienteCadastroComponent {
     telefone: '',
     email: '',
     perfil: 'STANDARD',
-    gastoAcumulado: 0,
+    gastoTotalAcumulado: 0,
     dataCadastro: new Date().toISOString().split('T')[0],
     endereco: {
       logradouro: '',

@@ -21,7 +21,7 @@ export class RelatorioService {
   obterTopSpenders(limite: number = 5): Observable<any[]> {
     return this.luxoService.getClientes().pipe(
       map(clientes => [...clientes]
-        .sort((a, b) => b.gastoAcumulado - a.gastoAcumulado)
+        .sort((a, b) => b.gastoTotalAcumulado - a.gastoTotalAcumulado)
         .slice(0, limite)
       )
     );
