@@ -1,164 +1,171 @@
+/* 1. Estrutura e Respiro (Negative Space) */
 .luxury-page-container {
   min-height: 100vh;
   background-color: #fafafa;
   display: flex;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem;
 }
 
 .luxury-form-card {
   background: #ffffff;
   width: 100%;
-  max-width: 800px;
-  padding: 4rem;
-  border: 1px solid #f0f0f0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+  max-width: 850px;
+  padding: 6rem;
+  border: 1px solid #f2f2f2;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.01);
 }
 
-/* Header e Breadcrumb */
+/* 2. Header Tipográfico (Extra Light) */
 .form-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 6rem;
 
   .breadcrumb {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.65rem;
-    letter-spacing: 0.2rem;
-    color: #bbb;
-    margin-bottom: 1rem;
+    gap: 1.2rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.35rem;
+    color: #d0d0d0;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
 
     .breadcrumb-button {
-      background: none;
-      border: none;
-      padding: 0;
-      margin: 0;
-      font: inherit;
-      color: inherit;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: inherit;
-      transition: color 0.3s ease;
-
-      &:hover, &:focus {
-        color: #1a1a1a;
-        outline: none;
-      }
+      background: none; border: none; cursor: pointer; color: inherit; font: inherit;
+      transition: color 0.4s ease;
+      &:hover { color: #1a1a1a; }
     }
-
-    .sep {
-      color: #eee;
-    }
-
-    .active {
-      color: #1a1a1a;
-      font-weight: 600;
-    }
+    .active { color: #1a1a1a; font-weight: 500; }
   }
 
   .luxury-title {
-    font-family: 'Inter', sans-serif;
-    font-weight: 200;
-    font-size: 2.2rem;
-    margin: 0;
+    font-weight: 100;
+    font-size: 3rem;
     color: #1a1a1a;
+    letter-spacing: -0.04em;
+    margin: 0;
   }
 
   .luxury-subtitle {
-    font-size: 0.6rem;
-    letter-spacing: 0.3rem;
+    font-size: 0.55rem;
+    letter-spacing: 0.55rem;
     text-transform: uppercase;
-    color: #d0d0d0;
-    margin-top: 0.5rem;
+    color: #e0e0e0;
+    margin-top: 1.2rem;
   }
 }
 
-/* Tipografia dos Campos */
+/* 3. Labels (Grafite Profundo) */
 .luxury-label {
   display: block;
-  font-size: 0.6rem;
+  font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.1rem;
+  letter-spacing: 0.15rem;
   text-transform: uppercase;
-  color: #999;
-  margin-bottom: 0.5rem;
+  color: #888;
+  margin-bottom: 0.8rem;
 }
 
-/* Reset e Estilização de Componentes PrimeNG */
+/* 4. Reset PrimeNG e Blindagem de Estados (Sem "Pisca-Pisca") */
 :host ::ng-deep {
+  /* Alvo: Todos os inputs e especificamente a classe de âncora luxury-input */
   .p-inputtext,
-  .p-dropdown,
-  .p-inputnumber,
-  .p-inputnumber-input {
+  .luxury-input .p-inputtext,
+  input.p-inputmask {
+    background: transparent !important;
     border: none !important;
-    border-bottom: 1px solid #eee !important;
+    border-bottom: 1px solid #f0f0f0 !important; // Estado base cinza claro
     border-radius: 0 !important;
     padding: 0.8rem 0 !important;
-    background: transparent !important;
-    font-size: 1rem !important;
-    width: 100%;
-    transition: border-color 0.4s ease;
-
-    &:focus, &.p-inputwrapper-focus {
-      box-shadow: none !important;
-      border-bottom-color: #1a1a1a !important;
-    }
-  }
-
-  /* Alinhamento do texto no Dropdown */
-  .p-dropdown {
-    .p-dropdown-label {
-      padding-left: 0 !important;
-    }
-    .p-dropdown-trigger {
-      width: 2rem;
-    }
-  }
-
-  /* Alinhamento do InputNumber */
-  .p-inputnumber {
+    font-size: 1.05rem !important;
+    font-weight: 300 !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+    transition: border-color 0.2s linear !important;
     display: block;
+    width: 100%;
+
+    &::placeholder {
+      color: #e8e8e8 !important;
+      font-style: italic;
+      font-weight: 200;
+    }
+  }
+
+  /* BLOQUEIO DE OSCILAÇÃO:
+     Garante que se houver foco, conteúdo ou se o Angular detectar interação (ng-dirty),
+     a linha TRAVA no preto (#1a1a1a).
+  */
+  .p-inputtext:focus,
+  .p-focus .p-inputtext,
+  .p-inputwrapper-focus .p-inputtext,
+  .p-inputwrapper-filled .p-inputtext,
+  .luxury-input.p-inputwrapper-filled .p-inputtext,
+  .luxury-input.ng-dirty .p-inputtext,
+  input.ng-dirty,
+  input.p-filled,
+  input.ng-touched:not(:placeholder-shown) {
+    border-bottom-color: #1a1a1a !important;
+    outline: none !important;
+    background: transparent !important;
+  }
+
+  /* Remove sombras e bordas residuais dos containers do PrimeNG */
+  .p-inputmask.luxury-input,
+  .p-inputmask.luxury-input .p-inputtext {
+    box-shadow: none !important;
+    outline: none !important;
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
   }
 }
 
-/* Ações do Formulário (Footer) */
+/* 5. Ações (Contraste e Elegância) */
 .form-actions {
-  margin-top: 5rem;
+  margin-top: 7rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   .luxury-cancel-btn {
-    color: #999 !important;
-    font-size: 0.75rem;
-    letter-spacing: 0.1rem;
-    font-weight: 400;
-
-    &:hover {
-      color: #666 !important;
-      background: transparent !important;
-    }
+    color: #bbb !important;
+    font-size: 0.7rem;
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+    &:hover { color: #1a1a1a !important; background: transparent !important; }
   }
 
   .luxury-submit-btn {
     background: #1a1a1a !important;
-    color: #fff !important;
+    color: #ffffff !important;
     border: none !important;
     border-radius: 0 !important;
-    padding: 1.2rem 2.5rem !important;
-    font-size: 0.8rem;
-    letter-spacing: 0.15rem;
-    font-weight: 500;
-    transition: opacity 0.3s ease;
+    padding: 1.4rem 4rem !important;
+    font-size: 0.75rem;
+    letter-spacing: 0.3rem;
+    text-transform: uppercase;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
-    &:hover {
-      opacity: 0.8;
+    .p-button-label { color: #ffffff !important; }
+
+    &:hover:not(:disabled) {
+      background: #000 !important;
+      letter-spacing: 0.4rem;
+    }
+
+    &:disabled {
+      background: #fcfcfc !important;
+      color: #eeeeee !important;
+      border: 1px solid #f9f9f9 !important;
+      cursor: not-allowed;
+      .p-button-label { color: #eeeeee !important; }
     }
   }
 }
 
-/* Utilitários de Margem */
-.mb-5 { margin-bottom: 1.5rem !important; }
-.mb-6 { margin-bottom: 2.5rem !important; }
+.grid { row-gap: 3.5rem; }
+.mb-5 { margin-bottom: 2.5rem !important; }
