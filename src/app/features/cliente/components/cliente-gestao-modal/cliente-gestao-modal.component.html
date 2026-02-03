@@ -15,112 +15,79 @@
 
     <div class="field mb-5">
       <label for="modal_nome" class="luxury-label">Nome da Cliente VIP</label>
-      <input
-        pInputText
-        id="modal_nome"
-        [(ngModel)]="cliente.nome"
-        [disabled]="isReadOnly"
-        class="luxury-input"
-        placeholder="Nome Completo">
+      <input pInputText id="modal_nome" [(ngModel)]="cliente.nome" [disabled]="isReadOnly" class="luxury-input">
     </div>
 
     <div class="grid">
       <div class="col-12 md:col-6 field mb-5">
         <label for="modal_email" class="luxury-label">E-mail</label>
-        <input
-          pInputText
-          id="modal_email"
-          [(ngModel)]="cliente.email"
-          [disabled]="isReadOnly"
-          class="luxury-input"
-          placeholder="cliente@luxury.com">
+        <input pInputText id="modal_email" [(ngModel)]="cliente.email" [disabled]="isReadOnly" class="luxury-input">
       </div>
       <div class="col-12 md:col-6 field mb-5">
         <label for="modal_telefone" class="luxury-label">Telefone</label>
-        <input
-          pInputText
+        <p-inputMask
           id="modal_telefone"
           [(ngModel)]="cliente.telefone"
+          mask="(99) 99999-9999"
+          [unmask]="true"
           [disabled]="isReadOnly"
-          class="luxury-input"
-          placeholder="(00) 00000-0000">
+          styleClass="luxury-input">
+        </p-inputMask>
       </div>
     </div>
 
     <div class="grid">
       <div class="col-12 md:col-6 field mb-5">
         <label for="modal_perfil" class="luxury-label">Perfil de Consumo</label>
-        <p-dropdown
-          inputId="modal_perfil"
-          [options]="perfis"
-          [(ngModel)]="cliente.perfil"
-          [disabled]="isReadOnly"
-          styleClass="luxury-dropdown">
-        </p-dropdown>
+        <p-dropdown inputId="modal_perfil" [options]="perfis" [(ngModel)]="cliente.perfil" [disabled]="isReadOnly" styleClass="luxury-dropdown"></p-dropdown>
       </div>
       <div class="col-12 md:col-6 field mb-5">
         <label for="modal_gasto" class="luxury-label">Gasto Acumulado</label>
-        <p-inputNumber
-          inputId="modal_gasto"
-          [(ngModel)]="cliente.gastoTotalAcumulado"
-          mode="currency"
-          currency="BRL"
-          [disabled]="true">
-        </p-inputNumber>
+        <p-inputNumber inputId="modal_gasto" [(ngModel)]="cliente.gastoTotalAcumulado" mode="currency" currency="BRL" [disabled]="true"></p-inputNumber>
       </div>
     </div>
 
     <div class="address-section-title mb-4 mt-2">Endereço de Curadoria</div>
 
     <div class="grid">
+      <div class="col-12 md:col-4 field mb-4">
+        <label for="modal_cep" class="luxury-label">CEP</label>
+        <p-inputMask
+          id="modal_cep"
+          [(ngModel)]="cliente.endereco!.cep"
+          mask="99999-999"
+          [unmask]="true"
+          [disabled]="isReadOnly"
+          styleClass="luxury-input"
+          placeholder="00000-000">
+        </p-inputMask>
+      </div>
+      <div class="md:col-6"></div>
+      <div class="col-12 md:col-2 field mb-4">
+        <label for="modal_uf" class="luxury-label">UF</label>
+        <input pInputText id="modal_uf" [(ngModel)]="cliente.endereco!.uf" [disabled]="isReadOnly" class="luxury-input" maxlength="2">
+      </div>
+    </div>
+
+    <div class="grid">
       <div class="col-12 md:col-9 field mb-4">
         <label for="modal_logradouro" class="luxury-label">Logradouro</label>
-        <input
-          pInputText
-          id="modal_logradouro"
-          [(ngModel)]="cliente.endereco!.logradouro"
-          [disabled]="isReadOnly"
-          class="luxury-input">
+        <input pInputText id="modal_logradouro" [(ngModel)]="cliente.endereco!.logradouro" [disabled]="isReadOnly" class="luxury-input">
       </div>
       <div class="col-12 md:col-3 field mb-4">
         <label for="modal_numero" class="luxury-label">Nº</label>
-        <input
-          pInputText
-          id="modal_numero"
-          [(ngModel)]="cliente.endereco!.numero"
-          [disabled]="isReadOnly"
-          class="luxury-input">
+        <input pInputText id="modal_numero" [(ngModel)]="cliente.endereco!.numero" [disabled]="isReadOnly" class="luxury-input">
       </div>
     </div>
 
     <div class="grid">
       <div class="col-12 md:col-5 field mb-4">
         <label for="modal_bairro" class="luxury-label">Bairro</label>
-        <input
-          pInputText
-          id="modal_bairro"
-          [(ngModel)]="cliente.endereco!.bairro"
-          [disabled]="isReadOnly"
-          class="luxury-input">
+        <input pInputText id="modal_bairro" [(ngModel)]="cliente.endereco!.bairro" [disabled]="isReadOnly" class="luxury-input">
       </div>
-      <div class="col-12 md:col-5 field mb-4">
+      <div class="col-12 md:col-7 field mb-4">
         <label for="modal_cidade" class="luxury-label">Cidade</label>
-        <input
-          pInputText
-          id="modal_cidade"
-          [(ngModel)]="cliente.endereco!.cidade"
-          [disabled]="isReadOnly"
-          class="luxury-input">
-      </div>
-      <div class="col-12 md:col-2 field mb-4">
-        <label for="modal_uf" class="luxury-label">UF</label>
-        <input
-          pInputText
-          id="modal_uf"
-          [(ngModel)]="cliente.endereco!.uf"
-          [disabled]="isReadOnly"
-          class="luxury-input"
-          maxlength="2">
+        <input pInputText id="modal_cidade" [(ngModel)]="cliente.endereco!.cidade" [disabled]="isReadOnly" class="luxury-input">
       </div>
     </div>
 

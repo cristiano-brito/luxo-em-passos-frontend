@@ -6,6 +6,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
 import { Cliente } from '../../../../models/luxo.models';
 import { ClienteService } from '../../services/cliente.service';
 
@@ -19,7 +20,8 @@ import { ClienteService } from '../../services/cliente.service';
     ButtonModule,
     InputTextModule,
     DropdownModule,
-    InputNumberModule
+    InputNumberModule,
+    InputMaskModule
   ],
   templateUrl: './cliente-gestao-modal.component.html',
   styleUrl: './cliente-gestao-modal.component.scss'
@@ -43,6 +45,7 @@ export class ClienteGestaoModalComponent {
       numero: '',
       bairro: '',
       cidade: '',
+      cep: '',
       uf: ''
     }
   };
