@@ -6,7 +6,7 @@ export interface Endereco {
   bairro?: string;
   cidade?: string;
   cep?: string;
-  uf?: string; //Não tem no backend
+  uf?: string;
 }
 
 export interface Cliente {

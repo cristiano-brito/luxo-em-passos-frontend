@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LuxoService } from '../../../services/luxo.service';
 import { map, Observable } from 'rxjs';
-import { Cliente } from '../../../models/luxo.models';
+import { Cliente, Endereco } from '../../../models/luxo.models';
 import { HttpClient } from '@angular/common/http';
 import { ApiResponse } from '../../../models/api-response.model';
 
@@ -17,13 +17,19 @@ export class ClienteService {
   ) {}
 
   listarTodos(): Observable<Cliente[]> {
-    return this.http.get<ApiResponse<Cliente[]>>(this.API).pipe(
-      map((res) => res.dados),
-    );
+    return this.http
+      .get<ApiResponse<Cliente[]>>(this.API)
+      .pipe(map((res) => res.dados));
   }
 
   adicionar(cliente: Cliente): Observable<Cliente> {
-    return this.luxoData.adicionarCliente(cliente);
+    const payload = {
+      ...cliente,
+      endereco: this.isValidEndereco(cliente.endereco) ? cliente.endereco : undefined,
+    };
+    return this.http
+      .post<ApiResponse<Cliente>>(this.API, payload)
+      .pipe(map((res) => res.dados));
   }
 
   excluir(id: number): Observable<boolean> {
@@ -36,5 +42,9 @@ export class ClienteService {
 
   atualizar(cliente: Cliente) {
     return this.luxoData.atualizarCliente(cliente);
+  }
+
+  private isValidEndereco(e?: Endereco): boolean {
+    return !!(e?.logradouro?.trim() && e?.cep?.trim() && e?.uf?.trim());
   }
 }
