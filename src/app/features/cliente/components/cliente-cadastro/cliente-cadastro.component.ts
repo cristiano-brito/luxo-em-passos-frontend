@@ -43,6 +43,7 @@ export class ClienteCadastroComponent {
   private criarNovoCliente(): Cliente {
     return {
       nome: '',
+      cpf: '',
       telefone: '',
       email: '',
       perfil: 'STANDARD',

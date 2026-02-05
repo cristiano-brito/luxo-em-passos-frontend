@@ -1,171 +1,119 @@
-/* 1. Estrutura e Respiro (Negative Space) */
 .luxury-page-container {
   min-height: 100vh;
-  background-color: #fafafa;
+  background-color: #fcfcfc; // Fundo Diamante
   display: flex;
   justify-content: center;
-  padding: 5rem 2rem;
+  padding: 4rem 1rem;
 }
 
 .luxury-form-card {
   background: #ffffff;
   width: 100%;
-  max-width: 850px;
-  padding: 6rem;
+  max-width: 900px;
+  padding: 5rem;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.03); // Sombra etérea
   border: 1px solid #f2f2f2;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.01);
 }
 
-/* 2. Header Tipográfico (Extra Light) */
 .form-header {
-  text-align: center;
-  margin-bottom: 6rem;
-
-  .breadcrumb {
-    display: flex;
-    justify-content: center;
-    gap: 1.2rem;
-    font-size: 0.6rem;
-    letter-spacing: 0.35rem;
-    color: #d0d0d0;
-    margin-bottom: 1.5rem;
-    text-transform: uppercase;
-
-    .breadcrumb-button {
-      background: none; border: none; cursor: pointer; color: inherit; font: inherit;
-      transition: color 0.4s ease;
-      &:hover { color: #1a1a1a; }
-    }
-    .active { color: #1a1a1a; font-weight: 500; }
-  }
+  text-align: left; // Mudança para o moderno alinhado à esquerda
+  margin-bottom: 5rem;
+  border-left: 3px solid #b38728; // Detalhe em Dourado
+  padding-left: 2rem;
 
   .luxury-title {
-    font-weight: 100;
-    font-size: 3rem;
+    font-weight: 200;
+    font-size: 2.5rem;
     color: #1a1a1a;
-    letter-spacing: -0.04em;
-    margin: 0;
+    letter-spacing: -0.02em;
   }
 
   .luxury-subtitle {
-    font-size: 0.55rem;
-    letter-spacing: 0.55rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.4rem;
     text-transform: uppercase;
-    color: #e0e0e0;
-    margin-top: 1.2rem;
+    color: #b0b0b0;
+    margin-top: 0.5rem;
   }
 }
 
-/* 3. Labels (Grafite Profundo) */
-.luxury-label {
-  display: block;
-  font-size: 0.65rem;
-  font-weight: 600;
-  letter-spacing: 0.15rem;
+.section-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.2rem;
+  color: #1a1a1a;
+  font-weight: 700;
   text-transform: uppercase;
-  color: #888;
-  margin-bottom: 0.8rem;
+  margin: 3rem 0 2rem;
+  border-bottom: 1px solid #f8f8f8;
+  padding-bottom: 0.5rem;
 }
 
-/* 4. Reset PrimeNG e Blindagem de Estados (Sem "Pisca-Pisca") */
+.luxury-label {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12rem;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 0.5rem;
+
+  .required-mark { color: #b38728; }
+  .recommend-text { color: #ccc; font-weight: 300; font-style: italic; text-transform: none; }
+}
+
 :host ::ng-deep {
-  /* Alvo: Todos os inputs e especificamente a classe de âncora luxury-input */
-  .p-inputtext,
-  .luxury-input .p-inputtext,
-  input.p-inputmask {
+  .p-inputtext, .luxury-input .p-inputtext, .p-dropdown {
     background: transparent !important;
     border: none !important;
-    border-bottom: 1px solid #f0f0f0 !important; // Estado base cinza claro
+    border-bottom: 1px solid #eee !important;
     border-radius: 0 !important;
     padding: 0.8rem 0 !important;
-    font-size: 1.05rem !important;
+    font-size: 1rem !important;
     font-weight: 300 !important;
     color: #1a1a1a !important;
     box-shadow: none !important;
-    transition: border-color 0.2s linear !important;
-    display: block;
-    width: 100%;
+    transition: all 0.3s ease;
 
-    &::placeholder {
-      color: #e8e8e8 !important;
-      font-style: italic;
-      font-weight: 200;
+    &:focus {
+      border-bottom-color: #b38728 !important; // Foco Dourado
     }
   }
 
-  /* BLOQUEIO DE OSCILAÇÃO:
-     Garante que se houver foco, conteúdo ou se o Angular detectar interação (ng-dirty),
-     a linha TRAVA no preto (#1a1a1a).
-  */
-  .p-inputtext:focus,
-  .p-focus .p-inputtext,
-  .p-inputwrapper-focus .p-inputtext,
-  .p-inputwrapper-filled .p-inputtext,
-  .luxury-input.p-inputwrapper-filled .p-inputtext,
-  .luxury-input.ng-dirty .p-inputtext,
-  input.ng-dirty,
-  input.p-filled,
-  input.ng-touched:not(:placeholder-shown) {
-    border-bottom-color: #1a1a1a !important;
-    outline: none !important;
-    background: transparent !important;
-  }
-
-  /* Remove sombras e bordas residuais dos containers do PrimeNG */
-  .p-inputmask.luxury-input,
-  .p-inputmask.luxury-input .p-inputtext {
-    box-shadow: none !important;
-    outline: none !important;
-    border-top: none !important;
-    border-left: none !important;
-    border-right: none !important;
+  .p-dropdown {
+      border-bottom: 1px solid #eee !important;
   }
 }
 
-/* 5. Ações (Contraste e Elegância) */
 .form-actions {
-  margin-top: 7rem;
+  margin-top: 5rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 2rem;
 
   .luxury-cancel-btn {
-    color: #bbb !important;
-    font-size: 0.7rem;
-    letter-spacing: 0.2rem;
-    text-transform: uppercase;
-    &:hover { color: #1a1a1a !important; background: transparent !important; }
+    color: #999 !important;
+    font-size: 0.65rem;
+    letter-spacing: 0.1rem;
+    &:hover { color: #1a1a1a !important; }
   }
 
   .luxury-submit-btn {
-    background: #1a1a1a !important;
-    color: #ffffff !important;
-    border: none !important;
+    background: #1a1a1a !important; // Preto Moderno
+    color: #fff !important;
     border-radius: 0 !important;
-    padding: 1.4rem 4rem !important;
-    font-size: 0.75rem;
-    letter-spacing: 0.3rem;
-    text-transform: uppercase;
-    font-weight: 300;
-    cursor: pointer;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-
-    .p-button-label { color: #ffffff !important; }
+    padding: 1.2rem 3rem !important;
+    font-size: 0.7rem;
+    letter-spacing: 0.2rem;
+    border: none !important;
+    transition: all 0.4s ease;
 
     &:hover:not(:disabled) {
-      background: #000 !important;
-      letter-spacing: 0.4rem;
+      background: #b38728 !important; // Hover vira Dourado
+      transform: translateY(-2px);
     }
 
     &:disabled {
-      background: #fcfcfc !important;
-      color: #eeeeee !important;
-      border: 1px solid #f9f9f9 !important;
-      cursor: not-allowed;
-      .p-button-label { color: #eeeeee !important; }
+        opacity: 0.2;
+        background: #ccc !important;
     }
   }
 }
-
-.grid { row-gap: 3.5rem; }
-.mb-5 { margin-bottom: 2.5rem !important; }

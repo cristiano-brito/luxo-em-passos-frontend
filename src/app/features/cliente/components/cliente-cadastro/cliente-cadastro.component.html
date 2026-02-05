@@ -15,55 +15,76 @@
 
     <form class="form-content p-fluid" #clienteForm="ngForm">
 
-      <div class="field mb-5">
-        <label for="nome" class="luxury-label">Nome Completo</label>
-        <input pInputText id="nome" name="nome" [(ngModel)]="cliente.nome" placeholder="Ex: Marcello Mastroianni" required>
+      <div class="section-title">Informações de Identidade</div>
+
+      <div class="field mb-6">
+        <label for="nome" class="luxury-label">Nome Completo <span class="required-mark">*</span></label>
+        <input pInputText id="nome" name="nome" [(ngModel)]="cliente.nome" placeholder="Ex: Marcello Mastroianni" class="luxury-input">
       </div>
 
-      <div class="grid mb-5">
-        <div class="col-7 field">
-          <label for="email" class="luxury-label">E-mail de Contato</label>
-          <input pInputText type="email" id="email" name="email" [(ngModel)]="cliente.email" placeholder="contato@luxo.com" email required>
+      <div class="grid mb-6">
+        <div class="col-12 md:col-6 field">
+          <label for="cpf" class="luxury-label">CPF <span class="required-mark">*</span></label>
+          <p-inputMask id="cpf" name="cpf" [(ngModel)]="cliente.cpf" mask="999.999.999-99" [unmask]="true" placeholder="000.000.000-00" styleClass="luxury-input"></p-inputMask>
         </div>
-        <div class="col-5 field">
-          <label for="telefone" class="luxury-label">Telefone</label>
-          <p-inputMask id="telefone" name="telefone" [(ngModel)]="cliente.telefone" mask="(99) 99999-9999"
-            placeholder="(00) 00000-0000" [unmask]="true" required styleClass="luxury-input">
-          </p-inputMask>
+        <div class="col-12 md:col-6 field">
+          <label for="email" class="luxury-label">E-mail de Contato <span class="recommend-text">(Opcional)</span></label>
+          <input pInputText type="email" id="email" name="email" [(ngModel)]="cliente.email" placeholder="contato@luxo.com" class="luxury-input">
         </div>
       </div>
+
+      <div class="grid mb-6">
+        <div class="col-12 md:col-6 field">
+          <label for="telefone" class="luxury-label">Telefone</label>
+          <p-inputMask id="telefone" name="telefone" [(ngModel)]="cliente.telefone" mask="(99) 99999-9999" [unmask]="true" placeholder="(00) 00000-0000" styleClass="luxury-input"></p-inputMask>
+        </div>
+        <div class="col-12 md:col-3 field">
+          <label class="luxury-label">Status Inicial</label>
+          <input pInputText [value]="cliente.perfil" [disabled]="true" class="luxury-input">
+        </div>
+        <div class="col-12 md:col-3 field">
+          <label class="luxury-label">Gasto Inicial</label>
+          <input pInputText [value]="cliente.gastoTotalAcumulado | currency:'BRL'" [disabled]="true" class="luxury-input">
+        </div>
+      </div>
+
+      <div class="section-title">Endereço de Curadoria</div>
 
       <div class="grid">
-        <div class="col-3 field">
+        <div class="col-12 md:col-4 field">
           <label for="cep" class="luxury-label">CEP</label>
-          <p-inputMask id="cep" name="cep" [(ngModel)]="cliente.endereco!.cep" mask="99999-999" placeholder="00000-000" [unmask]="true"></p-inputMask>
+          <p-inputMask id="cep" name="cep" [(ngModel)]="cliente.endereco!.cep" mask="99999-999" [unmask]="true" placeholder="00000-000" styleClass="luxury-input"></p-inputMask>
         </div>
-        <div class="col-9"></div> <div class="col-10 field">
+        <div class="col-12 md:col-8"></div>
+
+        <div class="col-12 md:col-10 field">
           <label for="logradouro" class="luxury-label">Logradouro</label>
-          <input pInputText id="logradouro" name="logradouro" [(ngModel)]="cliente.endereco!.logradouro" placeholder="Avenida Brigadeiro Faria Lima...">
+          <input pInputText id="logradouro" name="logradouro" [(ngModel)]="cliente.endereco!.logradouro" placeholder="Rua, Avenida..." class="luxury-input">
         </div>
-        <div class="col-2 field">
+        <div class="col-12 md:col-2 field">
           <label for="numero" class="luxury-label">Nº</label>
-          <input pInputText id="numero" name="numero" [(ngModel)]="cliente.endereco!.numero" placeholder="123">
+          <input pInputText id="numero" name="numero" [(ngModel)]="cliente.endereco!.numero" class="luxury-input">
         </div>
 
-        <div class="col-5 field">
+        <div class="col-12 md:col-5 field">
           <label for="bairro" class="luxury-label">Bairro</label>
-          <input pInputText id="bairro" name="bairro" [(ngModel)]="cliente.endereco!.bairro">
+          <input pInputText id="bairro" name="bairro" [(ngModel)]="cliente.endereco!.bairro" class="luxury-input">
         </div>
-        <div class="col-5 field">
+        <div class="col-12 md:col-5 field">
           <label for="cidade" class="luxury-label">Cidade</label>
-          <input pInputText id="cidade" name="cidade" [(ngModel)]="cliente.endereco!.cidade">
+          <input pInputText id="cidade" name="cidade" [(ngModel)]="cliente.endereco!.cidade" class="luxury-input">
         </div>
-        <div class="col-2 field">
+        <div class="col-12 md:col-2 field">
           <label for="uf" class="luxury-label">UF</label>
-          <input pInputText id="uf" name="uf" [(ngModel)]="cliente.endereco!.uf" maxlength="2" placeholder="UF">
+          <input pInputText id="uf" name="uf" [(ngModel)]="cliente.endereco!.uf" maxlength="2" placeholder="UF" class="luxury-input">
         </div>
       </div>
 
       <footer class="form-actions">
-        <button pButton type="button" label="VOLTAR" class="p-button-text luxury-cancel-btn" (click)="voltarParaLista()"></button>
-        <button pButton type="button" label="CONFIRMAR INSCRIÇÃO" class="luxury-submit-btn" [disabled]="clienteForm.invalid" (click)="confirmarInscricao()"></button>
+        <button pButton type="button" label="CANCELAR" class="p-button-text luxury-cancel-btn" (click)="voltarParaLista()"></button>
+        <button pButton type="button" label="FINALIZAR INSCRIÇÃO" class="luxury-submit-btn"
+                [disabled]="!cliente.nome || !cliente.cpf || cliente.cpf.length !== 11"
+                (click)="confirmarInscricao()"></button>
       </footer>
     </form>
 
