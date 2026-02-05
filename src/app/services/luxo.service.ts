@@ -17,6 +17,7 @@ export class LuxoService {
     {
       id: 1,
       nome: 'Sophia Loren',
+      cpf: '15062656001',
       email: 'sophia@luxury.com',
       telefone: '(11) 99999-8888',
       perfil: 'BLACK',
@@ -33,6 +34,7 @@ export class LuxoService {
     {
       id: 2,
       nome: 'Gisele Bundchen',
+      cpf: '22233344455',
       email: 'gisele@vogue.com',
       telefone: '(11) 98888-7777',
       perfil: 'GOLD',

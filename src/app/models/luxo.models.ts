@@ -12,9 +12,10 @@ export interface Endereco {
 export interface Cliente {
   id?: number;
   nome: string;
-  telefone: string;
-  email: string;
-  dataCadastro?: string | Date;
+  cpf: string;
+  telefone?: string;
+  email?: string;
+  dataCadastro?: string;
   endereco?: Endereco;
   perfil: PerfilFidelidade;
   gastoTotalAcumulado: number;

@@ -23,8 +23,10 @@ export class ClienteService {
   }
 
   adicionar(cliente: Cliente): Observable<Cliente> {
+    const { id, dataCadastro, ...dadosParaEnvio } = cliente;
+
     const payload = {
-      ...cliente,
+      ...dadosParaEnvio,
       endereco: this.isValidEndereco(cliente.endereco) ? cliente.endereco : undefined,
     };
     return this.http
