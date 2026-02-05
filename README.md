@@ -25,9 +25,12 @@ O **Luxo em Passos** é uma plataforma premium de gestão para boutiques de cal�
 * **Gestão de Inventário por SKU:** Controle rigoroso de estoque para peças de luxo com suporte a categorias premium e visualização de curadoria.
 
 ### 👥 CRM & Gestão de Clientes VIP
-* **Ranking de Fidelidade:** Segmentação visual automática por perfil (**BLACK**, **GOLD** e **STANDARD**) baseada no gasto acumulado.
+* **Design "Ateliê" (Novo):** Refatoração visual completa utilizando paleta de cores baseada em **Preto Absoluto, Ouro Nobre e Diamante**, com foco em espaços negativos e tipografia refinada.
+* **Ranking de Fidelidade:** Segmentação visual automática por perfil (**BLACK**, **GOLD** e **STANDARD**) baseada no gasto acumulado e processada pelo backend.
 * **Arquitetura Smart & Presentational:** Separação rigorosa de responsabilidades entre componentes de listagem e modais especializados de gestão.
-* **Type-Safe Forms:** Uso de *Non-null Assertion* e inicialização de modelos para garantir integridade em formulários complexos de endereçamento sob o modo estrito do Angular 17.
+* **Blindagem de Dados & Estabilidade:** Implementação de normalização de objetos complexos e uso de guards de renderização (`*ngIf`) para prevenir erros de dados nulos ou indefinidos em campos opcionais (E-mail, Telefone e Endereço).
+* **Micro-animações:** Implementação de animações de entrada (*fade-in*) e efeito cascata na listagem de membros para reforçar a percepção de produto premium.
+* **Type-Safe Forms:** Uso estratégico de inicialização de modelos para garantir integridade em formulários complexos de endereçamento sob o modo estrito do Angular 17.
 
 ---
 
@@ -53,6 +56,7 @@ src/app/
 │   ├── cliente/     # CRM VIP (Listagem, Cadastro e Gestão)
 │   ├── relatorio/   # Dashboard e Analytics reativo
 │   └── sandalia/    # Gestão de Inventário (CRUD)
+├── shared/          # Pipes (CPF, Moeda, Data) e componentes genéricos
 ├── models/          # Interfaces de domínio (Cliente, Sandalia, Pedido)
 ├── services/        # Central de inteligência reativa (LuxoService)
 └── environments/    # Configurações de API (Local, Staging, Prod)
