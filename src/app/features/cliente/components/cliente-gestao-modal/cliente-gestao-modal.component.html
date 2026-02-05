@@ -7,22 +7,37 @@
   [blockScroll]="true"
   styleClass="luxury-dialog-management"
   maskStyleClass="luxury-mask"
-  [style]="{width: '50vw'}"
+  [style]="{width: '55vw'}"
   [breakpoints]="{'960px': '85vw', '640px': '100vw'}"
   [contentStyle]="{'overflow': 'visible'}">
 
-  <div class="luxury-form-container p-fluid">
+  <div *ngIf="display && cliente" class="luxury-form-container p-fluid">
 
     <div class="field mb-5">
-      <label for="modal_nome" class="luxury-label">Nome da Cliente VIP</label>
+      <label for="modal_nome" class="luxury-label">Nome da Cliente VIP*</label>
       <input pInputText id="modal_nome" [(ngModel)]="cliente.nome" [disabled]="isReadOnly" class="luxury-input">
     </div>
 
     <div class="grid">
       <div class="col-12 md:col-6 field mb-5">
-        <label for="modal_email" class="luxury-label">E-mail</label>
-        <input pInputText id="modal_email" [(ngModel)]="cliente.email" [disabled]="isReadOnly" class="luxury-input">
+        <label for="modal_cpf" class="luxury-label">Identificação (CPF)*</label>
+        <p-inputMask
+          id="modal_cpf"
+          [(ngModel)]="cliente.cpf"
+          mask="999.999.999-99"
+          [unmask]="true"
+          [disabled]="isReadOnly || !!cliente.id"
+          styleClass="luxury-input"
+          placeholder="000.000.000-00">
+        </p-inputMask>
       </div>
+      <div class="col-12 md:col-6 field mb-5">
+        <label for="modal_email" class="luxury-label">E-mail</label>
+        <input pInputText id="modal_email" [(ngModel)]="cliente.email" [disabled]="isReadOnly" class="luxury-input" placeholder="exemplo@email.com">
+      </div>
+    </div>
+
+    <div class="grid">
       <div class="col-12 md:col-6 field mb-5">
         <label for="modal_telefone" class="luxury-label">Telefone</label>
         <p-inputMask
@@ -34,16 +49,20 @@
           styleClass="luxury-input">
         </p-inputMask>
       </div>
+      <div class="col-12 md:col-6 field mb-5">
+        <label for="modal_perfil" class="luxury-label">Perfil de Consumo</label>
+        <p-dropdown inputId="modal_perfil" [options]="perfis" [(ngModel)]="cliente.perfil" [disabled]="isReadOnly || !cliente.id" styleClass="luxury-dropdown"></p-dropdown>
+      </div>
     </div>
 
     <div class="grid">
       <div class="col-12 md:col-6 field mb-5">
-        <label for="modal_perfil" class="luxury-label">Perfil de Consumo</label>
-        <p-dropdown inputId="modal_perfil" [options]="perfis" [(ngModel)]="cliente.perfil" [disabled]="isReadOnly" styleClass="luxury-dropdown"></p-dropdown>
-      </div>
-      <div class="col-12 md:col-6 field mb-5">
         <label for="modal_gasto" class="luxury-label">Gasto Acumulado</label>
         <p-inputNumber inputId="modal_gasto" [(ngModel)]="cliente.gastoTotalAcumulado" mode="currency" currency="BRL" [disabled]="true"></p-inputNumber>
+      </div>
+      <div class="col-12 md:col-6 field mb-5">
+        <label for="modal_data" class="luxury-label">Data de Admissão</label>
+        <input pInputText id="modal_data" [value]="cliente.dataCadastro | date: 'dd/MM/yyyy'" [disabled]="true" class="luxury-input">
       </div>
     </div>
 
@@ -93,17 +112,20 @@
 
     <p class="form-instruction mt-4" *ngIf="!isReadOnly">
       <i class="pi pi-info-circle mr-1"></i>
-      As alterações de endereço impactarão futuras entregas e convites exclusivos.
+      * Campos obrigatórios. O CPF não pode ser alterado após o registro inicial.
     </p>
-  </div>
-
-  <ng-template pTemplate="footer">
+  </div> <ng-template pTemplate="footer">
     <div class="footer-divider mb-4"></div>
     <div class="flex justify-content-end gap-3 px-4 pb-4">
       <button *ngIf="isReadOnly" pButton label="FECHAR" class="p-button-text luxury-save-btn" (click)="fecharModal()"></button>
       <ng-container *ngIf="!isReadOnly">
         <button pButton label="CANCELAR" class="p-button-text luxury-cancel-btn" (click)="fecharModal()"></button>
-        <button pButton label="SALVAR ALTERAÇÕES" class="p-button-text luxury-save-btn" (click)="confirmarAlteracoes()"></button>
+        <button pButton
+                label="SALVAR ALTERAÇÕES"
+                class="p-button-text luxury-save-btn"
+                (click)="confirmarAlteracoes()"
+                [disabled]="!cliente.nome || !cliente.cpf || cliente.cpf.length !== 11">
+        </button>
       </ng-container>
     </div>
   </ng-template>

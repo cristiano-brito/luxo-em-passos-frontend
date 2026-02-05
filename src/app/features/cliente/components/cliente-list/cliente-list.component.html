@@ -32,8 +32,8 @@
   <p-table
     #dt
     [value]="clientes"
-    [globalFilterFields]="['nome', 'email', 'perfil']"
-    [tableStyle]="{ 'min-width': '50rem' }"
+    [globalFilterFields]="['nome', 'cpf', 'email', 'perfil']"
+    [tableStyle]="{ 'min-width': '60rem' }"
     styleClass="p-datatable-luxury"
     [paginator]="true"
     [rows]="5"
@@ -45,7 +45,13 @@
     <ng-template pTemplate="header">
       <tr>
         <th scope="col" pSortableColumn="nome">
-          NOME <p-sortIcon field="nome"></p-sortIcon>
+          MEMBRO <p-sortIcon field="nome"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="cpf">
+          IDENTIFICAÇÃO <p-sortIcon field="cpf"></p-sortIcon>
+        </th>
+        <th scope="col" pSortableColumn="dataCadastro">
+          ADMISSÃO <p-sortIcon field="dataCadastro"></p-sortIcon>
         </th>
         <th scope="col" pSortableColumn="perfil">
           PERFIL <p-sortIcon field="perfil"></p-sortIcon>
@@ -62,8 +68,14 @@
         <td class="font-medium text-900">
           <div class="flex flex-column">
             {{ cliente.nome }}
-            <span class="text-xs text-400 font-light">{{ cliente.email }}</span>
+            <span class="text-xs text-400 font-light">{{ cliente.email || 'E-mail não informado' }}</span>
           </div>
+        </td>
+        <td class="text-600 font-light">
+          {{ cliente.cpf | cpf }}
+        </td>
+        <td class="text-600 font-light">
+          {{ cliente.dataCadastro | date: 'dd/MM/yyyy' }}
         </td>
         <td>
           <app-badge-perfil [perfil]="cliente.perfil"></app-badge-perfil>
@@ -77,7 +89,6 @@
                   icon="pi pi-eye"
                   class="p-button-rounded p-button-text action-icon"
                   pTooltip="Visualizar Insights"
-                  tooltipPosition="top"
                   (click)="abrirVisualizacao(cliente)">
           </button>
 
@@ -85,7 +96,6 @@
                   icon="pi pi-pencil"
                   class="p-button-rounded p-button-text action-icon"
                   pTooltip="Editar Cadastro"
-                  tooltipPosition="top"
                   (click)="abrirEdicao(cliente)">
           </button>
 
@@ -93,7 +103,6 @@
                   icon="pi pi-trash"
                   class="p-button-rounded p-button-text p-button-danger action-icon"
                   pTooltip="Excluir do Acervo"
-                  tooltipPosition="top"
                   (click)="confirmarExclusao(cliente.id)">
           </button>
         </td>
@@ -102,7 +111,7 @@
 
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="4" class="text-center p-8">
+        <td colspan="6" class="text-center p-8">
           <i class="pi pi-search-minus text-4xl mb-3 block text-300"></i>
           <span class="text-600 font-light">Nenhum membro VIP corresponde à sua busca.</span>
         </td>

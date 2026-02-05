@@ -132,3 +132,31 @@
         }
     }
 }
+
+/* Animação suave para as linhas da tabela */
+@keyframes fadeInLuxury {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+:host ::ng-deep {
+    .p-datatable-luxury {
+        .luxury-row {
+            /* Aplica a animação em cada linha */
+            animation: fadeInLuxury 0.6s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+
+            /* (Opcional) Delay cascata: as linhas entram uma após a outra */
+            @for $i from 1 through 10 {
+                &:nth-child(#{$i}) {
+                    animation-delay: #{$i * 0.05}s;
+                }
+            }
+        }
+    }
+}

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ClienteService } from '../../services/cliente.service';
 import { InputTextModule } from 'primeng/inputtext';
+import { CpfPipe } from '../../../../shared/pipes/cpf.pipe';
 
 @Component({
   selector: 'app-cliente-list',
@@ -26,7 +27,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ClienteGestaoModalComponent,
     ConfirmDialogModule,
     ToastModule,
-    InputTextModule
+    InputTextModule,
+    CpfPipe,
   ],
   templateUrl: './cliente-list.component.html',
   styleUrl: './cliente-list.component.scss',

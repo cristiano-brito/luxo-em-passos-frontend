@@ -36,6 +36,7 @@ export class ClienteGestaoModalComponent {
   // Inicialização completa para satisfazer a interface Cliente
   cliente: Cliente = {
     nome: '',
+    cpf: '',
     email: '',
     telefone: '',
     perfil: 'STANDARD',
@@ -61,15 +62,13 @@ export class ClienteGestaoModalComponent {
   abrirParaEdicao(clienteParaEditar: Cliente) {
     this.modalTitle = 'EDIT PROFILE';
     this.isReadOnly = false;
-    this.cliente = JSON.parse(JSON.stringify(clienteParaEditar)); // Deep clone para segurança
-    this.display = true;
+    this.prepararEExibir(clienteParaEditar);
   }
 
   abrirParaVisualizacao(clienteParaConsultar: Cliente) {
     this.modalTitle = 'CLIENT INSIGHTS';
     this.isReadOnly = true;
-    this.cliente = { ...clienteParaConsultar };
-    this.display = true;
+    this.prepararEExibir(clienteParaConsultar);
   }
 
   fecharModal() {
@@ -86,5 +85,26 @@ export class ClienteGestaoModalComponent {
         }
       });
     }
+  }
+
+  private prepararEExibir(dadosCliente: Cliente) {
+    // 1. Fazemos a cópia profunda para não sujar a tabela antes de salvar
+    const clone = JSON.parse(JSON.stringify(dadosCliente));
+
+    // 2. Blindagem: Se o endereço não existir no banco, criamos um objeto vazio
+    // Isso evita o erro de "Cannot read properties of undefined (reading 'cep')"
+    if (!clone.endereco) {
+      clone.endereco = {
+        logradouro: '',
+        numero: '',
+        bairro: '',
+        cidade: '',
+        cep: '',
+        uf: ''
+      };
+    }
+
+    this.cliente = clone;
+    this.display = true;
   }
 }
